@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Hub | Fidelity Wealth Scheme</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .gradient-dark { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .glass-header { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); }
+        
+        /* Captcha Box Styling */
+        .captcha-box {
+            font-family: 'Courier New', Courier, monospace;
+            background: #e2e8f0;
+            letter-spacing: 5px;
+            user-select: none;
+            border: 2px solid #cbd5e1;
+        }
+
+        /* Success Overlay */
+        #successOverlay {
+            display: none;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        #successOverlay.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        /* File Upload Styling */
+        #fileInputBox { transition: all 0.3s ease; }
+        #fileInputBox.dragover { border-color: #fbbf24; background: #fffbeb; }
+
+        /* Chat Widget Styles */
+        #chatWindow {
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #chatWindow.open { transform: scale(1); opacity: 1; pointer-events: auto; }
+        
+        .chat-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Custom Scrollbar for Chat */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        @media (max-width: 320px) {
+            h1 { font-size: 1.5rem !important; }
+            .btn-text { display: none; }
+        }
+    </style>
+</head>
+<body class="text-slate-900 overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-[100] glass-header border-b border-slate-800 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-yellow-500 p-1.5 rounded-lg">
+                    <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
+                </div>
+                <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span class="text-yellow-500">Wealth</span></span>
+            </div>
+            <a href="index.html" class="bg-yellow-500 hover:bg-yellow-600 text-slate-950 px-5 py-2 rounded-full text-xs font-black transition-all">
+                EXIT HUB
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="gradient-dark pt-40 pb-32 relative text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="gsap-hero text-4xl md:text-6xl font-black text-white mb-6">How can we assist your <span class="text-yellow-500 underline decoration-4 underline-offset-8">growth?</span></h1>
+            <p class="gsap-hero text-slate-400 max-w-2xl mx-auto text-lg">Our financial support specialists are available around the clock to manage your lending inquiries and account security.</p>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto px-6 -mt-16 pb-20 relative z-10">
+        
+        <!-- CONTACT CARDS (Top Structure) -->
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <!-- WhatsApp -->
+            <div class="gsap-card bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="message-circle"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">WhatsApp Direct</h3>
+                <p class="text-slate-500 text-sm mb-4">Fastest channel for verification and deposit issues.</p>
+                <a href="https://wa.me/16314285542" class="text-yellow-600 font-bold text-sm flex items-center">
+                    CHAT NOW <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                </a>
+            </div>
+            <!-- Email -->
+            <div class="gsap-card bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="mail"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Official Email</h3>
+                <p class="text-slate-500 text-sm mb-4">For institutional partnerships or complex inquiries.</p>
+                <a href="mailto:fidelitywealth9@gmail.com" class="text-yellow-600 font-bold text-sm flex items-center">
+                    fidelitywealth9@gmail.com
+                </a>
+            </div>
+            <!-- Hours -->
+            <div class="gsap-card bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="clock"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Operating Hours</h3>
+                <p class="text-slate-500 text-sm mb-1">Mon - Fri: 24 Hours</p>
+                <p class="text-slate-500 text-sm mb-4">Sat - Sun: 10:00 AM - 4:00 PM</p>
+                <div class="flex items-center text-[10px] font-black text-green-500 uppercase tracking-widest">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span> System Online
+                </div>
+            </div>
+        </div>
+
+        <!-- TICKET FORM (Central Vault Structure) -->
+        <div class="max-w-4xl mx-auto relative gsap-form">
+            <div class="bg-white rounded-[2.5rem] p-8 md:p-16 shadow-2xl border border-slate-100 relative overflow-hidden">
+                
+                <!-- SUCCESS OVERLAY (Ported Feature) -->
+                <div id="successOverlay" class="absolute inset-0 z-50 flex-col items-center justify-center text-center p-6">
+                    <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-200">
+                        <i data-lucide="check" class="w-10 h-10"></i>
+                    </div>
+                    <h2 class="text-3xl font-black mb-2">Ticket Dispatched</h2>
+                    <p class="text-slate-500 mb-8 max-w-sm">Reference ID: #FW-${Math.floor(Math.random()*90000)}<br>A manager will contact you shortly.</p>
+                    <button onclick="resetTicketForm()" class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition-all">Submit New Request</button>
+                </div>
+
+                <div class="mb-10 text-center">
+                    <h2 class="text-3xl font-black text-slate-900">Submit Institutional Ticket</h2>
+                    <p class="text-slate-500 mt-2">Required for all account-level modifications.</p>
+                </div>
+
+                <form id="fidelityTicketForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Legal Full Name</label>
+                            <input type="text" required class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all" placeholder="John Doe">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Verified Email</label>
+                            <input type="email" required class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all" placeholder="john@example.com">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Inquiry Department</label>
+                        <select class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all cursor-pointer">
+                            <option>Lending Cycle Verification</option>
+                            <option>Withdrawal/Payout Issue</option>
+                            <option>Capital Deposit Assistant</option>
+                            <option>Technical/Security Bug</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Detailed Description</label>
+                        <textarea rows="5" required class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all" placeholder="Explain your situation..."></textarea>
+                    </div>
+
+                    <!-- ATTACHMENT (Ported Feature) -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Evidence/Screenshot (Optional)</label>
+                        <label id="fileInputBox" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-all">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <i data-lucide="upload-cloud" class="w-8 h-8 text-slate-400 mb-2"></i>
+                                <p id="fileStatus" class="text-xs text-slate-500 font-bold">Attach JPG or PNG (Max 5MB)</p>
+                            </div>
+                            <input type="file" id="ticketFile" class="hidden" accept="image/*">
+                        </label>
+                    </div>
+
+                    <!-- CAPTCHA (Ported Feature) -->
+                    <div class="flex flex-col md:flex-row items-center gap-4 bg-slate-900 p-6 rounded-2xl">
+                        <div class="flex-1 w-full">
+                            <input type="text" id="captchaInput" placeholder="Enter Security Code" class="w-full bg-white/10 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 text-sm">
+                        </div>
+                        <div id="captchaDisplay" class="captcha-box px-8 py-4 rounded-xl font-black text-xl text-slate-700 italic">
+                            <!-- Code via JS -->
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitTicketBtn" disabled class="w-full bg-yellow-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest transition-all opacity-50 cursor-not-allowed flex items-center justify-center space-x-2">
+                        <span>Initiate Support Ticket</span>
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- AI CHATBOT (Ported Feature) -->
+    <div id="chatTrigger" class="fixed bottom-8 right-8 w-16 h-16 bg-yellow-500 text-slate-950 rounded-full flex items-center justify-center cursor-pointer shadow-2xl z-[200] hover:scale-110 transition-transform">
+        <div class="absolute inset-0 bg-yellow-500 rounded-full chat-pulse"></div>
+        <i data-lucide="bot" class="relative z-10 w-8 h-8"></i>
+    </div>
+
+    <div id="chatWindow" class="fixed bottom-28 right-8 w-[350px] md:w-[400px] h-[550px] bg-white rounded-[2rem] shadow-2xl border border-slate-200 z-[200] flex flex-col overflow-hidden">
+        <!-- Chat Header -->
+        <div class="bg-slate-900 p-6 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-yellow-500 rounded-xl flex items-center justify-center text-slate-950">
+                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-sm">Fidelity AI</h4>
+                    <p class="text-[10px] text-green-400 font-black uppercase tracking-widest">Active Specialist</p>
+                </div>
+            </div>
+            <button id="closeChat" class="text-slate-400 hover:text-white"><i data-lucide="x"></i></button>
+        </div>
+        <!-- Chat Body -->
+        <div id="chatContent" class="flex-1 p-6 overflow-y-auto custom-scroll space-y-4 bg-slate-50">
+            <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-sm text-slate-600 shadow-sm">
+                Greetings. I am the Fidelity Wealth Virtual Assistant. How may I facilitate your lending experience today?
+            </div>
+        </div>
+        <div id="typingIndicator" class="px-6 py-2 text-[10px] font-bold text-slate-400 uppercase hidden">Specialist is typing...</div>
+        <!-- Chat Footer -->
+        <div class="p-4 bg-white border-t border-slate-100 flex items-center space-x-2">
+            <input type="text" id="chatInput" placeholder="Enter inquiry..." class="flex-1 bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm outline-none focus:border-yellow-500">
+            <button id="sendChat" class="bg-slate-900 text-white p-3 rounded-xl hover:bg-slate-800 transition-colors">
+                <i data-lucide="arrow-up" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Init Lucide
+        lucide.createIcons();
+
+        // ----------------------------------------------------
+        // GSAP ANIMATIONS
+        // ----------------------------------------------------
+        gsap.from(".gsap-hero", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out" });
+        gsap.from(".gsap-card", { y: 30, opacity: 0, duration: 0.8, stagger: 0.15, delay: 0.5, ease: "back.out(1.7)" });
+        gsap.from(".gsap-form", { y: 100, opacity: 0, duration: 1, delay: 0.8, ease: "power4.out" });
+
+        // ----------------------------------------------------
+        // TICKET FORM LOGIC (Captcha, File, Success)
+        // ----------------------------------------------------
+        const ticketForm = document.getElementById('fidelityTicketForm');
+        const submitBtn = document.getElementById('submitTicketBtn');
+        const captchaInput = document.getElementById('captchaInput');
+        const captchaDisplay = document.getElementById('captchaDisplay');
+        const fileInput = document.getElementById('ticketFile');
+        const fileStatus = document.getElementById('fileStatus');
+        const successOverlay = document.getElementById('successOverlay');
+
+        // Captcha Engine
+        const codes = ["FID98", "WAL77", "SEC44", "LEND1", "GOLD9", "ROI20"];
+        let currentCode = codes[Math.floor(Math.random()*codes.length)];
+        captchaDisplay.innerText = currentCode;
+
+        captchaInput.addEventListener('input', (e) => {
+            if(e.target.value.toUpperCase() === currentCode) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        });
+
+        // File Handler
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) {
+                fileStatus.innerText = "Target: " + e.target.files[0].name;
+                fileStatus.style.color = "#10b981";
+            }
+        });
+
+        // Form Submit
+        ticketForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitBtn.innerHTML = `<i data-lucide="loader-2" class="animate-spin w-5 h-5 mr-2"></i> Processing...`;
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                successOverlay.classList.add('active');
+            }, 2000);
+        });
+
+        function resetTicketForm() {
+            successOverlay.classList.remove('active');
+            ticketForm.reset();
+            fileStatus.innerText = "Attach JPG or PNG (Max 5MB)";
+            fileStatus.style.color = "";
+            submitBtn.innerHTML = `<span>Initiate Support Ticket</span><i data-lucide="send" class="w-5 h-5"></i>`;
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            currentCode = codes[Math.floor(Math.random()*codes.length)];
+            captchaDisplay.innerText = currentCode;
+            lucide.createIcons();
+        }
+
+        // ----------------------------------------------------
+        // AI CHATBOT LOGIC
+        // ----------------------------------------------------
+        const chatTrigger = document.getElementById('chatTrigger');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeChat = document.getElementById('closeChat');
+        const chatInput = document.getElementById('chatInput');
+        const sendChat = document.getElementById('sendChat');
+        const chatContent = document.getElementById('chatContent');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        chatTrigger.addEventListener('click', () => chatWindow.classList.add('open'));
+        closeChat.addEventListener('click', () => chatWindow.classList.remove('open'));
+
+        const botDB = {
+            "withdraw": "Maturation occurs at 200%. Once reached, the payout window unlocks automatically for institutional ACH transfer.",
+            "maturation": "A full cycle takes 20 days. You receive 10% daily ROI until the 2X threshold is met.",
+            "deposit": "Funds are pooled into our collateralized enterprise lending reserve. Minimums depend on active tier availability.",
+            "roi": "We offer a fixed 10% daily return based on real-world commercial interest from verified SMEs.",
+            "scam": "Fidelity Wealth Scheme is a debt-market platform. We do not rely on referrals; revenue is generated via commercial loans.",
+            "hello": "Greetings. How can Fidelity AI assist your wealth generation today?",
+            "hi": "Hello. I am online and ready to help with cycle verification or deposit queries.",
+            "thanks": "You are welcome. Your capital security is our priority.",
+            "help": "I can assist with: Maturation timers, Withdrawal protocols, Security settings, and Deposit verification."
+        };
+
+        function addChatMessage(msg, type) {
+            const div = document.createElement('div');
+            div.className = type === 'user' 
+                ? "bg-slate-900 text-white p-4 rounded-2xl rounded-tr-none text-sm self-end ml-10 shadow-md"
+                : "bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-sm text-slate-600 shadow-sm mr-10";
+            div.innerText = msg;
+            chatContent.appendChild(div);
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }
+
+        function processBotResponse(input) {
+            const lowInput = input.toLowerCase();
+            typingIndicator.classList.remove('hidden');
+            
+            setTimeout(() => {
+                typingIndicator.classList.add('hidden');
+                let response = "I did not recognize those parameters. Please inquire about 'Maturation', 'Withdrawals', or 'Deposits'.";
+                
+                for(let key in botDB) {
+                    if(lowInput.includes(key)) { response = botDB[key]; break; }
+                }
+
+                // Gibberish Check
+                if(lowInput.length > 8 && !lowInput.includes(" ") && !/[aeiouy]/i.test(lowInput)) {
+                    response = "System analysis failed: Input appears encrypted or non-standard. Please use standard English.";
+                }
+
+                addChatMessage(response, 'bot');
+            }, 1500);
+        }
+
+        function handleSend() {
+            const val = chatInput.value.trim();
+            if(!val) return;
+            addChatMessage(val, 'user');
+            chatInput.value = "";
+            processBotResponse(val);
+        }
+
+        sendChat.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+
+    </script>
+</body>
+</html>
