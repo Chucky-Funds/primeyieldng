@@ -29,8 +29,12 @@
             box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.4);
         }
         .glass-nav {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 0.98); /* Increased opacity for mobile stability */
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); /* Required for Safari */
+            top: 0;
+            left: 0;
+            will-change: transform, background-color; /* Forces GPU acceleration */
         }
         /* Mobile Menu Overlay */
         #mobileMenu {
@@ -55,7 +59,7 @@
 <body class="bg-slate-50 text-slate-900 overflow-x-hidden">
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-[100] glass-nav border-b border-slate-800 py-4">
+    <nav class="fixed top-0 left-0 w-full z-[100] glass-nav border-b border-slate-800 py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="bg-yellow-500 p-1.5 rounded-lg">
@@ -635,6 +639,13 @@ contactForm.addEventListener('submit', function(e) {
         lucide.createIcons();
     }, 3000);
 });
+// Force header repaint on load to fix mobile rendering glitch
+        window.addEventListener('load', () => {
+            const nav = document.querySelector('nav');
+            nav.style.display = 'none';
+            nav.offsetHeight; // Trigger reflow
+            nav.style.display = 'flex';
+        });
     </script>
 </body>
 </html>
