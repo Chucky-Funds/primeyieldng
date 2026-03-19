@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Feedback | Fidelity Wealth Scheme</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP for Professional Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .gradient-dark { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .glass-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); }
+        
+        /* Category Button Styling */
+        .filter-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+        }
+        .filter-btn.active {
+            background-color: #fbbf24;
+            border-color: #fbbf24;
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Review Card Design */
+        .review-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .avatar-ring {
+            width: 48px;
+            height: 48px;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #fbbf24;
+        }
+        
+        /* Star Colors */
+        .stars-excellent { color: #fbbf24; }
+        .stars-moderate { color: #94a3b8; }
+        .stars-critical { color: #ef4444; }
+
+        @media (max-width: 320px) {
+            .container { px: 4 !important; }
+            h1 { font-size: 1.5rem !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-900 overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-[100] glass-nav border-b border-slate-800 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-yellow-500 p-1.5 rounded-lg">
+                    <i data-lucide="shield-check" class="text-slate-900 w-5 h-5"></i>
+                </div>
+                <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span class="text-yellow-500">Wealth</span></span>
+            </div>
+            <a href="index.html" class="text-slate-300 hover:text-yellow-500 font-semibold text-sm transition-colors flex items-center">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="gradient-dark pt-32 pb-20 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-yellow-500 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-blue-500 rounded-full blur-[120px]"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6">Transparency Matters.</h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-lg">Join thousands of verified members who power the global lending market. Real feedback from our community.</p>
+            
+            <div class="mt-10 flex flex-wrap justify-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10 w-fit mx-auto">
+                <div class="px-6 py-2">
+                    <p class="text-yellow-500 text-2xl font-bold">4.9/5</p>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold">Avg Rating</p>
+                </div>
+                <div class="w-px h-12 bg-white/10"></div>
+                <div class="px-6 py-2">
+                    <p class="text-white text-2xl font-bold">12k+</p>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold">Members</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN REVIEWS SECTION -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            
+            <!-- Filter Bar -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12" id="filterBar">
+                <button class="filter-btn active px-6 py-3 rounded-xl font-bold text-sm" onclick="filterReviews('all')">All Feedback</button>
+                <button class="filter-btn px-6 py-3 rounded-xl font-bold text-sm" onclick="filterReviews('excellent')">★★★★★ Excellent</button>
+                <button class="filter-btn px-6 py-3 rounded-xl font-bold text-sm" onclick="filterReviews('moderate')">★★★☆☆ Moderate</button>
+                <button class="filter-btn px-6 py-3 rounded-xl font-bold text-sm" onclick="filterReviews('critical')">★☆☆☆☆ Critical</button>
+            </div>
+
+            <!-- Reviews Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="reviewsGrid">
+                <!-- Cards injected via JS -->
+            </div>
+
+            <!-- Infinite Scroll Trigger (Sentinel) -->
+            <div id="sentinel" class="h-20 w-full flex items-center justify-center mt-10">
+                <div id="loader" class="flex space-x-2">
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full animate-bounce"></div>
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                </div>
+                <p id="statusText" class="text-slate-500 font-medium hidden">End of record.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-slate-400 text-sm">&copy; 2024 Fidelity Wealth Scheme. Community moderation active.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    gsap.registerPlugin(ScrollTrigger);
+    lucide.createIcons();
+
+    // 1. SEEDED RANDOMNESS (Ensures same reviews appear on every refresh)
+    let seed = 888; 
+    function seededRandom() {
+        var x = Math.sin(seed++) * 10000;
+        return x - Math.floor(x);
+    }
+
+    // 2. MASSIVE DATASETS (Names and Fidelity-specific Content)
+    const names = [
+        "Chukwudi", "Olamide", "Fatima", "Ibrahim", "Blessing", "Ngozi", "Tunde", "Aisha", "Emeka", "Sarah",
+        "Musa", "Chioma", "Kelechi", "Zainab", "David", "Funke", "Ahmed", "Precious", "Mercy", "Victor",
+        "Abubakar", "Chisom", "Esther", "Femi", "Joy", "Samuel", "Mary", "Michael", "Faith", "Solomon",
+        "Destiny", "Gideon", "Olabisi", "Prosper", "Anita", "Kingsley", "Jennifer", "Umar", "Folake", "Idris"
+    ];
+
+    const sources = {
+        excellent: [
+            { t: "10% ROI is Real", d: "I was skeptical about the daily 10%, but Fidelity has proven me wrong. My ₦100k doubled in 20 days exactly." },
+            { t: "Institutional Standard", d: "The dashboard and the payout speed are world-class. No other scheme comes close to this level of transparency." },
+            { t: "Life Changer", d: "This lending cycle has helped me pay my kids' school fees. Thank you Fidelity Wealth." },
+            { t: "Verified Payout", d: "Received my 2x maturation bonus directly to my bank. No hidden fees or stories." }
+        ],
+        moderate: [
+            { t: "Good Service", d: "It works well, but sometimes the SMS alerts for deposits take a few minutes. Otherwise, 10/10." },
+            { t: "Needs Dark Mode", d: "I love the profit, but please add a dark theme to the members area! My eyes hurt at night." },
+            { t: "Support is Busy", d: "I had a question about lending cycles. Support took 4 hours to reply, but they were very helpful." }
+        ],
+        critical: [
+            { t: "Confusing Lock", d: "I didn't realize I couldn't withdraw until it reached 2x. I need to read the terms better next time." },
+            { t: "Network Issues", d: "The site was slow during peak hours today. Payout was still on time though." },
+            { t: "Registration SMS", d: "My verification code didn't arrive the first time. Had to resend it." }
+        ]
+    };
+
+    // 3. GENERATE 500+ VIRTUAL MEMBERS
+    let allReviewsData = [];
+    for(let i=0; i<500; i++) {
+        let rand = seededRandom();
+        let category, rating, sourcePool;
+
+        if (rand > 0.4) { 
+            category = 'excellent'; rating = 5; sourcePool = sources.excellent;
+        } else if (rand > 0.15) { 
+            category = 'moderate'; rating = 3.5; sourcePool = sources.moderate;
+        } else { 
+            category = 'critical'; rating = 1.5; sourcePool = sources.critical;
+        }
+
+        let content = sourcePool[Math.floor(seededRandom() * sourcePool.length)];
+        
+        allReviewsData.push({
+            id: i,
+            name: names[i % names.length] + " " + String.fromCharCode(65 + (i % 26)) + ".",
+            rating: rating,
+            title: content.t,
+            text: content.d,
+            date: Math.floor(seededRandom() * 28) + " days ago",
+            category: category,
+            avatarColor: `hsl(${seededRandom() * 360}, 70%, 40%)`
+        });
+    }
+
+    // 4. INFINITE SCROLL & FILTER LOGIC
+    let activeDataset = [];
+    let loadedCount = 0;
+    const BATCH_SIZE = 9;
+    const grid = document.getElementById('reviewsGrid');
+    const statusText = document.getElementById('statusText');
+    const loader = document.getElementById('loader');
+    let scrollTriggerInstance;
+
+    window.filterReviews = function(type) {
+        // Toggle Buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.innerText.toLowerCase().includes(type) || (type === 'all' && btn.innerText.includes('All'))) {
+                btn.classList.add('active');
+            }
+        });
+
+        // Filter Data
+        activeDataset = (type === 'all') ? allReviewsData : allReviewsData.filter(r => r.category === type);
+        
+        // Reset Grid
+        grid.innerHTML = '';
+        loadedCount = 0;
+        statusText.classList.add('hidden');
+        loader.classList.remove('hidden');
+
+        loadNextBatch();
+        setupScrollTrigger();
+    };
+
+    function loadNextBatch() {
+        if (loadedCount >= activeDataset.length) {
+            statusText.classList.remove('hidden');
+            loader.classList.add('hidden');
+            if(scrollTriggerInstance) scrollTriggerInstance.kill();
+            return;
+        }
+
+        const nextBatch = activeDataset.slice(loadedCount, loadedCount + BATCH_SIZE);
+        const newCards = [];
+
+        nextBatch.forEach(r => {
+            const starStr = '★'.repeat(Math.floor(r.rating)) + (r.rating % 1 !== 0 ? '½' : '') + '☆'.repeat(5 - Math.ceil(r.rating));
+            
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="avatar-ring" style="background:${r.avatarColor}; color:white;">
+                            ${r.name.substring(0,2)}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900">${r.name}</h4>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">${r.date}</p>
+                        </div>
+                    </div>
+                    <div class="rating-stars text-xs font-black stars-${r.category}">${starStr}</div>
+                </div>
+                <h5 class="font-extrabold text-slate-800 mb-2">${r.title}</h5>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6">"${r.text}"</p>
+                <div class="flex items-center text-[10px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-md w-fit">
+                    <i data-lucide="check-check" class="w-3 h-3 mr-1"></i> VERIFIED USER
+                </div>
+            `;
+            grid.appendChild(card);
+            newCards.push(card);
+        });
+
+        loadedCount += nextBatch.length;
+        lucide.createIcons();
+
+        // Staggered GSAP Entrance
+        gsap.fromTo(newCards, 
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+        );
+
+        ScrollTrigger.refresh();
+    }
+
+    function setupScrollTrigger() {
+        if(scrollTriggerInstance) scrollTriggerInstance.kill();
+        scrollTriggerInstance = ScrollTrigger.create({
+            trigger: "#sentinel",
+            start: "top bottom",
+            onEnter: () => setTimeout(loadNextBatch, 300)
+        });
+    }
+
+    // Initialize
+    filterReviews('all');
+});
+    </script>
+</body>
+</html>

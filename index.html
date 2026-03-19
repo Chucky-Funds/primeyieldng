@@ -463,11 +463,24 @@
                 <div class="lg:w-1/2 relative z-10" data-aos="fade-left">
                     <form class="space-y-4">
                         <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors">
-                            <input type="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors">
+                            <input type="text" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors" required>
+                            <input type="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors" required>
                         </div>
-                        <input type="text" placeholder="Subject" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors">
-                        <textarea rows="4" placeholder="Your Message" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors"></textarea>
+                        <div class="relative">
+                            <select required id="contactSubject" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors appearance-none cursor-pointer">
+                                <option value="" disabled selected class="bg-slate-900">Select Subject</option>
+                                <option value="Account Issues" class="bg-slate-900">Account Issues</option>
+                                <option value="Deposit Verification" class="bg-slate-900">Deposit Verification</option>
+                                <option value="Withdrawal Status" class="bg-slate-900">Withdrawal Status</option>
+                                <option value="Technical Support" class="bg-slate-900">Technical Support</option>
+                                <option value="General Inquiry" class="bg-slate-900">General Inquiry</option>
+                            </select>
+                            <!-- Custom dropdown arrow for professional look -->
+                            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-500">
+                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <textarea rows="4" placeholder="Your Message" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors" required></textarea>
                         <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold uppercase tracking-widest text-slate-900">Send Message</button>
                     </form>
                 </div>
@@ -581,6 +594,45 @@
                 }
             });
         });
+        // CONTACT FORM LOGIC
+const contactForm = document.querySelector('#contact form');
+const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+contactForm.addEventListener('submit', function(e) {
+    // 1. Prevent the page from refreshing
+    e.preventDefault();
+
+    // 2. Change button to "Processing..." and disable it
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = `
+        <span class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Processing...
+        </span>
+    `;
+    submitBtn.style.opacity = "0.7";
+    submitBtn.style.pointerEvents = "none";
+
+    // 3. Wait for 3 seconds
+    setTimeout(() => {
+        // 4. Show success alert
+        alert("Success! Your message has been sent to the Fidelity Wealth support team.");
+
+        // 5. Reset the form
+        contactForm.reset();
+
+        // 6. Restore the button
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.opacity = "1";
+        submitBtn.style.pointerEvents = "auto";
+        
+        // Refresh icons in case any were inside the button
+        lucide.createIcons();
+    }, 3000);
+});
     </script>
 </body>
 </html>
