@@ -108,22 +108,45 @@
 </aside>
 
     <!-- MOBILE BOTTOM NAV -->
-    <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-darkCard border-t border-slate-200 dark:border-slate-800 flex justify-around items-center py-3 z-50">
-        <button onclick="showTab('home')" class="nav-item-mobile flex flex-col items-center text-slate-400">
-            <i data-lucide="home" class="w-6 h-6"></i><span class="text-[10px] mt-1 font-bold">Home</span>
+    <!-- UPDATED 6-BUTTON MOBILE BOTTOM NAV -->
+    <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-darkCard border-t border-slate-200 dark:border-slate-800 flex justify-around items-center py-3 z-[60] px-1 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+        
+        <!-- HOME -->
+        <button onclick="showTab('home')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+            <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Home</span>
         </button>
-        <button onclick="showTab('investments')" class="nav-item-mobile flex flex-col items-center text-slate-400">
-            <i data-lucide="pie-chart" class="w-6 h-6"></i><span class="text-[10px] mt-1 font-bold">Invest</span>
+
+        <!-- ROI / INVESTMENTS -->
+        <button onclick="showTab('investments')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+            <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">ROI</span>
         </button>
-        <button onclick="showTab('transactions')" class="nav-item-mobile flex flex-col items-center text-slate-400">
-            <i data-lucide="history" class="w-6 h-6"></i><span class="text-[10px] mt-1 font-bold">History</span>
+
+        <!-- CALCULATOR (NEW) -->
+        <button onclick="showTab('calculator')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+            <i data-lucide="calculator" class="w-5 h-5"></i>
+            <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Calc</span>
         </button>
-        <button onclick="showTab('withdraw')" class="nav-item-mobile flex flex-col items-center text-slate-400">
-            <i data-lucide="arrow-down-circle" class="w-6 h-6"></i><span class="text-[10px] mt-1 font-bold">Withdraw</span>
+
+        <!-- HISTORY / TRANSACTIONS -->
+        <button onclick="showTab('transactions')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+            <i data-lucide="history" class="w-5 h-5"></i>
+            <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Hist</span>
         </button>
-        <button onclick="showTab('profile')" class="nav-item-mobile flex flex-col items-center text-slate-400">
-            <i data-lucide="user" class="w-6 h-6"></i><span class="text-[10px] mt-1 font-bold">Profile</span>
+
+        <!-- WITHDRAW / PAYOUT -->
+        <button onclick="showTab('withdraw')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+            <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">With</span>
         </button>
+
+        <!-- PROFILE / ACCOUNT -->
+        <button onclick="showTab('profile')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">User</span>
+        </button>
+
     </nav>
 
     <!-- MAIN CONTENT AREA -->
