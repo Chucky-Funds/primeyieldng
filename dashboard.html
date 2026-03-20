@@ -153,19 +153,40 @@
     <main class="p-4 md:p-8 max-w-7xl mx-auto">
         
         <!-- HEADER -->
-        <header class="flex justify-between items-center mb-8">
-            <div>
-                <h1 class="text-xl md:text-2xl font-black">Dashboard</h1>
-                <p class="text-sm text-slate-500" id="welcome-msg">Welcome, User</p>
+        <!-- UPDATED PREMIUM HEADER -->
+        <header class="flex justify-between items-center mb-10">
+            <!-- Left: Greeting -->
+            <div class="animate-entrance">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Account Dashboard</p>
+                <h1 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white" id="welcome-msg">John Doe</h1>
             </div>
-            <div class="flex items-center space-x-3">
-                <button class="relative p-2 bg-white dark:bg-darkCard rounded-full border border-slate-200 dark:border-slate-800">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-darkBg"></span>
+
+            <!-- Right: Actions & Profile -->
+            <div class="flex items-center space-x-3 md:space-x-4">
+                
+                <!-- Theme Toggle (Mobile Only) -->
+                <button class="lg:hidden p-2.5 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700" onclick="toggleTheme()">
+                    <i data-lucide="sun" class="w-5 h-5 text-primary"></i>
                 </button>
-                <div class="lg:hidden p-1 bg-primary rounded-lg" onclick="toggleTheme()">
-                    <i data-lucide="sun" class="text-slate-900 w-5 h-5"></i>
+
+                <!-- Notification Bell -->
+                <button class="relative p-2.5 bg-white dark:bg-darkCard rounded-2xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm">
+                    <i data-lucide="bell" class="w-5 h-5 text-slate-500"></i>
+                    <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-darkCard animate-pulse"></span>
+                </button>
+
+                <!-- Profile Picture -->
+                <div class="relative cursor-pointer group" onclick="showTab('profile')">
+                    <div class="w-12 h-12 rounded-full border-2 border-primary p-0.5 transition-transform group-hover:scale-105 shadow-lg shadow-primary/20">
+                        <!-- You can replace this URL with a user's uploaded image later -->
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
+                             alt="User Profile" 
+                             class="w-full h-full rounded-full object-cover bg-slate-200">
+                    </div>
+                    <!-- Online Status Dot -->
+                    <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-darkBg rounded-full"></span>
                 </div>
+
             </div>
         </header>
 
@@ -551,11 +572,13 @@
     <script>
         // --- 1. CORE STATE ---
         let state = JSON.parse(localStorage.getItem('fw_state')) || {
-            user: { name: "Investor", email: "fidelity.user@example.com", balance: 0 },
-            investments: [],
-            transactions: [],
-            settings: { darkMode: true }
-        };
+    user: { 
+        name: "John Doe", // Update this here
+        email: "john.doe@fidelity.com", 
+        balance: 0 
+    },
+    // ... rest of state
+};
 
         function save() {
             localStorage.setItem('fw_state', JSON.stringify(state));
