@@ -562,39 +562,48 @@
     </div>
 </div>
         <!-- CALCULATOR TAB -->
-        <div id="tab-calculator" class="tab-content hidden">
-            <div class="max-w-2xl mx-auto">
-                <h3 class="text-2xl font-black mb-6">Profit Calculator</h3>
-                <div class="bg-white dark:bg-darkCard p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl">
-                    <p class="text-slate-500 mb-8 text-sm text-center font-medium uppercase tracking-widest">Project your earnings over 20 days</p>
-                    
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-500 uppercase ml-2">Investment Amount (₦)</label>
-                            <input type="number" id="calc-input" oninput="runCalculator()" value="10000" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-5 rounded-[1.5rem] text-2xl font-black outline-none focus:border-primary transition-all">
-                        </div>
+        <!-- UPDATED CALCULATOR TAB -->
+<div id="tab-calculator" class="tab-content hidden">
+    <div class="max-w-2xl mx-auto">
+        <h3 class="text-2xl font-black mb-6">Profit Calculator</h3>
+        <div class="bg-white dark:bg-darkCard p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl">
+            <p class="text-slate-500 mb-8 text-sm text-center font-medium uppercase tracking-widest">Project your earnings over 20 days</p>
+            
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-500 uppercase ml-2">Investment Amount (₦)</label>
+                    <!-- Input strictly for numbers, prevents 'e', '+', '-' -->
+                    <input type="number" 
+                           id="calc-input" 
+                           oninput="runCalculator()" 
+                           onkeydown="if(['e', 'E', '+', '-'].includes(event.key)) event.preventDefault();"
+                           value="10000" 
+                           min="0"
+                           class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-5 rounded-[1.5rem] text-2xl font-black outline-none focus:border-primary transition-all">
+                </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="p-6 rounded-[1.5rem] bg-primary/10 border border-primary/20">
-                                <p class="text-[10px] font-bold text-primary uppercase">Daily ROI (10%)</p>
-                                <p class="text-xl font-black">₦<span id="calc-daily">1,000</span></p>
-                            </div>
-                            <div class="p-6 rounded-[1.5rem] bg-green-500/10 border border-green-500/20 text-green-500">
-                                <p class="text-[10px] font-bold uppercase">Total Return (200%)</p>
-                                <p class="text-xl font-black">₦<span id="calc-total">20,000</span></p>
-                            </div>
-                            <div class="p-6 rounded-[1.5rem] bg-blue-500/10 border border-blue-500/20 text-blue-500">
-                                <p class="text-[10px] font-bold uppercase">Duration</p>
-                                <p class="text-xl font-black">20 Days</p>
-                            </div>
-                        </div>
-
-                        <button onclick="showTab('home'); triggerDeposit();" class="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-black py-4 rounded-2xl uppercase tracking-widest text-sm shadow-xl">
-                            Start This Investment
-                        </button>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-6 rounded-[1.5rem] bg-primary/10 border border-primary/20">
+                        <p class="text-[10px] font-bold text-primary uppercase">Daily ROI (10%)</p>
+                        <p class="text-xl font-black text-slate-900 dark:text-white">₦<span id="calc-daily">1,000</span></p>
+                    </div>
+                    <div class="p-6 rounded-[1.5rem] bg-green-500/10 border border-green-500/20 text-green-500">
+                        <p class="text-[10px] font-bold uppercase">Total Return (200%)</p>
+                        <p class="text-xl font-black">₦<span id="calc-total">20,000</span></p>
+                    </div>
+                    <div class="p-6 rounded-[1.5rem] bg-blue-500/10 border border-blue-500/20 text-blue-500">
+                        <p class="text-[10px] font-bold uppercase">Duration</p>
+                        <p class="text-xl font-black">20 Days</p>
                     </div>
                 </div>
+
+                <button onclick="showTab('home'); triggerDeposit();" class="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-black py-4 rounded-2xl uppercase tracking-widest text-sm shadow-xl transition-transform active:scale-95">
+                    Start This Investment
+                </button>
             </div>
+        </div>
+    </div>
+</div>
         </div>
 
         <!-- SUPPORT TAB -->
@@ -1048,6 +1057,30 @@ startPayoutTimer();
             alert("Ticket Submitted! We will respond to " + state.user.email + " shortly.");
             e.target.reset();
         }
+        function runCalculator() {
+    const input = document.getElementById('calc-input');
+    const dailyDisplay = document.getElementById('calc-daily');
+    const totalDisplay = document.getElementById('calc-total');
+
+    // Get value and ensure it's a number
+    let amount = parseFloat(input.value);
+
+    // If input is cleared or not a number, set to 0
+    if (isNaN(amount) || amount < 0) {
+        dailyDisplay.innerText = "0";
+        totalDisplay.innerText = "0";
+        return;
+    }
+
+    // 10% Daily ROI
+    const dailyProfit = amount * 0.10;
+    // 200% Total Return
+    const totalReturn = amount * 2;
+
+    // Update the UI with formatted numbers
+    dailyDisplay.innerText = dailyProfit.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    totalDisplay.innerText = totalReturn.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
     </script>
 </body>
 </html>
