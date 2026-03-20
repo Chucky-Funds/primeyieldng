@@ -170,61 +170,140 @@
         </header>
 
         <!-- TABS CONTAINER -->
-        <div id="tab-home" class="tab-content">
-            <!-- BALANCE CARD -->
-            <div class="relative overflow-hidden bg-primary p-8 rounded-[2.5rem] text-slate-900 mb-8 shadow-2xl shadow-primary/20">
-                <div class="absolute top-0 right-0 p-12 opacity-10">
-                    <i data-lucide="wallet" class="w-32 h-32"></i>
-                </div>
-                <p class="text-sm font-bold uppercase tracking-widest opacity-70">Total Available Balance</p>
-                <h2 class="text-4xl md:text-5xl font-black my-2">₦<span id="display-balance">0.00</span></h2>
-                <div class="flex space-x-3 mt-6">
-                    <button onclick="triggerDeposit()" class="bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold flex items-center shadow-lg">
-                        <i data-lucide="plus-circle" class="mr-2 w-5 h-5"></i> Deposit
-                    </button>
-                    <button onclick="showTab('withdraw')" class="bg-white/20 backdrop-blur-md px-6 py-3 rounded-2xl font-bold flex items-center border border-white/30">
-                        <i data-lucide="arrow-up-right" class="mr-2 w-5 h-5"></i> Withdraw
-                    </button>
-                </div>
-            </div>
+        <!-- UPDATED MAIN DASHBOARD (HOME) -->
+<div id="tab-home" class="tab-content">
+    
+    <!-- TOP ROW: SYSTEM STATUS & WELCOME -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+            <h2 class="text-2xl font-black">Account Overview</h2>
+            <p class="text-sm text-slate-500">Real-time capital growth tracking</p>
+        </div>
+        <!-- SYSTEM LIVE BADGE (Trust Builder) -->
+        <div class="flex items-center space-x-2 bg-green-500/10 border border-green-500/20 px-4 py-2 rounded-2xl">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span class="text-[10px] font-black text-green-600 uppercase tracking-widest">System Online & Paying</span>
+        </div>
+    </div>
 
-            <!-- STATS GRID -->
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="bg-white dark:bg-darkCard p-5 rounded-3xl border border-slate-100 dark:border-slate-800">
-                    <p class="text-xs text-slate-500 font-bold uppercase">Deposited</p>
-                    <p class="text-lg font-black mt-1">₦<span id="stat-deposited">0</span></p>
-                </div>
-                <div class="bg-white dark:bg-darkCard p-5 rounded-3xl border border-slate-100 dark:border-slate-800">
-                    <p class="text-xs text-slate-500 font-bold uppercase">Earned</p>
-                    <p class="text-lg font-black mt-1 text-green-500">₦<span id="stat-earned">0</span></p>
-                </div>
-                <div class="bg-white dark:bg-darkCard p-5 rounded-3xl border border-slate-100 dark:border-slate-800">
-                    <p class="text-xs text-slate-500 font-bold uppercase">Active</p>
-                    <p class="text-lg font-black mt-1" id="stat-active">0</p>
-                </div>
-                <div class="bg-white dark:bg-darkCard p-5 rounded-3xl border border-slate-100 dark:border-slate-800">
-                    <p class="text-xs text-slate-500 font-bold uppercase">Growth</p>
-                    <p class="text-lg font-black mt-1 text-primary">+10% <span class="text-[10px] font-normal">Daily</span></p>
-                </div>
-            </div>
-
-            <!-- CHART & RECENT -->
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 bg-white dark:bg-darkCard p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
-                    <h3 class="font-bold mb-4">Earnings Overview</h3>
-                    <canvas id="earningsChart" height="200"></canvas>
-                </div>
-                <div class="bg-white dark:bg-darkCard p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="font-bold">Recent</h3>
-                        <button onclick="showTab('transactions')" class="text-xs font-bold text-primary">View All</button>
-                    </div>
-                    <div id="recent-list" class="space-y-4">
-                        <!-- Items injected by JS -->
-                    </div>
-                </div>
+    <!-- BALANCE CARD (FIXED WITHDRAW BUTTON) -->
+    <div class="relative overflow-hidden bg-slate-900 dark:bg-darkCard p-8 rounded-[2.5rem] text-white mb-8 shadow-2xl">
+        <!-- Abstract background pattern -->
+        <div class="absolute top-0 right-0 p-8 opacity-10 rotate-12">
+            <i data-lucide="shield-check" class="w-48 h-48 text-primary"></i>
+        </div>
+        
+        <div class="relative z-10">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">Total Available Balance</p>
+            <h2 class="text-4xl md:text-5xl font-black mb-8 flex items-baseline">
+                <span class="text-primary mr-2 text-2xl">₦</span>
+                <span id="display-balance">0.00</span>
+            </h2>
+            
+            <div class="flex flex-wrap gap-3">
+                <button onclick="triggerDeposit()" class="bg-primary hover:bg-yellow-500 text-slate-900 px-8 py-4 rounded-2xl font-black flex items-center transition-all active:scale-95 shadow-lg shadow-primary/20 uppercase text-xs tracking-widest">
+                    <i data-lucide="plus-circle" class="mr-2 w-4 h-4"></i> Deposit
+                </button>
+                <!-- FIXED WITHDRAW BUTTON (No color break on click) -->
+                <button onclick="showTab('withdraw')" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-2xl font-black flex items-center transition-all active:scale-95 uppercase text-xs tracking-widest">
+                    <i data-lucide="arrow-down-to-line" class="mr-2 w-4 h-4"></i> Withdraw
+                </button>
             </div>
         </div>
+    </div>
+
+    <!-- QUICK STATS (ROI Focused) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white dark:bg-darkCard p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+                <div class="p-2 bg-blue-500/10 rounded-lg text-blue-500"><i data-lucide="trending-up" class="w-4 h-4"></i></div>
+                <span class="text-[10px] font-black text-slate-400 uppercase">Capital</span>
+            </div>
+            <p class="text-xl font-black">₦<span id="stat-deposited">0</span></p>
+        </div>
+        <div class="bg-white dark:bg-darkCard p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+                <div class="p-2 bg-green-500/10 rounded-lg text-green-500"><i data-lucide="zap" class="w-4 h-4"></i></div>
+                <span class="text-[10px] font-black text-slate-400 uppercase">Total Profit</span>
+            </div>
+            <p class="text-xl font-black text-green-500">₦<span id="stat-earned">0</span></p>
+        </div>
+        <div class="bg-white dark:bg-darkCard p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+                <div class="p-2 bg-primary/10 rounded-lg text-primary"><i data-lucide="clock" class="w-4 h-4"></i></div>
+                <span class="text-[10px] font-black text-slate-400 uppercase">Next ROI In</span>
+            </div>
+            <p class="text-xl font-black" id="payout-timer">23:59:59</p>
+        </div>
+        <div class="bg-white dark:bg-darkCard p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+            <div class="flex items-center space-x-3 mb-3">
+                <div class="p-2 bg-purple-500/10 rounded-lg text-purple-500"><i data-lucide="users" class="w-4 h-4"></i></div>
+                <span class="text-[10px] font-black text-slate-400 uppercase">Ref. Bonus</span>
+            </div>
+            <p class="text-xl font-black">₦0.00</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT GRID -->
+    <div class="grid lg:grid-cols-3 gap-8">
+        
+        <!-- LEFT: ACTIVE PLANS & CHART -->
+        <div class="lg:col-span-2 space-y-8">
+            
+            <!-- CURRENT PROGRESS TRACKER (Relevant Content) -->
+            <div class="bg-white dark:bg-darkCard p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-black text-lg">Active Plan Progress</h3>
+                    <button onclick="showTab('investments')" class="text-xs font-bold text-primary">View Portfolio</button>
+                </div>
+                <div id="home-active-plans" class="space-y-6">
+                    <!-- Sample Progress if empty -->
+                    <div class="text-center py-6 text-slate-400">
+                        <i data-lucide="package-search" class="w-10 h-10 mx-auto mb-2 opacity-20"></i>
+                        <p class="text-xs font-bold uppercase tracking-widest">No Active Investment</p>
+                        <button onclick="triggerDeposit()" class="text-primary text-[10px] font-black underline mt-2">Start Earning 10% Daily Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EARNINGS CHART -->
+            <div class="bg-white dark:bg-darkCard p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800">
+                <h3 class="font-black text-lg mb-6">Performance Index</h3>
+                <canvas id="earningsChart" height="150"></canvas>
+            </div>
+        </div>
+
+        <!-- RIGHT: RECENT ACTIVITY & TIPS -->
+        <div class="space-y-8">
+            
+            <!-- RECENT TRANSACTIONS -->
+            <div class="bg-white dark:bg-darkCard p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-black text-lg">Activity</h3>
+                    <i data-lucide="refresh-cw" class="w-4 h-4 text-slate-400"></i>
+                </div>
+                <div id="recent-list" class="space-y-4">
+                    <!-- Items injected by JS -->
+                </div>
+            </div>
+
+            <!-- SECURITY TIP (Reasonable Content) -->
+            <div class="bg-primary/10 border border-primary/20 p-6 rounded-[2rem]">
+                <div class="flex items-center space-x-2 text-primary mb-2">
+                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                    <span class="text-[10px] font-black uppercase">Safety Tip</span>
+                </div>
+                <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Withdrawals are processed every 1-3 hours. Never share your <b>Withdrawal Password</b> with anyone claiming to be a Fidelity Wealth agent.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
 
         <!-- INVESTMENTS TAB -->
         <div id="tab-investments" class="tab-content hidden">
@@ -676,23 +755,27 @@
 
         // --- 5. UI UTILITIES ---
         function showTab(tabId) {
-    // 1. Hide all contents
+    // 1. Hide all tab contents
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     
-    // 2. Show selected content
-    const activeTab = document.getElementById('tab-' + tabId);
-    if(activeTab) activeTab.classList.remove('hidden');
+    // 2. Show the specific tab clicked
+    const target = document.getElementById('tab-' + tabId);
+    if(target) target.classList.remove('hidden');
 
-    // 3. Remove active styles from ALL nav items (Desktop & Mobile)
+    // 3. Update the visual 'Active' state ONLY for Nav items
+    // (This prevents Deposit/Withdraw buttons from getting "stuck" in a highlighted color)
     document.querySelectorAll('.nav-item, .nav-item-mobile').forEach(btn => {
         btn.classList.remove('active-tab');
     });
 
-    // 4. Add active style to the clicked item(s)
-    // We select by the function call to find all buttons that trigger this tab
-    document.querySelectorAll(`[onclick="showTab('${tabId}')"]`).forEach(btn => {
-        btn.classList.add('active-tab');
+    // 4. Highlight all Sidebar/Mobile Nav buttons that point to this tab
+    document.querySelectorAll('.nav-item, .nav-item-mobile').forEach(btn => {
+        if(btn.getAttribute('onclick') === `showTab('${tabId}')`) {
+            btn.classList.add('active-tab');
+        }
     });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
         function toggleTheme() {
@@ -729,6 +812,21 @@
                     scales: { y: { display: false }, x: { grid: { display: false } } }
                 }
             });
+            function startPayoutTimer() {
+    setInterval(() => {
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setHours(24, 0, 0, 0);
+        
+        const diff = tomorrow - now;
+        const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
+        const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+        const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+        
+        document.getElementById('payout-timer').innerText = `${h}:${m}:${s}`;
+    }, 1000);
+}
+startPayoutTimer();
         };
         // --- 1. PROFILE UPDATE & RENDERING ---
         function updateProfile(e) {
