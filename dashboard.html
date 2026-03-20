@@ -37,40 +37,75 @@
 
     <!-- DESKTOP SIDEBAR -->
 <!-- UPDATED DESKTOP SIDEBAR -->
-    <aside class="hidden lg:flex flex-col fixed left-0 top-0 h-screen w-64 bg-white dark:bg-darkCard border-r border-slate-200 dark:border-slate-800 z-50">
-        <div class="p-6 flex items-center space-x-3">
-            <div class="bg-primary p-2 rounded-lg"><i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i></div>
-            <span class="font-black text-xl tracking-tighter uppercase">Fidelity <span class="text-primary">Wealth</span></span>
+    <!-- PROFESSIONALLY SPACED SIDEBAR -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-screen w-64 bg-white dark:bg-darkCard border-r border-slate-200 dark:border-slate-800 z-50">
+    
+    <!-- 1. BRANDING (Top) -->
+    <div class="p-8 flex items-center space-x-3">
+        <div class="bg-primary p-2 rounded-xl shadow-lg shadow-primary/20">
+            <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
         </div>
-        
-        <nav class="flex-1 px-4 mt-4 space-y-1 overflow-y-auto hide-scrollbar">
-            <button onclick="showTab('home')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold transition-all text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <i data-lucide="layout-dashboard"></i> <span>Home</span>
-            </button>
-            <button onclick="showTab('investments')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold transition-all text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <i data-lucide="trending-up"></i> <span>Investments</span>
-            </button>
-            <button onclick="showTab('calculator')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold transition-all text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <i data-lucide="calculator"></i> <span>Calculator</span>
-            </button>
-            <button onclick="showTab('transactions')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold transition-all text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <i data-lucide="list-ordered"></i> <span>Transactions</span>
-            </button>
-            <button onclick="showTab('withdraw')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold transition-all text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <i data-lucide="wallet"></i> <span>Withdraw</span>
-            </button>
-            <button onclick="showTab('profile')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold transition-all text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-    <i data-lucide="user"></i> <span>Profile</span>
-</button>
-        </nav>
+        <span class="font-black text-xl tracking-tighter uppercase">Fidelity <span class="text-primary">Wealth</span></span>
+    </div>
 
-        <div class="p-6 border-t border-slate-200 dark:border-slate-800">
+    <!-- 2. NAVIGATION (Middle - Takes all available space) -->
+    <div class="flex-1 px-4 py-4 overflow-y-auto hide-scrollbar flex flex-col justify-between">
+        
+        <div class="space-y-8">
+            <!-- SECTION: OVERVIEW -->
+            <div class="space-y-2">
+                <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Main Menu</p>
+                <button onclick="showTab('home')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> <span>Dashboard</span>
+                </button>
+                <button onclick="showTab('investments')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i> <span>Investments</span>
+                </button>
+                <button onclick="showTab('calculator')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="calculator" class="w-5 h-5"></i> <span>Calculator</span>
+                </button>
+            </div>
+
+            <!-- SECTION: FINANCIALS -->
+            <div class="space-y-2">
+                <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Financials</p>
+                <button onclick="showTab('transactions')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="history" class="w-5 h-5"></i> <span>History</span>
+                </button>
+                <button onclick="showTab('withdraw')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="wallet" class="w-5 h-5"></i> <span>Withdraw</span>
+                </button>
+            </div>
+
+            <!-- SECTION: USER -->
+            <div class="space-y-2">
+                <p class="px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Account</p>
+                <button onclick="showTab('profile')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="user" class="w-5 h-5"></i> <span>Profile & Help</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- SPECIAL PROMO CARD (Inside Sidebar) -->
+        <div class="mt-8 px-2">
+            <div class="bg-slate-900 dark:bg-slate-800 p-5 rounded-3xl border border-slate-700">
+                <p class="text-[10px] font-bold text-primary uppercase mb-2">Invite Benefit</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">Earn 5% on every friend's first deposit instantly.</p>
+                <button onclick="showTab('profile')" class="w-full bg-primary text-slate-900 py-2 rounded-xl text-[10px] font-black uppercase">Get Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. FOOTER (Bottom) -->
+    <div class="p-6 border-t border-slate-100 dark:border-slate-800">
+        <div class="flex items-center justify-between mb-4 px-2">
             <button onclick="toggleTheme()" class="w-full flex items-center justify-between p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
                 <span class="text-sm font-medium">Theme</span>
                 <i data-lucide="moon" id="theme-icon"></i>
             </button>
         </div>
-    </aside>
+    </div>
+</aside>
 
     <!-- MOBILE BOTTOM NAV -->
     <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white dark:bg-darkCard border-t border-slate-200 dark:border-slate-800 flex justify-around items-center py-3 z-50">
@@ -618,15 +653,24 @@
 
         // --- 5. UI UTILITIES ---
         function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            
-            // Nav Highlighting
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active-tab'));
-            document.querySelectorAll('.nav-item-mobile').forEach(i => i.classList.remove('active-tab'));
-            // This is a simple way to highlight based on text matching
-            document.querySelectorAll(`[onclick="showTab('${tabId}')"]`).forEach(el => el.classList.add('active-tab'));
-        }
+    // 1. Hide all contents
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+    
+    // 2. Show selected content
+    const activeTab = document.getElementById('tab-' + tabId);
+    if(activeTab) activeTab.classList.remove('hidden');
+
+    // 3. Remove active styles from ALL nav items (Desktop & Mobile)
+    document.querySelectorAll('.nav-item, .nav-item-mobile').forEach(btn => {
+        btn.classList.remove('active-tab');
+    });
+
+    // 4. Add active style to the clicked item(s)
+    // We select by the function call to find all buttons that trigger this tab
+    document.querySelectorAll(`[onclick="showTab('${tabId}')"]`).forEach(btn => {
+        btn.classList.add('active-tab');
+    });
+}
 
         function toggleTheme() {
             state.settings.darkMode = !state.settings.darkMode;
