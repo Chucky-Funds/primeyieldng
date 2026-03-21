@@ -968,6 +968,50 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 
     lucide.createIcons();
     updateChart();
+
+    // 8. Full Transaction History Table (History Tab)
+    const historyTableBody = document.getElementById('transactions-table-body');
+    if (historyTableBody) {
+        if (state.transactions.length === 0) {
+            historyTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-10 text-center text-slate-400 text-xs uppercase font-bold tracking-widest">No transaction history found</td></tr>`;
+        } else {
+            historyTableBody.innerHTML = state.transactions.map(t => {
+                // Determine color and sign based on type
+                const isNegative = t.type === 'Withdraw';
+                const amtColor = isNegative ? 'text-red-500' : 'text-green-500';
+                const sign = isNegative ? '-' : '+';
+                
+                // Status Badge logic
+                let statusStyle = "";
+                if (t.status === 'Success') statusStyle = "bg-green-500/10 text-green-500";
+                else if (t.status === 'Pending') statusStyle = "bg-yellow-500/10 text-yellow-500";
+                else statusStyle = "bg-red-500/10 text-red-500";
+
+                return `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 rounded-lg ${isNegative ? 'bg-red-500/10 text-red-500' : 'bg-primary/10 text-primary'}">
+                                <i data-lucide="${t.type === 'Withdraw' ? 'arrow-up-right' : t.type === 'Deposit' ? 'arrow-down-left' : 'zap'}" class="w-4 h-4"></i>
+                            </div>
+                            <span class="text-sm font-bold text-slate-700 dark:text-slate-200">${t.type}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 font-black ${amtColor} text-sm">
+                        ${sign}₦${t.amount.toLocaleString()}
+                    </td>
+                    <td class="px-6 py-4 text-xs text-slate-500 font-medium">
+                        ${t.date}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${statusStyle}">
+                            ${t.status}
+                        </span>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+    }
 }
 
     // --- 4. CHART ENGINE ---
