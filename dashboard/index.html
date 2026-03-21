@@ -188,40 +188,46 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
         <!-- HEADER -->
         <!-- UPDATED PREMIUM HEADER -->
         <header class="flex justify-between items-center mb-10">
-            <!-- Left: Greeting -->
-            <div class="animate-entrance">
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Account Dashboard</p>
-                <h1 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white" id="welcome-msg">John Doe</h1>
-            </div>
+    <div class="animate-entrance">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Account Dashboard</p>
+        <h1 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white" id="welcome-msg">John Doe</h1>
+    </div>
 
-            <!-- Right: Actions & Profile -->
-            <div class="flex items-center space-x-3 md:space-x-4">
-                
-                <!-- Theme Toggle (Mobile Only) -->
-                <button class="lg:hidden p-2.5 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700" onclick="toggleTheme()">
-                    <i data-lucide="sun" class="w-5 h-5 text-primary"></i>
-                </button>
+    <div class="flex items-center space-x-3 md:space-x-4">
+        <button class="lg:hidden p-2.5 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700" onclick="toggleTheme()">
+            <i data-lucide="sun" class="w-5 h-5 text-primary"></i>
+        </button>
 
-                <!-- Notification Bell -->
-                <button class="relative p-2.5 bg-white dark:bg-darkCard rounded-2xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm">
-                    <i data-lucide="bell" class="w-5 h-5 text-slate-500"></i>
-                    <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-darkCard animate-pulse"></span>
-                </button>
+        <!-- NOTIFICATION SYSTEM -->
+        <div class="relative">
+            <button onclick="toggleNotifications()" class="relative p-2.5 bg-white dark:bg-darkCard rounded-2xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm">
+                <i data-lucide="bell" class="w-5 h-5 text-slate-500"></i>
+                <!-- Red dot only shows if there are unread notifications -->
+                <span id="notif-dot" class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-darkCard animate-pulse hidden"></span>
+            </button>
 
-                <!-- Profile Picture -->
-                <div class="relative cursor-pointer group" onclick="showTab('profile')">
-                    <div class="w-12 h-12 rounded-full border-2 border-primary p-0.5 transition-transform group-hover:scale-105 shadow-lg shadow-primary/20" >
-                        <!-- You can replace this URL with a user's uploaded image later -->
-                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
-                             alt="User Profile" 
-                             class="w-full h-full rounded-full object-cover bg-slate-200">
-                    </div>
-                    <!-- Online Status Dot -->
-                    <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-darkBg rounded-full"></span>
+            <!-- Notification Dropdown -->
+            <div id="notif-dropdown" class="hidden absolute right-0 mt-3 w-80 bg-white dark:bg-darkCard rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 z-[100] overflow-hidden">
+                <div class="p-5 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
+                    <h4 class="font-black text-xs uppercase tracking-widest">Notifications</h4>
+                    <button onclick="clearNotifications()" class="text-[9px] font-bold text-primary uppercase">Clear All</button>
                 </div>
-
+                <div id="notif-list" class="max-h-96 overflow-y-auto hide-scrollbar">
+                    <!-- Notifications Injected Here -->
+                </div>
             </div>
-        </header>
+        </div>
+
+        <div class="relative cursor-pointer group" onclick="showTab('profile')">
+            <div class="w-12 h-12 rounded-full border-2 border-primary p-0.5 transition-transform group-hover:scale-105 shadow-lg shadow-primary/20">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
+                     alt="User Profile" 
+                     class="w-full h-full rounded-full object-cover bg-slate-200">
+            </div>
+            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-darkBg rounded-full"></span>
+        </div>
+    </div>
+</header>
 
         <!-- TABS CONTAINER -->
         <!-- UPDATED MAIN DASHBOARD (HOME) -->
@@ -749,13 +755,15 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
             phone: accountData ? accountData.phone : "",
             age: accountData ? accountData.dob : "",
             balance: 0,
-            referralBalance: 0
+            referralBalance: 0 
         },
         investments: [],
         transactions: [],
+        notifications: [], 
         settings: { darkMode: true }
     };
 
+    // Force sync profile info from Master Account if it exists
     if (accountData) {
         state.user.name = accountData.fullName;
         state.user.email = accountData.email;
@@ -765,6 +773,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 
     function save() {
         localStorage.setItem('fw_state', JSON.stringify(state));
+        // Sync back to master account for login persistence
         const updatedMaster = {
             ...accountData,
             fullName: state.user.name,
@@ -791,7 +800,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                     const dailyAmount = inv.amount * 0.10;
                     const totalDue = dailyAmount * daysPassed;
                     
-                    const maxEarning = inv.amount * 2; // 200% Cap
+                    const maxEarning = inv.amount * 2; 
                     const remainingToCap = maxEarning - inv.earned;
 
                     if (remainingToCap > 0) {
@@ -799,7 +808,6 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                         inv.earned += actualEarning;
                         inv.lastUpdate = now;
                         
-                        // Add only the profit to the withdrawable balance
                         state.user.balance += actualEarning;
                         
                         state.transactions.unshift({
@@ -809,13 +817,15 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                             status: 'Success'
                         });
 
+                        // Notification triggered for this specific earning
+                        addNotification('Daily ROI Received', `Successfully received ₦${actualEarning.toLocaleString()} profit.`, 'profit');
+
                         if (inv.earned >= maxEarning) inv.status = 'Completed';
                         updated = true;
                     }
                 }
             }
         });
-
         if (updated) save();
     }
 
@@ -823,83 +833,76 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     let earningsChart; 
 
     function render() {
-    // Logic: Capital and Profit only count "Active" (non-matured) plans
-    const activePlans = state.investments.filter(i => i.status === 'Active');
-    const currentCapital = activePlans.reduce((sum, i) => sum + i.amount, 0);
-    const currentProfit = activePlans.reduce((sum, i) => sum + i.earned, 0);
+        // Logic: Capital and Profit only count "Active" (non-matured) plans
+        const activePlans = state.investments.filter(i => i.status === 'Active');
+        const currentCapital = activePlans.reduce((sum, i) => sum + i.amount, 0);
+        const currentProfit = activePlans.reduce((sum, i) => sum + i.earned, 0);
 
-    // 1. Display Totals
-    document.getElementById('display-balance').innerText = state.user.balance.toLocaleString('en-NG', { minimumFractionDigits: 2 });
-    document.getElementById('stat-deposited').innerText = currentCapital.toLocaleString();
-    document.getElementById('stat-earned').innerText = currentProfit.toLocaleString();
-    
-    // 2. Referral Bonus Display
-    const refBonusElement = document.querySelector('#tab-home .grid div:last-child p.text-xl');
-    if(refBonusElement) refBonusElement.innerText = "₦" + (state.user.referralBalance || 0).toLocaleString();
+        // 1. Display Totals
+        document.getElementById('display-balance').innerText = state.user.balance.toLocaleString('en-NG', { minimumFractionDigits: 2 });
+        document.getElementById('stat-deposited').innerText = currentCapital.toLocaleString();
+        document.getElementById('stat-earned').innerText = currentProfit.toLocaleString();
+        
+        // 2. Referral Bonus Display
+        const refBonusElement = document.querySelector('#tab-home .grid div:last-child p.text-xl');
+        if(refBonusElement) refBonusElement.innerText = "₦" + (state.user.referralBalance || 0).toLocaleString();
 
-    document.getElementById('welcome-msg').innerText = `Welcome back, ${state.user.name.split(' ')[0]}`;
-    
-    // 3. Profile Sync
-    document.getElementById('profile-name-header').innerText = state.user.name;
-    document.getElementById('profile-email-header').innerText = state.user.email;
-    document.getElementById('edit-name').value = state.user.name;
-    document.getElementById('edit-email').value = state.user.email;
-    document.getElementById('edit-phone').value = (state.user.phone || "").replace("+234", "");
-    document.getElementById('edit-age').value = state.user.age || "";
+        document.getElementById('welcome-msg').innerText = `Welcome back, ${state.user.name.split(' ')[0]}`;
+        
+        // 3. Profile Sync
+        document.getElementById('profile-name-header').innerText = state.user.name;
+        document.getElementById('profile-email-header').innerText = state.user.email;
+        document.getElementById('edit-name').value = state.user.name;
+        document.getElementById('edit-email').value = state.user.email;
+        document.getElementById('edit-phone').value = (state.user.phone || "").replace("+234", "");
+        document.getElementById('edit-age').value = state.user.age || "";
 
-    // 4. Activity List
-    const recentHtml = state.transactions.slice(0, 5).map(t => `
-        <div class="flex items-center justify-between p-1">
-            <div class="flex items-center space-x-3">
-                <div class="p-2 rounded-lg ${t.type === 'Withdraw' ? 'bg-red-500/10 text-red-500' : 'bg-green-500/10 text-green-500'}">
-                    <i data-lucide="${t.type === 'Withdraw' ? 'arrow-up-right' : 'trending-up'}" class="w-4 h-4"></i>
+        // 4. Activity List (Dashboard)
+        const recentHtml = state.transactions.slice(0, 5).map(t => `
+            <div class="flex items-center justify-between p-1">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 rounded-lg ${t.type === 'Withdraw' ? 'bg-red-500/10 text-red-500' : 'bg-green-500/10 text-green-500'}">
+                        <i data-lucide="${t.type === 'Withdraw' ? 'arrow-up-right' : 'trending-up'}" class="w-4 h-4"></i>
+                    </div>
+                    <div><p class="text-sm font-bold">${t.type}</p><p class="text-[10px] text-slate-500">${t.date}</p></div>
                 </div>
-                <div><p class="text-sm font-bold">${t.type}</p><p class="text-[10px] text-slate-500">${t.date}</p></div>
+                <p class="text-sm font-black ${t.type === 'Withdraw' ? 'text-red-500' : 'text-green-500'}">
+                    ${t.type === 'Withdraw' ? '-' : '+'}₦${t.amount.toLocaleString()}
+                </p>
             </div>
-            <p class="text-sm font-black ${t.type === 'Withdraw' ? 'text-red-500' : 'text-green-500'}">
-                ${t.type === 'Withdraw' ? '-' : '+'}₦${t.amount.toLocaleString()}
-            </p>
-        </div>
-    `).join('');
-    document.getElementById('recent-list').innerHTML = recentHtml || '<p class="text-xs text-slate-500 text-center py-4">No activity yet</p>';
+        `).join('');
+        document.getElementById('recent-list').innerHTML = recentHtml || '<p class="text-xs text-slate-500 text-center py-4">No activity yet</p>';
 
-    // 5. Active Plan Progress Tracker (Small Bars on Home Tab)
-    const homeProgressContainer = document.getElementById('home-active-plans');
-    if (activePlans.length === 0) {
-        homeProgressContainer.innerHTML = `<div class="text-center py-6 text-slate-400">No active portfolios</div>`;
-    } else {
-        homeProgressContainer.innerHTML = activePlans.map((inv, idx) => {
-            const progress = (inv.earned / (inv.amount * 2)) * 100;
-            return `
-            <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl mb-2 border border-slate-100 dark:border-slate-800">
-                <div class="flex justify-between mb-2">
-                    <span class="text-xs font-black">₦${inv.amount.toLocaleString()} Plan</span>
-                    <span class="text-[10px] text-primary font-bold">${Math.round(progress)}%</span>
-                </div>
-                <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-primary" style="width: ${progress}%"></div>
-                </div>
-            </div>`;
-        }).join('');
-    }
-
-    // 6. Dynamic Investment List (Big Detailed Cards in Investment Tab)
-    const portfolioContainer = document.getElementById('dynamic-portfolio-container');
-    if (portfolioContainer) {
-        if (state.investments.length === 0) {
-            portfolioContainer.innerHTML = `<div class="text-center py-20 opacity-50"><p>No investments made yet.</p></div>`;
+        // 5. Active Plan Progress (Dashboard Sidebar)
+        const homeProgressContainer = document.getElementById('home-active-plans');
+        if (activePlans.length === 0) {
+            homeProgressContainer.innerHTML = `<div class="text-center py-6 text-slate-400">No active portfolios</div>`;
         } else {
-            portfolioContainer.innerHTML = state.investments.map((inv, idx) => {
-                // MATH CALCULATIONS
+            homeProgressContainer.innerHTML = activePlans.map((inv, idx) => {
+                const progress = (inv.earned / (inv.amount * 2)) * 100;
+                return `
+                <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl mb-2 border border-slate-100 dark:border-slate-800">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-xs font-black">₦${inv.amount.toLocaleString()} Plan</span>
+                        <span class="text-[10px] text-primary font-bold">${Math.round(progress)}%</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary" style="width: ${progress}%"></div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // 6. Dynamic Investment List (Investment Tab)
+        const portfolioContainer = document.getElementById('dynamic-portfolio-container');
+        if (portfolioContainer) {
+            portfolioContainer.innerHTML = state.investments.length === 0 ? `<div class="text-center py-20 opacity-50"><p>No investments found.</p></div>` : 
+            state.investments.map((inv, idx) => {
                 const dailyROI = inv.amount * 0.10;
                 const targetPayout = inv.amount * 2.00;
-                const totalEarned = inv.earned;
-                const remainingToEarn = Math.max(0, targetPayout - totalEarned);
-                const daysElapsed = Math.min(20, Math.floor(totalEarned / dailyROI));
-                const daysLeft = 20 - daysElapsed;
-                const progressPercent = Math.min(100, (totalEarned / targetPayout) * 100);
+                const daysElapsed = Math.min(20, Math.floor(inv.earned / dailyROI));
+                const progressPercent = Math.min(100, (inv.earned / targetPayout) * 100);
                 const isCompleted = inv.status === 'Completed';
-
                 return `
                 <div class="bg-white dark:bg-darkCard border-2 ${isCompleted ? 'border-slate-200 dark:border-slate-800' : 'border-primary/30'} rounded-[2.5rem] overflow-hidden shadow-xl mb-6">
                     <div onclick="toggleDetails('portfolio-${idx}')" class="p-6 md:p-8 flex items-center justify-between cursor-pointer ${isCompleted ? 'bg-slate-50/50 dark:bg-slate-900/20' : 'bg-primary/5'}">
@@ -917,16 +920,15 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                             <i data-lucide="chevron-down" id="chevron-portfolio-${idx}" class="w-5 h-5 text-primary transition-transform"></i>
                         </div>
                     </div>
-
                     <div id="details-portfolio-${idx}" class="hidden p-6 md:p-8 border-t border-slate-100 dark:border-slate-800">
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                                 <p class="text-[9px] font-black text-slate-400 uppercase mb-1">Daily 10% ROI</p>
                                 <p class="font-black text-lg text-green-500">₦${dailyROI.toLocaleString()}</p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                                 <p class="text-[9px] font-black text-slate-400 uppercase mb-1">Total Earned</p>
-                                <p class="font-black text-lg">₦${totalEarned.toLocaleString()}</p>
+                                <p class="font-black text-lg">₦${inv.earned.toLocaleString()}</p>
                             </div>
                             <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                                 <p class="text-[9px] font-black text-slate-400 uppercase mb-1">Days Elapsed</p>
@@ -937,7 +939,6 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                                 <p class="font-black text-lg text-primary">₦${targetPayout.toLocaleString()}</p>
                             </div>
                         </div>
-
                         <div class="space-y-4">
                             <div class="flex justify-between items-end">
                                 <span class="text-[10px] font-black text-slate-400 uppercase">Cycle Progress</span>
@@ -946,191 +947,112 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                             <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                 <div class="h-full bg-primary" style="width: ${progressPercent}%"></div>
                             </div>
-                            <div class="flex justify-between text-[10px] font-bold text-slate-500">
-                                <p>Remaining: ₦${remainingToEarn.toLocaleString()}</p>
-                                <p>${daysLeft} Days Left</p>
-                            </div>
                         </div>
                     </div>
                 </div>`;
             }).join('');
         }
-    }
 
-    // 7. Matured List for Withdrawal Tab (ONLY SHOWS 2x MATURED FUNDS)
-    const maturedContainer = document.getElementById('matured-list');
-    
-    // CHANGE: We now filter ONLY for 'Completed' status and funds that haven't been fully withdrawn yet
-    const withdrawableInvestments = state.investments.filter(i => i.status === 'Completed' && i.earned > 0);
-
-    if (maturedContainer) {
-        if (withdrawableInvestments.length === 0) {
-            // Show a message if nothing has matured yet
-            maturedContainer.innerHTML = `
-                <div class="p-6 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No Matured Funds Available</p>
-                    <p class="text-[9px] text-slate-500 mt-1">Investments appear here only after completing the 2x growth cycle.</p>
-                </div>`;
-        } else {
-            // Show only the 2x matured investments
-            maturedContainer.innerHTML = withdrawableInvestments.map(inv => `
+        // 7. Matured List (Withdraw Tab) - STRICT MATURITY ONLY
+        const maturedContainer = document.getElementById('matured-list');
+        const maturedInvestments = state.investments.filter(i => i.status === 'Completed' && i.earned > 0);
+        if (maturedContainer) {
+            maturedContainer.innerHTML = maturedInvestments.length === 0 ? `<div class="p-6 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No Matured Funds Available</p></div>` :
+            maturedInvestments.map(inv => `
                 <label class="relative flex items-center justify-between p-5 bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-3xl cursor-pointer hover:border-primary transition-all">
                     <div class="flex items-center space-x-4">
                         <input type="radio" name="selected_investment" value="${inv.id}" data-max="${inv.earned}" class="w-4 h-4 text-primary" required>
                         <div>
                             <p class="text-[10px] font-black text-slate-400 uppercase">Matured Portfolio (₦${inv.amount.toLocaleString()})</p>
-                            <p class="text-sm font-black text-slate-800 dark:text-white">₦${inv.earned.toLocaleString()}</p>
+                            <p class="text-sm font-black">₦${inv.earned.toLocaleString()}</p>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <span class="block text-[9px] font-black text-green-500 uppercase tracking-tighter">Ready for Payout</span>
                     </div>
                 </label>`).join('');
         }
-    }
 
-    lucide.createIcons();
-    updateChart();
-
-    // 8. Full Transaction History Table (History Tab)
-    const historyTableBody = document.getElementById('transactions-table-body');
-    if (historyTableBody) {
-        if (state.transactions.length === 0) {
-            historyTableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-10 text-center text-slate-400 text-xs uppercase font-bold tracking-widest">No transaction history found</td></tr>`;
-        } else {
-            historyTableBody.innerHTML = state.transactions.map(t => {
-                // Determine color and sign based on type
+        // 8. Transaction History Table
+        const historyTableBody = document.getElementById('transactions-table-body');
+        if (historyTableBody) {
+            historyTableBody.innerHTML = state.transactions.length === 0 ? `<tr><td colspan="4" class="px-6 py-10 text-center text-slate-400 text-xs font-bold uppercase">No transactions found</td></tr>` :
+            state.transactions.map(t => {
                 const isNegative = t.type === 'Withdraw';
                 const amtColor = isNegative ? 'text-red-500' : 'text-green-500';
-                const sign = isNegative ? '-' : '+';
-                
-                // Status Badge logic
-                let statusStyle = "";
-                if (t.status === 'Success') statusStyle = "bg-green-500/10 text-green-500";
-                else if (t.status === 'Pending') statusStyle = "bg-yellow-500/10 text-yellow-500";
-                else statusStyle = "bg-red-500/10 text-red-500";
-
                 return `
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 rounded-lg ${isNegative ? 'bg-red-500/10 text-red-500' : 'bg-primary/10 text-primary'}">
-                                <i data-lucide="${t.type === 'Withdraw' ? 'arrow-up-right' : t.type === 'Deposit' ? 'arrow-down-left' : 'zap'}" class="w-4 h-4"></i>
-                            </div>
-                            <span class="text-sm font-bold text-slate-700 dark:text-slate-200">${t.type}</span>
+                    <td class="px-6 py-4 flex items-center space-x-3">
+                        <div class="p-2 rounded-lg ${isNegative ? 'bg-red-500/10 text-red-500' : 'bg-primary/10 text-primary'}">
+                            <i data-lucide="${isNegative ? 'arrow-up-right' : 'zap'}" class="w-4 h-4"></i>
                         </div>
+                        <span class="text-sm font-bold">${t.type}</span>
                     </td>
-                    <td class="px-6 py-4 font-black ${amtColor} text-sm" style="white-space: nowrap;">
-                        ${sign}₦${t.amount.toLocaleString()}
-                    </td>
-                    <td class="px-6 py-4 text-xs text-slate-500 font-medium">
-                        ${t.date}
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${statusStyle}">
-                            ${t.status}
-                        </span>
-                    </td>
+                    <td class="px-6 py-4 font-black ${amtColor} text-sm">${isNegative ? '-' : '+'}₦${t.amount.toLocaleString()}</td>
+                    <td class="px-6 py-4 text-xs text-slate-500">${t.date}</td>
+                    <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-[10px] font-black uppercase ${t.status === 'Success' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}">${t.status}</span></td>
                 </tr>`;
             }).join('');
         }
+
+        // 9. Notification Center
+        const notifList = document.getElementById('notif-list');
+        const notifDot = document.getElementById('notif-dot');
+        if (notifList) {
+            const unreadCount = state.notifications.filter(n => n.unread).length;
+            unreadCount > 0 ? notifDot.classList.remove('hidden') : notifDot.classList.add('hidden');
+            notifList.innerHTML = state.notifications.length === 0 ? `<div class="p-10 text-center text-slate-400 text-[10px] font-bold uppercase">No new notifications</div>` :
+            state.notifications.map(n => `
+                <div class="p-5 border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                    <div class="flex items-start space-x-3">
+                        <div class="p-2 bg-primary/10 rounded-xl text-primary mt-0.5"><i data-lucide="${n.icon}" class="w-4 h-4"></i></div>
+                        <div class="flex-1"><p class="text-sm font-black mb-0.5">${n.title}</p><p class="text-[11px] text-slate-500 leading-tight">${n.message}</p></div>
+                    </div>
+                </div>`).join('');
+        }
+
+        lucide.createIcons();
+        updateChart();
     }
-}
 
     // --- 4. CHART ENGINE ---
-
-function updateChart() {
-    const ctx = document.getElementById('earningsChart');
-    if (!ctx) return;
-
-    // 1. Get Labels for last 7 days
-    const last7Days = [...Array(7)].map((_, i) => {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
-        return d.toLocaleDateString();
-    }).reverse();
-
-    // 2. Calculate Cumulative Growth (Total earnings at each day)
-    let runningTotal = 0;
-    const growthData = last7Days.map(date => {
-        const dailyProfit = state.transactions
-            .filter(t => t.date === date && t.type === 'Daily ROI')
-            .reduce((sum, t) => sum + t.amount, 0);
-        runningTotal += dailyProfit;
-        return runningTotal;
-    });
-
-    // 3. Generate Human-Readable Sentences (Insights)
-    const totalEarned = growthData[growthData.length - 1];
-    const prevEarned = growthData[growthData.length - 2] || 0;
-    const dailyGain = totalEarned - prevEarned;
-    const insightBox = document.getElementById('chart-insight-text');
-
-    if (totalEarned > 0) {
-        insightBox.innerHTML = `Your portfolio is performing at 100% efficiency. You earned <b class="text-green-500">₦${dailyGain.toLocaleString()}</b> today. Your total wealth has grown by <b class="text-primary">₦${totalEarned.toLocaleString()}</b> since you started, following a consistent 10% daily ROI trend.`;
-    } else {
-        insightBox.innerText = "No earnings detected yet. Your profit chart will climb once your first investment starts generating 10% daily ROI.";
+    function updateChart() {
+        const ctx = document.getElementById('earningsChart');
+        if (!ctx) return;
+        const last7Days = [...Array(7)].map((_, i) => {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            return d.toLocaleDateString();
+        }).reverse();
+        let runningTotal = 0;
+        const growthData = last7Days.map(date => {
+            const dailyProfit = state.transactions.filter(t => t.date === date && t.type === 'Daily ROI').reduce((sum, t) => sum + t.amount, 0);
+            runningTotal += dailyProfit;
+            return runningTotal;
+        });
+        const totalEarned = growthData[growthData.length - 1];
+        const insightBox = document.getElementById('chart-insight-text');
+        if (insightBox) {
+            insightBox.innerHTML = totalEarned > 0 ? `Your portfolio is performing at 100% efficiency. Your total wealth has grown by <b class="text-primary">₦${totalEarned.toLocaleString()}</b> since you started.` : "Analysis pending... complete your first deposit to see growth trends.";
+        }
+        if (earningsChart) earningsChart.destroy();
+        const chartCtx = ctx.getContext('2d');
+        const gradient = chartCtx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(251, 191, 36, 0.4)');
+        gradient.addColorStop(1, 'rgba(251, 191, 36, 0)');
+        earningsChart = new Chart(chartCtx, {
+            type: 'line',
+            data: {
+                labels: ['6 Days Ago', '5 Days Ago', '4 Days Ago', '3 Days Ago', '2 Days Ago', 'Yesterday', 'Today'],
+                datasets: [{
+                    data: growthData, borderColor: '#fbbf24', borderWidth: 4, pointRadius: 0, tension: 0.4, fill: true, backgroundColor: gradient
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } }, y: { display: false } }
+            }
+        });
     }
 
-    // 4. Create the Chart
-    if (earningsChart) earningsChart.destroy();
-
-    const chartCtx = ctx.getContext('2d');
-    
-    // Create Gradient Background
-    const gradient = chartCtx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(251, 191, 36, 0.4)');
-    gradient.addColorStop(1, 'rgba(251, 191, 36, 0)');
-
-    earningsChart = new Chart(chartCtx, {
-        type: 'line',
-        data: {
-            labels: ['6 Days Ago', '5 Days Ago', '4 Days Ago', '3 Days Ago', '2 Days Ago', 'Yesterday', 'Today'],
-            datasets: [{
-                label: 'Cumulative Profit',
-                data: growthData,
-                borderColor: '#fbbf24',
-                borderWidth: 4,
-                pointBackgroundColor: '#fbbf24',
-                pointRadius: 0,
-                pointHoverRadius: 6,
-                tension: 0.4, // Makes line smooth
-                fill: true,
-                backgroundColor: gradient
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { display: false },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                    backgroundColor: '#0f172a',
-                    titleFont: { size: 10 },
-                    bodyFont: { weight: 'bold' },
-                    callbacks: {
-                        label: function(context) {
-                            return ' Total: ₦' + context.parsed.y.toLocaleString();
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: { 
-                    grid: { display: false }, 
-                    ticks: { color: '#94a3b8', font: { size: 9, weight: 'bold' } } 
-                },
-                y: { 
-                    display: false 
-                }
-            }
-        }
-    });
-}
-
-    // --- 5. ACTIONS & MODALS ---
+    // --- 5. ACTIONS & HANDLERS ---
     function triggerDeposit() {
         document.getElementById('deposit-modal').classList.remove('hidden');
         document.getElementById('deposit-amount-input').focus();
@@ -1147,116 +1069,71 @@ function updateChart() {
     }
 
     function initiatePaystack() {
-    const amount = document.getElementById('deposit-amount-input').value;
-    if (!amount || amount < 500) return alert("Minimum ₦500 required");
+        const amount = document.getElementById('deposit-amount-input').value;
+        if (!amount || amount < 500) return alert("Minimum ₦500 required");
+        const finalAmount = parseFloat(amount);
+        closeDepositModal();
+        let handler = PaystackPop.setup({
+            key: 'pk_test_335a79da994d7c1777f46c1ef44abf7f4535491a',
+            email: state.user.email,
+            amount: finalAmount * 100,
+            currency: "NGN",
+            callback: function(response) {
+                const instantProfit = finalAmount * 0.10;
+                state.investments.unshift({ 
+                    id: Date.now(), amount: finalAmount, earned: instantProfit, 
+                    date: new Date().toLocaleDateString(), lastUpdate: Date.now(), status: 'Active' 
+                });
+                state.user.balance += instantProfit;
+                state.transactions.unshift({ type: 'Deposit', amount: finalAmount, date: new Date().toLocaleDateString(), status: 'Success' });
+                state.transactions.unshift({ type: 'Daily ROI', amount: instantProfit, date: new Date().toLocaleDateString(), status: 'Success' });
+                addNotification('Deposit Received', `₦${finalAmount.toLocaleString()} has been added.`, 'deposit');
+                addNotification('Instant ROI', 'Your first 10% profit credited!', 'profit');
+                save();
+                alert('Deposit Successful!');
+            }
+        });
+        handler.openIframe();
+    }
 
-    const finalAmount = parseFloat(amount);
-    closeDepositModal();
-
-    let handler = PaystackPop.setup({
-        key: 'pk_test_335a79da994d7c1777f46c1ef44abf7f4535491a',
-        email: state.user.email,
-        amount: finalAmount * 100,
-        currency: "NGN",
-        callback: function(response) {
-            // --- LOGIC FOR IMMEDIATE PROFIT ---
-            const instantProfit = finalAmount * 0.10; // Calculate 10% immediately
-
-            // 1. Add Investment (Set earned to the instant profit)
-            state.investments.unshift({ 
-                id: Date.now(), 
-                amount: finalAmount, 
-                earned: instantProfit, // Starts with 10% profit
-                date: new Date().toLocaleDateString(), 
-                lastUpdate: Date.now(), 
-                status: 'Active' 
-            });
-
-            // 2. Add profit to the withdrawable balance immediately
-            state.user.balance += instantProfit;
-
-            // 3. Record the Deposit Transaction
-            state.transactions.unshift({ 
-                type: 'Deposit', 
-                amount: finalAmount, 
-                date: new Date().toLocaleDateString(), 
-                status: 'Success' 
-            });
-
-            // 4. Record the Instant ROI Transaction
-            state.transactions.unshift({ 
-                type: 'Daily ROI', 
-                amount: instantProfit, 
-                date: new Date().toLocaleDateString(), 
-                status: 'Success' 
-            });
-
-            save(); // Updates UI instantly
-            alert('Deposit Successful! Your first 10% profit has been credited immediately.');
-        },
-        onClose: function() {
-            alert('Transaction cancelled.');
-        }
-    });
-    handler.openIframe();
-}
     function handleWithdrawal(e) {
         e.preventDefault();
         const selected = document.querySelector('input[name="selected_investment"]:checked');
         const amt = parseFloat(document.getElementById('withdraw-amount').value);
-        
         if (!selected) return alert("Select a portfolio.");
         const max = parseFloat(selected.dataset.max);
         if (amt > max || amt > state.user.balance) return alert("Insufficient balance.");
-
         const target = state.investments.find(i => i.id == selected.value);
         target.earned -= amt;
         state.user.balance -= amt;
-
         state.transactions.unshift({ type: 'Withdraw', amount: amt, date: new Date().toLocaleDateString(), status: 'Pending' });
+        addNotification('Withdrawal Requested', `₦${amt.toLocaleString()} payout processing.`, 'withdrawal');
         save();
-        alert("Withdrawal Pending. Expected in 1-3 hours.");
+        alert("Withdrawal Pending.");
         e.target.reset();
         toggleWithdrawForm();
     }
-function updateProfile(e) {
-    e.preventDefault();
-    
-    // 1. Get values from the form
-    const oldPassInput = document.getElementById('old-pass').value;
-    const newPassInput = document.getElementById('edit-pass').value;
-    
-    // 2. Handle Password Change Logic
-    if (newPassInput !== "") {
-        // Retrieve the master account data to check the current password
-        const masterAccount = JSON.parse(localStorage.getItem('fidelity_user'));
-        
-        // CHECK: Does the 'Old Password' input match the one in our database?
-        if (oldPassInput !== masterAccount.password) {
-            alert("Error: The 'Old Password' you entered is incorrect. Identity not verified.");
-            return; // Stop the function here
+
+    function updateProfile(e) {
+        e.preventDefault();
+        const oldPass = document.getElementById('old-pass').value;
+        const newPass = document.getElementById('edit-pass').value;
+        if (newPass !== "") {
+            const master = JSON.parse(localStorage.getItem('fidelity_user'));
+            if (oldPass !== master.password) return alert("Incorrect Old Password.");
+            master.password = newPass;
+            localStorage.setItem('fidelity_user', JSON.stringify(master));
+            addNotification('Password Changed', 'Your login security was updated.', 'profile');
         }
-        
-        // If correct, update the master password
-        masterAccount.password = newPassInput;
-        localStorage.setItem('fidelity_user', JSON.stringify(masterAccount));
-        alert("Security Credentials Updated Successfully!");
+        state.user.name = document.getElementById('edit-name').value;
+        state.user.email = document.getElementById('edit-email').value;
+        state.user.phone = "+234" + document.getElementById('edit-phone').value;
+        state.user.age = document.getElementById('edit-age').value;
+        addNotification('Profile Updated', 'Your identity details have been saved.', 'profile');
+        save();
+        alert("Profile Updated!");
     }
 
-    // 3. Update other profile details
-    state.user.name = document.getElementById('edit-name').value;
-    state.user.email = document.getElementById('edit-email').value;
-    state.user.phone = "+234" + document.getElementById('edit-phone').value;
-    state.user.age = document.getElementById('edit-age').value;
-
-    save(); // Save state and re-render
-    
-    // 4. Clear the password fields so they are empty for next time
-    document.getElementById('old-pass').value = "";
-    document.getElementById('edit-pass').value = "";
-    
-    alert("Profile details updated!");
-}
     function runCalculator() {
         const val = parseFloat(document.getElementById('calc-input').value) || 0;
         document.getElementById('calc-daily').innerText = (val * 0.10).toLocaleString();
@@ -1268,6 +1145,7 @@ function updateProfile(e) {
         if (!phone) return alert("Enter phone.");
         const msg = encodeURIComponent("Earn 10% daily with Fidelity Wealth: https://fidelitywealth.com");
         window.open(`https://wa.me/234${phone}?text=${msg}`, '_blank');
+        addNotification('Invitation Sent', 'Referral link shared via WhatsApp.', 'referral');
     }
 
     // --- 6. UTILITIES ---
@@ -1275,18 +1153,28 @@ function updateProfile(e) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
         document.getElementById('tab-' + tabId).classList.remove('hidden');
         document.querySelectorAll('.nav-item, .nav-item-mobile').forEach(btn => btn.classList.remove('active-tab'));
-        document.querySelectorAll(`[onclick="showTab('${tabId}')"]`).forEach(btn => btn.classList.add('active-tab'));
+        const activeBtns = document.querySelectorAll(`.nav-item[onclick*="'${tabId}'"], .nav-item-mobile[onclick*="'${tabId}'"]`);
+        activeBtns.forEach(btn => btn.classList.add('active-tab'));
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function toggleNotifications() {
+        document.getElementById('notif-dropdown').classList.toggle('hidden');
+        state.notifications.forEach(n => n.unread = false);
+        save();
+    }
+
+    function clearNotifications() {
+        state.notifications = [];
+        save();
+    }
+
     function toggleDetails(id) {
-    const content = document.getElementById(`details-${id}`);
-    const chevron = document.getElementById(`chevron-${id}`);
-    if (content) {
-        content.classList.toggle('hidden');
+        const content = document.getElementById(`details-${id}`);
+        const chevron = document.getElementById(`chevron-${id}`);
+        if (content) content.classList.toggle('hidden');
         if (chevron) chevron.classList.toggle('rotate-180');
     }
-}
 
     function toggleWithdrawForm() {
         const selected = document.querySelector('input[name="selected_investment"]:checked');
@@ -1309,13 +1197,17 @@ function updateProfile(e) {
         }
     }
 
+    function addNotification(title, message, type = 'info') {
+        const iconMap = {'profit': 'zap', 'withdrawal': 'wallet', 'deposit': 'arrow-down-left', 'profile': 'user-cog', 'referral': 'users'};
+        state.notifications.unshift({ id: Date.now(), title, message, icon: iconMap[type] || 'bell', unread: true });
+    }
+
     // --- 7. INITIALIZATION ---
     window.onload = () => {
         if (state.settings.darkMode) document.documentElement.classList.add('dark');
         processEarnings();
         render();
         showTab('home');
-
         setInterval(() => {
             const now = new Date();
             const tomorrow = new Date(now); tomorrow.setHours(24, 0, 0, 0);
