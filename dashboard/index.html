@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
+        /*
     // --- 0. BULLETPROOF AUTHENTICATION GUARD ---
     (function() {
         try {
@@ -32,6 +33,7 @@
             window.location.href = "../index.html";
         }
     })();
+    */
     
     // --- 1. TAILWIND CONFIG (Keep this below the guard) ---
     tailwind.config = {
@@ -243,13 +245,12 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
         </div>
 
         <div class="relative cursor-pointer group" onclick="showTab('profile')">
-            <div class="w-12 h-12 rounded-full border-2 border-primary p-0.5 transition-transform group-hover:scale-105 shadow-lg shadow-primary/20">
-                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
-                     alt="User Profile" 
-                     class="w-full h-full rounded-full object-cover bg-slate-200">
-            </div>
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-darkBg rounded-full"></span>
-        </div>
+    <!-- Letter Avatar Container -->
+    <div id="header-avatar" class="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center bg-primary text-slate-900 font-black text-lg transition-transform group-hover:scale-105 shadow-lg shadow-primary/20">
+        <!-- JS will inject letters here -->
+    </div>
+    <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-darkBg rounded-full"></span>
+</div>
     </div>
 </header>
 
@@ -872,6 +873,20 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     let earningsChart; 
 
     function render() {
+        // --- Dynamic Initial Logic ---
+    const userName = state.user.name || "User";
+    // Get first two letters and format them (e.g., Ibrahim -> Ib)
+    const initials = userName.substring(0, 2);
+    const formattedInitials = initials.charAt(0).toUpperCase() + initials.charAt(1).toLowerCase();
+
+    // Apply to Header
+    const headerAvatar = document.getElementById('header-avatar');
+    if (headerAvatar) headerAvatar.innerText = formattedInitials;
+
+    // Apply to Profile Tab
+    const profileInitials = document.getElementById('profile-initials');
+    if (profileInitials) profileInitials.innerText = formattedInitials;
+
         const activePlans = state.investments.filter(i => i.status === 'Active');
         const currentCapital = activePlans.reduce((sum, i) => sum + i.amount, 0);
         const currentProfit = activePlans.reduce((sum, i) => sum + i.earned, 0);
