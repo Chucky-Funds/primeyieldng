@@ -326,13 +326,33 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
         </div>
 
         <!-- EARNINGS CHART -->
-        <div class="bg-white dark:bg-darkCard p-5 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 w-full overflow-hidden shadow-sm">
-            <h3 class="font-black text-base md:text-lg mb-6 text-slate-700 dark:text-white">Performance Index</h3>
-            <!-- Wrapper for canvas to prevent width expansion -->
-            <div class="w-full overflow-hidden">
-                <canvas id="earningsChart" height="150" class="w-full"></canvas>
+        <!-- EARNINGS CHART -->
+<div class="bg-white dark:bg-darkCard p-5 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 w-full overflow-hidden shadow-sm">
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="font-black text-base md:text-lg text-slate-700 dark:text-white">Performance Index</h3>
+        <span class="text-[10px] font-bold bg-green-500/10 text-green-500 px-2 py-1 rounded-lg uppercase tracking-widest">Live Analysis</span>
+    </div>
+    
+    <!-- Wrapper for canvas -->
+    <div class="w-full h-48 overflow-hidden mb-6">
+        <canvas id="earningsChart"></canvas>
+    </div>
+
+    <!-- NEW: HUMAN-READABLE SENTENCES (INSIGHTS) -->
+    <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+        <div class="flex items-start space-x-3">
+            <div class="p-2 bg-primary/20 rounded-full mt-1">
+                <i data-lucide="zap" class="w-3 h-3 text-primary"></i>
+            </div>
+            <div>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Portfolio Insight</p>
+                <p id="chart-insight-text" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                    Analysis pending... complete your first deposit to see growth trends.
+                </p>
             </div>
         </div>
+    </div>
+</div>
     </div>
 
     <!-- RIGHT: RECENT ACTIVITY & TIPS (Added min-w-0) -->
@@ -935,45 +955,97 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     }
 
     // --- 4. CHART ENGINE ---
-    function updateChart() {
-        const ctx = document.getElementById('earningsChart');
-        if (!ctx) return;
 
-        const last7Days = [...Array(7)].map((_, i) => {
-            const d = new Date();
-            d.setDate(d.getDate() - i);
-            return d.toLocaleDateString();
-        }).reverse();
+function updateChart() {
+    const ctx = document.getElementById('earningsChart');
+    if (!ctx) return;
 
-        const chartData = last7Days.map(date => {
-            return state.transactions
-                .filter(t => t.date === date && t.type === 'Daily ROI')
-                .reduce((sum, t) => sum + t.amount, 0);
-        });
+    // 1. Get Labels for last 7 days
+    const last7Days = [...Array(7)].map((_, i) => {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        return d.toLocaleDateString();
+    }).reverse();
 
-        if (earningsChart) earningsChart.destroy();
+    // 2. Calculate Cumulative Growth (Total earnings at each day)
+    let runningTotal = 0;
+    const growthData = last7Days.map(date => {
+        const dailyProfit = state.transactions
+            .filter(t => t.date === date && t.type === 'Daily ROI')
+            .reduce((sum, t) => sum + t.amount, 0);
+        runningTotal += dailyProfit;
+        return runningTotal;
+    });
 
-        earningsChart = new Chart(ctx.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                datasets: [{
-                    data: chartData,
-                    backgroundColor: '#fbbf24',
-                    borderRadius: 8,
-                }]
+    // 3. Generate Human-Readable Sentences (Insights)
+    const totalEarned = growthData[growthData.length - 1];
+    const prevEarned = growthData[growthData.length - 2] || 0;
+    const dailyGain = totalEarned - prevEarned;
+    const insightBox = document.getElementById('chart-insight-text');
+
+    if (totalEarned > 0) {
+        insightBox.innerHTML = `Your portfolio is performing at 100% efficiency. You earned <b class="text-green-500">₦${dailyGain.toLocaleString()}</b> today. Your total wealth has grown by <b class="text-primary">₦${totalEarned.toLocaleString()}</b> since you started, following a consistent 10% daily ROI trend.`;
+    } else {
+        insightBox.innerText = "No earnings detected yet. Your profit chart will climb once your first investment starts generating 10% daily ROI.";
+    }
+
+    // 4. Create the Chart
+    if (earningsChart) earningsChart.destroy();
+
+    const chartCtx = ctx.getContext('2d');
+    
+    // Create Gradient Background
+    const gradient = chartCtx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(251, 191, 36, 0.4)');
+    gradient.addColorStop(1, 'rgba(251, 191, 36, 0)');
+
+    earningsChart = new Chart(chartCtx, {
+        type: 'line',
+        data: {
+            labels: ['6 Days Ago', '5 Days Ago', '4 Days Ago', '3 Days Ago', '2 Days Ago', 'Yesterday', 'Today'],
+            datasets: [{
+                label: 'Cumulative Profit',
+                data: growthData,
+                borderColor: '#fbbf24',
+                borderWidth: 4,
+                pointBackgroundColor: '#fbbf24',
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                tension: 0.4, // Makes line smooth
+                fill: true,
+                backgroundColor: gradient
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: '#0f172a',
+                    titleFont: { size: 10 },
+                    bodyFont: { weight: 'bold' },
+                    callbacks: {
+                        label: function(context) {
+                            return ' Total: ₦' + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } },
-                    y: { display: false }
+            scales: {
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { color: '#94a3b8', font: { size: 9, weight: 'bold' } } 
+                },
+                y: { 
+                    display: false 
                 }
             }
-        });
-    }
+        }
+    });
+}
 
     // --- 5. ACTIONS & MODALS ---
     function triggerDeposit() {
