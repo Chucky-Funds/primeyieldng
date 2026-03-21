@@ -802,46 +802,48 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 
     // --- 2. EARNINGS ENGINE (10% Daily ROI) ---
     function processEarnings() {
-        const now = Date.now();
-        let updated = false;
+    const now = Date.now();
+    let updated = false;
 
-        state.investments.forEach(inv => {
-            if (inv.status === 'Active') {
-                const msPerDay = 24 * 60 * 60 * 1000;
-                const elapsed = now - inv.lastUpdate;
+    state.investments.forEach(inv => {
+        if (inv.status === 'Active') {
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const elapsed = now - inv.lastUpdate;
+            
+            if (elapsed >= msPerDay) {
+                const daysPassed = Math.floor(elapsed / msPerDay);
+                const dailyAmount = inv.amount * 0.10;
+                const totalDue = dailyAmount * daysPassed;
                 
-                if (elapsed >= msPerDay) {
-                    const daysPassed = Math.floor(elapsed / msPerDay);
-                    const dailyAmount = inv.amount * 0.10;
-                    const totalDue = dailyAmount * daysPassed;
-                    const maxEarning = inv.amount * 2; 
-                    const remainingToCap = maxEarning - inv.earned;
+                const maxEarning = inv.amount * 2; 
+                const remainingToCap = maxEarning - inv.earned;
 
-                    if (remainingToCap > 0) {
-                        const actualEarning = Math.min(totalDue, remainingToCap);
-                        inv.earned += actualEarning;
-                        inv.lastUpdate = now;
-                        state.user.balance += actualEarning;
-                        
-                        state.transactions.unshift({
-                            type: 'Daily ROI',
-                            amount: actualEarning,
-                            date: new Date().toLocaleDateString(),
-                            status: 'Success'
-                        });
+                if (remainingToCap > 0) {
+                    const actualEarning = Math.min(totalDue, remainingToCap);
+                    inv.earned += actualEarning;
+                    inv.lastUpdate = now;
+                    
+                    // Add to the global available balance
+                    state.user.balance += actualEarning;
+                    
+                    state.transactions.unshift({
+                        type: 'Daily ROI',
+                        amount: actualEarning,
+                        date: new Date().toLocaleDateString(),
+                        status: 'Success'
+                    });
 
-                        // Notification MUST be inside this IF block
-                        addNotification('Daily ROI Received', `Successfully received ₦${actualEarning.toLocaleString()} profit.`, 'profit');
+                    // FIXED: Notification is now inside the loop so it records correctly for every plan
+                    addNotification('Daily ROI Received', `₦${actualEarning.toLocaleString()} profit added to balance.`, 'profit');
 
-                        if (inv.earned >= maxEarning) inv.status = 'Completed';
-                        updated = true;
-                    }
+                    if (inv.earned >= maxEarning) inv.status = 'Completed';
+                    updated = true;
                 }
             }
-        });
-        if (updated) save();
-    }
-
+        }
+    });
+    if (updated) save();
+}
     // --- 3. UI RENDERING ENGINE ---
     let earningsChart; 
 
@@ -1061,33 +1063,51 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     }
 
     function handleWithdrawal(e) {
-        e.preventDefault();
-        const selected = document.querySelector('input[name="selected_investment"]:checked');
-        const invAmt = parseFloat(document.getElementById('withdraw-amount-invest').value) || 0;
-        const refAmt = parseFloat(document.getElementById('withdraw-amount-ref').value) || 0;
-        const totalWithdraw = invAmt + refAmt;
+    e.preventDefault();
+    const selected = document.querySelector('input[name="selected_investment"]:checked');
+    const invAmt = parseFloat(document.getElementById('withdraw-amount-invest').value) || 0;
+    const refAmt = parseFloat(document.getElementById('withdraw-amount-ref').value) || 0;
+    const totalWithdraw = invAmt + refAmt;
 
-        if (totalWithdraw <= 0) return alert("Please enter an amount.");
-        if (invAmt > 0) {
-            if (!selected) return alert("Select a matured portfolio.");
-            if (invAmt > parseFloat(selected.dataset.max)) return alert("Insufficient portfolio funds.");
-        }
-        if (refAmt > state.user.referralBalance) return alert("Insufficient referral balance.");
-
-        if (selected && invAmt > 0) {
-            const target = state.investments.find(i => i.id == selected.value);
-            target.earned -= invAmt;
-        }
-        state.user.referralBalance -= refAmt;
-        state.user.balance -= totalWithdraw;
-        state.transactions.unshift({ type: 'Withdraw', amount: totalWithdraw, date: new Date().toLocaleDateString(), status: 'Pending' });
-        addNotification('Withdrawal Requested', `₦${totalWithdraw.toLocaleString()} payout processing.`, 'withdrawal');
-        save();
-        alert("Withdrawal Pending.");
-        e.target.reset();
-        document.getElementById('withdraw-amount-total').value = "₦0.00";
-        toggleWithdrawForm();
+    // 1. Basic Validation
+    if (totalWithdraw <= 0) return alert("Please enter an amount.");
+    
+    // 2. Portfolio Check
+    if (invAmt > 0) {
+        if (!selected) return alert("Select a matured portfolio to withdraw investment profits.");
+        if (invAmt > parseFloat(selected.dataset.max)) return alert("Insufficient funds in this matured portfolio.");
     }
+    
+    // 3. Referral Pot Check
+    if (refAmt > state.user.referralBalance) return alert("Insufficient referral balance.");
+
+    // 4. Global Balance Safety Check (The ultimate protection)
+    if (totalWithdraw > state.user.balance) return alert("Insufficient total available balance.");
+
+    // EXECUTION
+    if (selected && invAmt > 0) {
+        const target = state.investments.find(i => i.id == selected.value);
+        target.earned -= invAmt;
+    }
+    
+    state.user.referralBalance -= refAmt;
+    state.user.balance -= totalWithdraw; // CORRECT: Subtracts total from the global balance
+
+    state.transactions.unshift({ 
+        type: 'Withdraw', 
+        amount: totalWithdraw, 
+        date: new Date().toLocaleDateString(), 
+        status: 'Pending' 
+    });
+
+    addNotification('Withdrawal Requested', `₦${totalWithdraw.toLocaleString()} payout processing.`, 'withdrawal');
+    save();
+    
+    alert("Withdrawal request successful!");
+    e.target.reset();
+    document.getElementById('withdraw-amount-total').value = "₦0.00";
+    toggleWithdrawForm();
+}
 
     function updateProfile(e) {
         e.preventDefault();
