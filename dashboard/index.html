@@ -1244,8 +1244,34 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     }
 
     function deleteAccount() {
-        if(confirm("DANGER: Wipe all data?")) { localStorage.clear(); location.href = "../index.html"; }
+    // 1. Create a very scary warning message
+    const totalLoss = state.user.balance + state.investments.reduce((sum, i) => sum + i.amount, 0);
+    const warningMessage = `⚠️ PERMANENT DATA & MONEY LOSS WARNING!\n\n` +
+        `By deleting your account, you will PERMANENTLY LOSE:\n` +
+        `- Your Total Available Balance (₦${state.user.balance.toLocaleString()})\n` +
+        `- Your Active Investment Capital\n` +
+        `- Your entire Transaction History\n\n` +
+        `This action CANNOT be undone. All your money on this platform will be wiped forever.\n\n` +
+        `Are you absolutely sure you want to proceed?`;
+
+    // 2. First Confirmation
+    if (confirm(warningMessage)) {
+        
+        // 3. Final "Are you sure?" to prevent accidental clicks
+        if (confirm("FINAL CHECK: Are you really sure? Click 'OK' to lose all your money and delete everything.")) {
+            
+            // 4. Clear all platform data
+            localStorage.removeItem('fw_state');
+            localStorage.removeItem('fidelity_user');
+            // Using localStorage.clear() is also okay, but the above is more specific
+            
+            alert("Account and all financial data have been permanently wiped.");
+            
+            // 5. Redirect back to the landing/login page
+            location.href = "../"; 
+        }
     }
+}
 
     function addNotification(title, message, type = 'info') {
         const iconMap = {'profit': 'zap', 'withdrawal': 'wallet', 'deposit': 'arrow-down-left', 'profile': 'user-cog', 'referral': 'users'};
