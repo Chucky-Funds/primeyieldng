@@ -482,12 +482,12 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                         <div class="grid md:grid-cols-2 gap-4">
     <!-- Input 1: From Investment -->
     <div class="space-y-1">
-        <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">From Investment Portfolio (₦)</label>
+        <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Amt. From Investment Portfolio (₦)</label>
         <input type="number" id="withdraw-amount-invest" disabled oninput="calcTotalWithdraw()" placeholder="0" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold">
     </div>
     <!-- Input 2: From Referral Bonus -->
     <div class="space-y-1">
-        <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">From Referral Bonus (₦)</label>
+        <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Amt. From Referral Bonus (₦)</label>
         <input type="number" id="withdraw-amount-ref" disabled oninput="calcTotalWithdraw()" placeholder="0" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold">
     </div>
 </div>
@@ -972,6 +972,20 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 
         lucide.createIcons();
         updateChart();
+
+        // --- Referral Input Locking Logic ---
+    const refWithdrawInput = document.getElementById('withdraw-amount-ref');
+    if (refWithdrawInput) {
+        if (state.user.referralBalance <= 0) {
+            refWithdrawInput.readOnly = true;
+            refWithdrawInput.placeholder = "₦0.00 available";
+            refWithdrawInput.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            refWithdrawInput.readOnly = false;
+            refWithdrawInput.placeholder = "0";
+            refWithdrawInput.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
     }
 
     // --- 4. CHART ENGINE ---
@@ -1173,13 +1187,27 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     }
 
     function toggleWithdrawForm() {
-        const selected = document.querySelector('input[name="selected_investment"]:checked');
-        const section = document.getElementById('banking-section');
-        const inputs = section.querySelectorAll('input, button');
-        section.style.opacity = selected ? "1" : "0.4";
-        inputs.forEach(i => i.disabled = !selected);
-        // Special case: Bonus withdrawal is always enabled once a matured fund is selected
+    const selected = document.querySelector('input[name="selected_investment"]:checked');
+    const section = document.getElementById('banking-section');
+    const inputs = section.querySelectorAll('input, button');
+    
+    // Activate or Deactivate the section
+    section.style.opacity = selected ? "1" : "0.4";
+    inputs.forEach(i => i.disabled = !selected);
+
+    // SPECIFIC LOGIC FOR REFERRAL INPUT
+    const refInput = document.getElementById('withdraw-amount-ref');
+    if (state.user.referralBalance <= 0) {
+        refInput.readOnly = true;
+        refInput.placeholder = "₦0.00 available";
+        // Even if the form is "enabled", we keep this one visually locked
+        refInput.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+        refInput.readOnly = false;
+        refInput.placeholder = "Enter amount";
+        refInput.classList.remove('opacity-50', 'cursor-not-allowed');
     }
+}
 
     function toggleTheme() {
         state.settings.darkMode = !state.settings.darkMode;

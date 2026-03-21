@@ -1,0 +1,16 @@
+state.pendingReferrals.forEach(ref => {
+    // Subtract 11 hours from the time it was sent
+    ref.timestamp -= (11 * 60 * 60 * 1000); 
+});
+save(); 
+
+
+
+
+
+
+state.investments.forEach(inv => {
+    // Subtract 25 hours from the last update time
+    inv.lastUpdate -= (25 * 60 * 60 * 1000);
+});
+save();
