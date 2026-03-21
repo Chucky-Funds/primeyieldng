@@ -566,9 +566,21 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Phone Number</label>
-                            <input type="tel" id="edit-phone" placeholder="8012345678" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl text-sm outline-none focus:border-primary">
-                        </div>
+    <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Phone Number</label>
+    <div class="flex w-full group">
+        <!-- Permanent Prefix -->
+        <span class="flex items-center px-4 bg-slate-200 dark:bg-slate-800 border border-r-0 border-slate-200 dark:border-slate-700 rounded-l-2xl text-sm font-bold text-slate-500 select-none">
+            +234
+        </span>
+        <!-- Editable Input -->
+        <input type="tel" 
+               id="edit-phone" 
+               placeholder="8012345678" 
+               maxlength="10"
+               class="flex-1 min-w-0 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-r-2xl text-sm font-bold outline-none focus:border-primary transition-colors"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+    </div>
+</div>
                         <div class="space-y-1">
     <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Date of Birth</label>
     <div class="relative">
