@@ -992,30 +992,59 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     }
 
     function initiatePaystack() {
-        const amount = document.getElementById('deposit-amount-input').value;
-        if (!amount || amount < 500) return alert("Minimum ₦500 required");
+    const amount = document.getElementById('deposit-amount-input').value;
+    if (!amount || amount < 500) return alert("Minimum ₦500 required");
 
-        const finalAmount = parseFloat(amount);
-        closeDepositModal();
+    const finalAmount = parseFloat(amount);
+    closeDepositModal();
 
-        let handler = PaystackPop.setup({
-            key: 'pk_test_335a79da994d7c1777f46c1ef44abf7f4535491a',
-            email: state.user.email,
-            amount: finalAmount * 100,
-            currency: "NGN",
-            callback: function(response) {
-                state.investments.unshift({ 
-                    id: Date.now(), amount: finalAmount, earned: 0, 
-                    date: new Date().toLocaleDateString(), lastUpdate: Date.now(), status: 'Active' 
-                });
-                state.transactions.unshift({ type: 'Deposit', amount: finalAmount, date: new Date().toLocaleDateString(), status: 'Success' });
-                save();
-                alert('Deposit Successful!');
-            }
-        });
-        handler.openIframe();
-    }
+    let handler = PaystackPop.setup({
+        key: 'pk_test_335a79da994d7c1777f46c1ef44abf7f4535491a',
+        email: state.user.email,
+        amount: finalAmount * 100,
+        currency: "NGN",
+        callback: function(response) {
+            // --- LOGIC FOR IMMEDIATE PROFIT ---
+            const instantProfit = finalAmount * 0.10; // Calculate 10% immediately
 
+            // 1. Add Investment (Set earned to the instant profit)
+            state.investments.unshift({ 
+                id: Date.now(), 
+                amount: finalAmount, 
+                earned: instantProfit, // Starts with 10% profit
+                date: new Date().toLocaleDateString(), 
+                lastUpdate: Date.now(), 
+                status: 'Active' 
+            });
+
+            // 2. Add profit to the withdrawable balance immediately
+            state.user.balance += instantProfit;
+
+            // 3. Record the Deposit Transaction
+            state.transactions.unshift({ 
+                type: 'Deposit', 
+                amount: finalAmount, 
+                date: new Date().toLocaleDateString(), 
+                status: 'Success' 
+            });
+
+            // 4. Record the Instant ROI Transaction
+            state.transactions.unshift({ 
+                type: 'Daily ROI', 
+                amount: instantProfit, 
+                date: new Date().toLocaleDateString(), 
+                status: 'Success' 
+            });
+
+            save(); // Updates UI instantly
+            alert('Deposit Successful! Your first 10% profit has been credited immediately.');
+        },
+        onClose: function() {
+            alert('Transaction cancelled.');
+        }
+    });
+    handler.openIframe();
+}
     function handleWithdrawal(e) {
         e.preventDefault();
         const selected = document.querySelector('input[name="selected_investment"]:checked');
