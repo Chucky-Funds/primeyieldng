@@ -18,19 +18,19 @@
             const data = localStorage.getItem('fidelity_user');
             // If the item doesn't exist at all
             if (!data) {
-                window.location.href = "../index.html";
+                window.location.href = "../";
                 return;
             }
 
             const user = JSON.parse(data);
             // If the data exists but has no email
             if (!user || !user.email) {
-                window.location.href = "../index.html";
+                window.location.href = "../";
                 return;
             }
         } catch (error) {
             // If localStorage is blocked (Private Mode) or JSON is corrupted
-            window.location.href = "../index.html";
+            window.location.href = "../";
         }
     })();
 
