@@ -7,31 +7,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="../favicon.avif" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
-        // --- 0. AUTHENTICATION GUARD ---
-// Check if user data exists in local storage
-const checkUser = JSON.parse(localStorage.getItem('fidelity_user'));
+    // --- 0. BULLETPROOF AUTHENTICATION GUARD ---
+    (function() {
+        try {
+            const data = localStorage.getItem('fidelity_user');
+            // If the item doesn't exist at all
+            if (!data) {
+                window.location.href = "../index.html";
+                return;
+            }
 
-if (!checkUser || !checkUser.email) {
-    // If no email is found, the user is not logged in.
-    // Redirect them immediately to the home/login page.
-    window.location.replace("../"); 
-}
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#fbbf24',
-                        darkBg: '#020617',
-                        darkCard: '#0f172a'
-                    }
+            const user = JSON.parse(data);
+            // If the data exists but has no email
+            if (!user || !user.email) {
+                window.location.href = "../index.html";
+                return;
+            }
+        } catch (error) {
+            // If localStorage is blocked (Private Mode) or JSON is corrupted
+            window.location.href = "../index.html";
+        }
+    })();
+    
+    // --- 1. TAILWIND CONFIG (Keep this below the guard) ---
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#fbbf24',
+                    darkBg: '#020617',
+                    darkCard: '#0f172a'
                 }
             }
         }
-    </script>
+    }
+</script>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
