@@ -109,6 +109,46 @@
 .animate-entrance {
     animation: portalFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+/* Styling the native date picker appearance */
+.custom-date-input::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* Ensure the date text is visible and themed */
+input[type="date"] {
+    position: relative;
+    min-height: 43px; /* Matches your other inputs */
+}
+
+/* Chrome/Safari: Make the placeholder look like your other inputs when empty */
+input[type="date"]::before {
+    content: attr(placeholder);
+    width: 100%;
+    color: #64748b; /* slate-500 */
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+    display: none;
+}
+
+/* Dark mode selection color */
+input[type="date"]::-webkit-datetime-edit-month-field:focus,
+input[type="date"]::-webkit-datetime-edit-day-field:focus,
+input[type="date"]::-webkit-datetime-edit-year-field:focus {
+    background-color: #fbbf24; /* yellow-500 */
+    color: #020617; /* slate-950 */
+    border-radius: 2px;
+}
     </style>
 </head>
 <body class="text-slate-200 opacity-0 animate-entrance">
@@ -180,10 +220,19 @@
                             <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email Address</label>
                             <input type="email" placeholder="john@email.com" class="compact-input" required>
                         </div>
-                        <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Age</label>
-                            <input type="number" placeholder="18+" class="compact-input" required>
-                        </div>
+                        <!-- DATE OF BIRTH SECTION -->
+<div class="space-y-1">
+    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Date of Birth</label>
+    <div class="relative">
+        <input type="date" 
+               id="dob"
+               class="compact-input appearance-none block w-full custom-date-input" 
+               required 
+               onfocus="this.showPicker()">
+        <!-- Optional: A small icon to indicate it's a calendar -->
+        <i data-lucide="calendar" class="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500 pointer-events-none"></i>
+    </div>
+</div>
                     </div>
 
                     <div class="space-y-1">
@@ -312,6 +361,19 @@
             switchTab(initialTab);
             window.addEventListener('resize', () => updateCardHeight(window.location.hash === '#create' ? 'create' : 'login'));
         };
+        window.addEventListener('DOMContentLoaded', () => {
+    const dobInput = document.getElementById('dob');
+    // Calculate the date 18 years ago from today
+    const today = new Date();
+    const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    
+    // Format to YYYY-MM-DD for the 'max' attribute
+    const maxDate = eighteenYearsAgo.toISOString().split("T")[0];
+    dobInput.setAttribute("max", maxDate);
+    
+    // Refresh icons if you added the calendar icon
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+});
     </script>
 </body>
 </html>
