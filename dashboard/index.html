@@ -1216,7 +1216,7 @@ if (!state.settings) state.settings = { darkMode: true };
     function inviteViaWhatsApp() {
         const phone = document.getElementById('wa-phone').value;
         if (!phone) return alert("Enter phone.");
-        window.open(`https://wa.me/234${phone}?text=${encodeURIComponent("Earn 10% daily with Fidelity Wealth: https://fidelitywealth.com")}`, '_blank');
+        window.open(`https://wa.me/234${phone}?text=${encodeURIComponent("Invest your  money with Fidelity Wealth: https://bit.ly/4bzYxKr and get 2X back on your deposit by earning 10% daily!")}`, '_blank');
         state.pendingReferrals.push({ id: Date.now(), timestamp: Date.now(), amount: 100, processed: false });
         addNotification('Invite Sent', 'Your bonus is pending.', 'referral');
         save();
