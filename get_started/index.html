@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Access | Fidelity Wealth Scheme</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.avif" type="image/x-icon">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        (function() {
-    try {
-        const data = localStorage.getItem('fidelity_user');
+        (function () {
+            try {
+                const data = localStorage.getItem('fidelity_user');
 
-        // If the item exists
-        if (data) {
-            const user = JSON.parse(data);
+                // If the item exists
+                if (data) {
+                    const user = JSON.parse(data);
 
-            // If valid user with email exists → go to dashboard
-            if (user && user.email) {
-                window.location.href = "../dashboard";
-                return;
+                    // If valid user with email exists → go to dashboard
+                    if (user && user.email) {
+                        window.location.href = "../dashboard";
+                        return;
+                    }
+                }
+
+            } catch (error) {
+                // Do nothing (stay on page if error)
             }
-        }
-
-    } catch (error) {
-        // Do nothing (stay on page if error)
-    }
-})();
+        })();
     </script>
 
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #020617; 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -56,7 +58,7 @@
             position: relative;
             z-index: 10;
             transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden; 
+            overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
@@ -93,7 +95,11 @@
             outline: none;
             transition: all 0.2s ease;
         }
-        .compact-input:focus { border-color: #fbbf24; background: rgba(30, 41, 59, 0.8); }
+
+        .compact-input:focus {
+            border-color: #fbbf24;
+            background: rgba(30, 41, 59, 0.8);
+        }
 
         .captcha-box {
             background: #1e293b;
@@ -109,97 +115,115 @@
             transform: translateX(-10px);
             pointer-events: none;
         }
+
         .prefix-span.active {
             opacity: 1;
             transform: translateX(0);
         }
 
         @media screen and (max-width: 768px) {
-            input { font-size: 16px !important; }
+            input {
+                font-size: 16px !important;
+            }
         }
+
         /* Page Load Animation */
-@keyframes portalFadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
+        @keyframes portalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-.animate-entrance {
-    animation: portalFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-/* Styling the native date picker appearance */
-.custom-date-input::-webkit-calendar-picker-indicator {
-    background: transparent;
-    bottom: 0;
-    color: transparent;
-    cursor: pointer;
-    height: auto;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: auto;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* Ensure the date text is visible and themed */
-input[type="date"] {
-    position: relative;
-    min-height: 43px; /* Matches your other inputs */
-}
+        .animate-entrance {
+            animation: portalFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
 
-/* Chrome/Safari: Make the placeholder look like your other inputs when empty */
-input[type="date"]::before {
-    content: attr(placeholder);
-    width: 100%;
-    color: #64748b; /* slate-500 */
-}
+        /* Styling the native date picker appearance */
+        .custom-date-input::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
 
-input[type="date"]:focus::before,
-input[type="date"]:valid::before {
-    display: none;
-}
+        /* Ensure the date text is visible and themed */
+        input[type="date"] {
+            position: relative;
+            min-height: 43px;
+            /* Matches your other inputs */
+        }
 
-/* Dark mode selection color */
-input[type="date"]::-webkit-datetime-edit-month-field:focus,
-input[type="date"]::-webkit-datetime-edit-day-field:focus,
-input[type="date"]::-webkit-datetime-edit-year-field:focus {
-    background-color: #fbbf24; /* yellow-500 */
-    color: #020617; /* slate-950 */
-    border-radius: 2px;
-}
+        /* Chrome/Safari: Make the placeholder look like your other inputs when empty */
+        input[type="date"]::before {
+            content: attr(placeholder);
+            width: 100%;
+            color: #64748b;
+            /* slate-500 */
+        }
+
+        input[type="date"]:focus::before,
+        input[type="date"]:valid::before {
+            display: none;
+        }
+
+        /* Dark mode selection color */
+        input[type="date"]::-webkit-datetime-edit-month-field:focus,
+        input[type="date"]::-webkit-datetime-edit-day-field:focus,
+        input[type="date"]::-webkit-datetime-edit-year-field:focus {
+            background-color: #fbbf24;
+            /* yellow-500 */
+            color: #020617;
+            /* slate-950 */
+            border-radius: 2px;
+        }
     </style>
 </head>
+
 <body class="text-slate-200 opacity-0 animate-entrance">
 
     <!-- BACK TO HOME BUTTON -->
-    <a href="../index.html" class="fixed top-6 right-6 z-[100] flex items-center space-x-2 bg-slate-900/50 hover:bg-yellow-500 hover:text-slate-900 border border-slate-700 px-4 py-2 rounded-full transition-all group">
+    <a href="../index.html"
+        class="fixed top-6 right-6 z-[100] flex items-center space-x-2 bg-slate-900/50 hover:bg-yellow-500 hover:text-slate-900 border border-slate-700 px-4 py-2 rounded-full transition-all group">
         <span class="text-xs font-bold uppercase tracking-widest">Home</span>
         <i data-lucide="home" class="w-4 h-4"></i>
     </a>
 
     <!-- MAIN PORTAL -->
     <div id="card" class="portal-card opacity-0 animate-entrance">
-        
-        <div id="card-header" class="pt-8 pb-4 text-center">
-            <div class="inline-flex items-center space-x-2 bg-yellow-500 p-2 rounded-xl mb-3 shadow-lg shadow-yellow-500/20">
-                <i data-lucide="shield-check" class="text-slate-900 w-5 h-5"></i>
+        <a href="../index.html">
+
+            <div id="card-header" class="pt-8 pb-4 text-center">
+                <div
+                    class="inline-flex items-center space-x-2 bg-yellow-500 p-2 rounded-xl mb-3 shadow-lg shadow-yellow-500/20">
+                    <i data-lucide="shield-check" class="text-slate-900 w-5 h-5"></i>
+                </div>
+                <h2 class="text-lg font-black tracking-tighter uppercase text-white">Fidelity <span
+                        class="text-yellow-500">Wealth</span></h2>
             </div>
-            <h2 class="text-lg font-black tracking-tighter uppercase text-white">Fidelity <span class="text-yellow-500">Wealth</span></h2>
-        </div>
+        </a>
 
         <div id="card-nav" class="flex relative border-b border-slate-800/50">
-            <button onclick="switchTab('login')" id="nav-login" class="flex-1 py-4 text-xs font-bold uppercase tracking-widest text-yellow-500 transition-colors">Login</button>
-            <button onclick="switchTab('create')" id="nav-create" class="flex-1 py-4 text-xs font-bold uppercase tracking-widest text-slate-500 transition-colors">Create</button>
+            <button onclick="switchTab('login')" id="nav-login"
+                class="flex-1 py-4 text-xs font-bold uppercase tracking-widest text-yellow-500 transition-colors">Login</button>
+            <button onclick="switchTab('create')" id="nav-create"
+                class="flex-1 py-4 text-xs font-bold uppercase tracking-widest text-slate-500 transition-colors">Create</button>
             <div id="indicator" class="tab-indicator w-1/2 left-0"></div>
         </div>
 
         <div class="form-slider" id="slider">
-            
+
             <!-- LOGIN SECTION -->
             <div class="form-page" id="login-page">
                 <div class="mb-6">
@@ -207,23 +231,29 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                     <p class="text-slate-500 text-xs">Enter your Email or Phone Number</p>
                 </div>
                 <form class="space-y-4" id="login-form">
-    <div class="space-y-1.5">
-        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Account Identifier (Email or Phone)</label>
-        <div class="relative flex items-center overflow-hidden rounded-xl">
-            <span id="login-prefix" class="prefix-span absolute left-0 bg-slate-800 border-r border-slate-700 h-full flex items-center px-4 text-slate-400 font-bold text-xs">+234</span>
-            <input type="text" id="login-input" placeholder="Email or Phone" class="compact-input transition-all" required>
-        </div>
-    </div>
-    <div class="space-y-1.5">
-        <div class="flex justify-between">
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
-        </div>
-        <input type="password" id="login-password" placeholder="••••••••" class="compact-input" required>
-    </div>
-    <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-black py-4 rounded-xl transition-all shadow-lg shadow-yellow-500/10 uppercase tracking-widest text-xs mt-2">
-        Authorize Login
-    </button>
-</form>
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Account
+                            Identifier (Email or Phone)</label>
+                        <div class="relative flex items-center overflow-hidden rounded-xl">
+                            <span id="login-prefix"
+                                class="prefix-span absolute left-0 bg-slate-800 border-r border-slate-700 h-full flex items-center px-4 text-slate-400 font-bold text-xs">+234</span>
+                            <input type="text" id="login-input" placeholder="Email or Phone"
+                                class="compact-input transition-all" required>
+                        </div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between">
+                            <label
+                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
+                        </div>
+                        <input type="password" id="login-password" placeholder="••••••••" class="compact-input"
+                            required>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-black py-4 rounded-xl transition-all shadow-lg shadow-yellow-500/10 uppercase tracking-widest text-xs mt-2">
+                        Authorize Login
+                    </button>
+                </form>
             </div>
 
             <!-- CREATE ACCOUNT SECTION -->
@@ -233,67 +263,83 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                     <p class="text-slate-500 text-xs">Registration for lending reserve</p>
                 </div>
                 <form class="space-y-3.5" id="register-form">
-    <div class="space-y-1">
-        <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Full Name</label>
-        <input type="text" id="reg-fullname" placeholder="Johnathan Doe" class="compact-input" required>
-    </div>
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Full
+                            Name</label>
+                        <input type="text" id="reg-fullname" placeholder="Johnathan Doe" class="compact-input" required>
+                    </div>
 
-    <div class="grid grid-cols-2 gap-3">
-        <div class="space-y-1">
-            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email Address</label>
-            <input type="email" id="reg-email" placeholder="john@email.com" class="compact-input" required>
-        </div>
-        <!-- DATE OF BIRTH SECTION -->
-        <div class="space-y-1">
-            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Date of Birth (18+)</label>
-            <div class="relative">
-                <input type="date" 
-                       id="dob"
-                       class="compact-input appearance-none block w-full custom-date-input" 
-                       required 
-                       onfocus="this.showPicker()">
-                <!-- Optional: A small icon to indicate it's a calendar -->
-                <i data-lucide="calendar" class="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500 pointer-events-none"></i>
-            </div>
-        </div>
-    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email
+                                Address</label>
+                            <input type="email" id="reg-email" placeholder="john@email.com" class="compact-input"
+                                required>
+                        </div>
+                        <!-- DATE OF BIRTH SECTION -->
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Date of
+                                Birth (18+)</label>
+                            <div class="relative">
+                                <input type="date" id="dob"
+                                    class="compact-input appearance-none block w-full custom-date-input" required
+                                    onfocus="this.showPicker()">
+                                <!-- Optional: A small icon to indicate it's a calendar -->
+                                <i data-lucide="calendar"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500 pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="space-y-1">
-        <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Phone Number</label>
-        <div class="flex">
-            <span class="bg-slate-800 border border-slate-700 border-r-0 px-3 flex items-center rounded-l-xl text-slate-400 font-bold text-[11px]">+234</span>
-            <input type="tel" id="reg-phone" placeholder="8012345678" class="compact-input rounded-l-none" required>
-        </div>
-    </div>
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Phone
+                            Number</label>
+                        <div class="flex">
+                            <span
+                                class="bg-slate-800 border border-slate-700 border-r-0 px-3 flex items-center rounded-l-xl text-slate-400 font-bold text-[11px]">+234</span>
+                            <input type="tel" id="reg-phone" placeholder="8012345678"
+                                class="compact-input rounded-l-none" required>
+                        </div>
+                    </div>
 
-    <div class="grid grid-cols-2 gap-3">
-        <div class="space-y-1">
-            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
-            <input type="password" id="reg-password" placeholder="••••" class="compact-input" required>
-        </div>
-        <div class="space-y-1">
-            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Confirm</label>
-            <input type="password" id="reg-confirm" placeholder="••••" class="compact-input" required>
-        </div>
-    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label
+                                class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
+                            <input type="password" id="reg-password" placeholder="••••" class="compact-input" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label
+                                class="text-[9px] font-bold text-slate-500 uppercase tracking-widest ml-1">Confirm</label>
+                            <input type="password" id="reg-confirm" placeholder="••••" class="compact-input" required>
+                        </div>
+                    </div>
 
-    <div class="space-y-2">
-        <label class="text-[9px] font-black text-yellow-500 uppercase tracking-widest ml-1">Human Verification</label>
-        <div class="flex space-x-2">
-            <div id="captchaCode" class="captcha-box flex-1 flex items-center justify-center rounded-xl text-yellow-500 font-bold text-lg italic italic">77RO</div>
-            <input type="text" id="captchaInput" placeholder="Type Code" class="flex-1 compact-input text-center" required>
-        </div>
-    </div>
+                    <div class="space-y-2">
+                        <label class="text-[9px] font-black text-yellow-500 uppercase tracking-widest ml-1">Human
+                            Verification</label>
+                        <div class="flex space-x-2">
+                            <div id="captchaCode"
+                                class="captcha-box flex-1 flex items-center justify-center rounded-xl text-yellow-500 font-bold text-lg italic italic">
+                                77RO</div>
+                            <input type="text" id="captchaInput" placeholder="Type Code"
+                                class="flex-1 compact-input text-center" required>
+                        </div>
+                    </div>
 
-    <div class="flex items-center space-x-2 py-1">
-        <input type="checkbox" id="terms" required class="w-3.5 h-3.5 rounded bg-slate-900 text-yellow-500" aria-required="true">
-        <label for="terms" class="text-[12px] text-slate-500">I agree to the <a href="../tpf/#terms" class="text-yellow-500 font-bold">Terms of Service</a> & <a href="../tpf/#privacy" class="text-yellow-500 font-bold">Privacy Policy</a></label>
-    </div>
+                    <div class="flex items-center space-x-2 py-1">
+                        <input type="checkbox" id="terms" required
+                            class="w-3.5 h-3.5 rounded bg-slate-900 text-yellow-500" aria-required="true">
+                        <label for="terms" class="text-[12px] text-slate-500">I agree to the <a href="../tpf/#terms"
+                                class="text-yellow-500 font-bold">Terms of Service</a> & <a href="../tpf/#privacy"
+                                class="text-yellow-500 font-bold">Privacy Policy</a></label>
+                    </div>
 
-    <button type="submit" id="signupBtn" disabled class="w-full bg-yellow-500 text-slate-900 font-black py-4 rounded-xl transition-all opacity-40 cursor-not-allowed uppercase tracking-widest text-xs">
-        Create Account
-    </button>
-</form>
+                    <button type="submit" id="signupBtn" disabled
+                        class="w-full bg-yellow-500 text-slate-900 font-black py-4 rounded-xl transition-all opacity-40 cursor-not-allowed uppercase tracking-widest text-xs">
+                        Create Account
+                    </button>
+                </form>
             </div>
 
         </div>
@@ -306,176 +352,177 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     </footer>
 
     <script>
-    lucide.createIcons();
+        lucide.createIcons();
 
-    const card = document.getElementById('card');
-    const slider = document.getElementById('slider');
-    const indicator = document.getElementById('indicator');
-    const navLogin = document.getElementById('nav-login');
-    const navCreate = document.getElementById('nav-create');
-    const loginPage = document.getElementById('login-page');
-    const createPage = document.getElementById('create-page');
+        const card = document.getElementById('card');
+        const slider = document.getElementById('slider');
+        const indicator = document.getElementById('indicator');
+        const navLogin = document.getElementById('nav-login');
+        const navCreate = document.getElementById('nav-create');
+        const loginPage = document.getElementById('login-page');
+        const createPage = document.getElementById('create-page');
 
-    // --- 1. UI LOGIC: Email vs Phone Prefix ---
-    const loginInput = document.getElementById('login-input');
-    const loginPrefix = document.getElementById('login-prefix');
+        // --- 1. UI LOGIC: Email vs Phone Prefix ---
+        const loginInput = document.getElementById('login-input');
+        const loginPrefix = document.getElementById('login-prefix');
 
-    loginInput.addEventListener('input', (e) => {
-        const val = e.target.value;
-        if (val.length > 0 && /^[0-9]/.test(val)) {
-            loginPrefix.classList.add('active');
-            loginInput.style.paddingLeft = "4.5rem";
-        } else {
-            loginPrefix.classList.remove('active');
-            loginInput.style.paddingLeft = "1rem";
-        }
-    });
+        loginInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (val.length > 0 && /^[0-9]/.test(val)) {
+                loginPrefix.classList.add('active');
+                loginInput.style.paddingLeft = "4.5rem";
+            } else {
+                loginPrefix.classList.remove('active');
+                loginInput.style.paddingLeft = "1rem";
+            }
+        });
 
-    // --- 2. TAB SWITCHING & ACCOUNT CHECK ---
-    function switchTab(tab) {
-        // Check if an account already exists in LocalStorage
-        const existingUser = localStorage.getItem('fidelity_user');
+        // --- 2. TAB SWITCHING & ACCOUNT CHECK ---
+        function switchTab(tab) {
+            // Check if an account already exists in LocalStorage
+            const existingUser = localStorage.getItem('fidelity_user');
 
-        if (tab === 'create' && existingUser) {
-            alert("You have already created an account on this device. Please proceed to Login.");
-            switchTab('login'); // Force stay on login
-            return;
-        }
+            if (tab === 'create' && existingUser) {
+                alert("You have already created an account on this device. Please proceed to Login.");
+                switchTab('login'); // Force stay on login
+                return;
+            }
 
-        if (tab === 'create') {
-            slider.style.transform = 'translateX(-50%)';
-            indicator.style.left = '50%';
-            navCreate.classList.replace('text-slate-500', 'text-yellow-500');
-            navLogin.classList.replace('text-yellow-500', 'text-slate-500');
-            loginPage.style.opacity = '0';
-            setTimeout(() => createPage.style.opacity = '1', 150);
-            window.location.hash = 'create';
-        } else {
-            slider.style.transform = 'translateX(0%)';
-            indicator.style.left = '0%';
-            navLogin.classList.replace('text-slate-500', 'text-yellow-500');
-            navCreate.classList.replace('text-yellow-500', 'text-slate-500');
-            createPage.style.opacity = '0';
-            setTimeout(() => loginPage.style.opacity = '1', 150);
-            window.location.hash = 'login';
-        }
-        setTimeout(() => updateCardHeight(tab), 50);
-    }
-
-    function updateCardHeight(tab) {
-        const headerH = document.getElementById('card-header').offsetHeight;
-        const navH = document.getElementById('card-nav').offsetHeight;
-        const activeFormH = (tab === 'login') ? loginPage.offsetHeight : createPage.offsetHeight;
-        card.style.height = (headerH + navH + activeFormH) + "px";
-    }
-
-    // --- 3. CAPTCHA ENGINE ---
-    const captchaCodeBox = document.getElementById('captchaCode');
-    const captchaInput = document.getElementById('captchaInput');
-    const signupBtn = document.getElementById('signupBtn');
-    const codes = ["VX99", "77RO", "WLT1", "FID5", "2XGO"];
-    let activeCode = codes[Math.floor(Math.random() * codes.length)];
-    captchaCodeBox.innerText = activeCode;
-
-    captchaInput.addEventListener('input', (e) => {
-        if(e.target.value.toUpperCase() === activeCode) {
-            signupBtn.disabled = false;
-            signupBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-        } else {
-            signupBtn.disabled = true;
-            signupBtn.classList.add('opacity-40', 'cursor-not-allowed');
-        }
-    });
-
-    // --- 4. REGISTRATION (Save to LocalStorage & Sync Dashboard) ---
-    const regForm = document.getElementById('register-form');
-    regForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const password = document.getElementById('reg-password').value;
-        const confirm = document.getElementById('reg-confirm').value;
-
-        if(password !== confirm) {
-            alert("Passwords do not match!");
-            return;
+            if (tab === 'create') {
+                slider.style.transform = 'translateX(-50%)';
+                indicator.style.left = '50%';
+                navCreate.classList.replace('text-slate-500', 'text-yellow-500');
+                navLogin.classList.replace('text-yellow-500', 'text-slate-500');
+                loginPage.style.opacity = '0';
+                setTimeout(() => createPage.style.opacity = '1', 150);
+                window.location.hash = 'create';
+            } else {
+                slider.style.transform = 'translateX(0%)';
+                indicator.style.left = '0%';
+                navLogin.classList.replace('text-slate-500', 'text-yellow-500');
+                navCreate.classList.replace('text-yellow-500', 'text-slate-500');
+                createPage.style.opacity = '0';
+                setTimeout(() => loginPage.style.opacity = '1', 150);
+                window.location.hash = 'login';
+            }
+            setTimeout(() => updateCardHeight(tab), 50);
         }
 
-        // Object for Login validation
-        const userData = {
-            fullName: document.getElementById('reg-fullname').value,
-            email: document.getElementById('reg-email').value.toLowerCase(),
-            dob: document.getElementById('dob').value,
-            phone: document.getElementById('reg-phone').value,
-            password: password
+        function updateCardHeight(tab) {
+            const headerH = document.getElementById('card-header').offsetHeight;
+            const navH = document.getElementById('card-nav').offsetHeight;
+            const activeFormH = (tab === 'login') ? loginPage.offsetHeight : createPage.offsetHeight;
+            card.style.height = (headerH + navH + activeFormH) + "px";
+        }
+
+        // --- 3. CAPTCHA ENGINE ---
+        const captchaCodeBox = document.getElementById('captchaCode');
+        const captchaInput = document.getElementById('captchaInput');
+        const signupBtn = document.getElementById('signupBtn');
+        const codes = ["VX99", "77RO", "WLT1", "FID5", "2XGO"];
+        let activeCode = codes[Math.floor(Math.random() * codes.length)];
+        captchaCodeBox.innerText = activeCode;
+
+        captchaInput.addEventListener('input', (e) => {
+            if (e.target.value.toUpperCase() === activeCode) {
+                signupBtn.disabled = false;
+                signupBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+            } else {
+                signupBtn.disabled = true;
+                signupBtn.classList.add('opacity-40', 'cursor-not-allowed');
+            }
+        });
+
+        // --- 4. REGISTRATION (Save to LocalStorage & Sync Dashboard) ---
+        const regForm = document.getElementById('register-form');
+        regForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const password = document.getElementById('reg-password').value;
+            const confirm = document.getElementById('reg-confirm').value;
+
+            if (password !== confirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Object for Login validation
+            const userData = {
+                fullName: document.getElementById('reg-fullname').value,
+                email: document.getElementById('reg-email').value.toLowerCase(),
+                dob: document.getElementById('dob').value,
+                phone: document.getElementById('reg-phone').value,
+                password: password
+            };
+
+            // Save for Login access
+            localStorage.setItem('fidelity_user', JSON.stringify(userData));
+
+            // SYNC: Initialize the Dashboard State immediately so Name/Email show up there
+            let fwState = JSON.parse(localStorage.getItem('fw_state')) || {
+                user: {},
+                investments: [],
+                transactions: [],
+                settings: { darkMode: true }
+            };
+
+            fwState.user = {
+                name: userData.fullName,
+                email: userData.email,
+                phone: userData.phone,
+                age: userData.dob,
+                balance: fwState.user.balance || 0 // Keep balance if exists, else 0
+            };
+
+            localStorage.setItem('fw_state', JSON.stringify(fwState));
+
+            alert("Account Created Successfully! You can now log in with your credentials.");
+            switchTab('login');
+        });
+
+        // --- 5. LOGIN (Validate & Redirect) ---
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const inputID = document.getElementById('login-input').value.toLowerCase();
+            const inputPass = document.getElementById('login-password').value;
+
+            const storedData = localStorage.getItem('fidelity_user');
+
+            if (!storedData) {
+                alert("No account found on this device. Please create an account first.");
+                return;
+            }
+
+            const user = JSON.parse(storedData);
+
+            // Logic: Check if Identifier (Email OR Phone) matches AND Password matches
+            if ((inputID === user.email || inputID === user.phone) && inputPass === user.password) {
+                alert("Login Successful! Welcome back, " + user.fullName);
+
+                // Redirect to dashboard folder
+                window.location.href = "/dashboard/";
+            } else {
+                alert("Error: Incorrect credentials. Please check your email/phone and password.");
+            }
+        });
+
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            const initialTab = (window.location.hash === '#create') ? 'create' : 'login';
+            switchTab(initialTab);
+
+            // Set DOB limit to 18 years ago (Safety Check)
+            const dobInput = document.getElementById('dob');
+            const today = new Date();
+            const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+            if (dobInput) dobInput.setAttribute("max", eighteenYearsAgo.toISOString().split("T")[0]);
+
+            // Recalculate card height on resize
+            window.addEventListener('resize', () => updateCardHeight(window.location.hash === '#create' ? 'create' : 'login'));
         };
-
-        // Save for Login access
-        localStorage.setItem('fidelity_user', JSON.stringify(userData));
-
-        // SYNC: Initialize the Dashboard State immediately so Name/Email show up there
-        let fwState = JSON.parse(localStorage.getItem('fw_state')) || { 
-            user: {}, 
-            investments: [], 
-            transactions: [],
-            settings: { darkMode: true }
-        };
-
-        fwState.user = {
-            name: userData.fullName,
-            email: userData.email,
-            phone: userData.phone,
-            age: userData.dob,
-            balance: fwState.user.balance || 0 // Keep balance if exists, else 0
-        };
-
-        localStorage.setItem('fw_state', JSON.stringify(fwState));
-        
-        alert("Account Created Successfully! You can now log in with your credentials.");
-        switchTab('login');
-    });
-
-    // --- 5. LOGIN (Validate & Redirect) ---
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const inputID = document.getElementById('login-input').value.toLowerCase();
-        const inputPass = document.getElementById('login-password').value;
-        
-        const storedData = localStorage.getItem('fidelity_user');
-
-        if (!storedData) {
-            alert("No account found on this device. Please create an account first.");
-            return;
-        }
-
-        const user = JSON.parse(storedData);
-
-        // Logic: Check if Identifier (Email OR Phone) matches AND Password matches
-        if ((inputID === user.email || inputID === user.phone) && inputPass === user.password) {
-            alert("Login Successful! Welcome back, " + user.fullName);
-            
-            // Redirect to dashboard folder
-            window.location.href = "/dashboard/"; 
-        } else {
-            alert("Error: Incorrect credentials. Please check your email/phone and password.");
-        }
-    });
-
-    // --- INITIALIZATION ---
-    window.onload = () => {
-        const initialTab = (window.location.hash === '#create') ? 'create' : 'login';
-        switchTab(initialTab);
-        
-        // Set DOB limit to 18 years ago (Safety Check)
-        const dobInput = document.getElementById('dob');
-        const today = new Date();
-        const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-        if(dobInput) dobInput.setAttribute("max", eighteenYearsAgo.toISOString().split("T")[0]);
-        
-        // Recalculate card height on resize
-        window.addEventListener('resize', () => updateCardHeight(window.location.hash === '#create' ? 'create' : 'login'));
-    };
-</script>
+    </script>
 </body>
+
 </html>

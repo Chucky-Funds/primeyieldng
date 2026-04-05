@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legal Vault | Fidelity Wealth Scheme</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.avif" type="image/x-icon">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        .gradient-dark { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+
+        .gradient-dark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
         /* Unified Container */
         .vault-container {
             max-width: 900px;
@@ -28,6 +36,7 @@
             border-radius: 14px;
             margin-bottom: 2rem;
         }
+
         .tab-link {
             flex: 1;
             text-align: center;
@@ -40,55 +49,118 @@
             cursor: pointer;
             white-space: nowrap;
         }
+
         .tab-link.active {
             background: white;
             color: #0f172a;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         /* Section Visibility */
-        .legal-section { display: none; }
-        .legal-section.active { display: block; animation: fadeIn 0.4s ease; }
+        .legal-section {
+            display: none;
+        }
+
+        .legal-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* FAQ Sharp Styling */
-        .faq-item { border-bottom: 1px solid #f1f5f9; }
-        .faq-item:last-child { border-bottom: none; }
-        .faq-trigger { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; text-align: left; }
-        .faq-content { max-height: 0; overflow: hidden; transition: all 0.3s ease; color: #64748b; font-size: 0.95rem; }
-        .faq-item.active .faq-content { max-height: 300px; padding-bottom: 20px; }
-        .faq-item.active i { transform: rotate(180deg); color: #fbbf24; }
+        .faq-item {
+            border-bottom: 1px solid #f1f5f9;
+        }
 
-        .glass-header { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(10px); }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            text-align: left;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 300px;
+            padding-bottom: 20px;
+        }
+
+        .faq-item.active i {
+            transform: rotate(180deg);
+            color: #fbbf24;
+        }
+
+        .glass-header {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+        }
 
         /* Responsive Fixes */
         @media (max-width: 640px) {
-            .tab-nav { margin: 0 1rem 2rem; }
-            .vault-container { margin-top: -40px; }
-            h1 { font-size: 1.75rem !important; }
+            .tab-nav {
+                margin: 0 1rem 2rem;
+            }
+
+            .vault-container {
+                margin-top: -40px;
+            }
+
+            h1 {
+                font-size: 1.75rem !important;
+            }
         }
+
         @media (max-width: 320px) {
-            .tab-link { font-size: 0.7rem; padding: 8px 4px; }
+            .tab-link {
+                font-size: 0.7rem;
+                padding: 8px 4px;
+            }
         }
     </style>
 </head>
+
 <body class="text-slate-900 overflow-x-hidden">
 
     <!-- TOP NAVIGATION -->
     <nav class="fixed w-full z-[100] glass-header border-b border-slate-800 py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="bg-yellow-500 p-1.5 rounded-lg">
-                    <i data-lucide="shield-check" class="text-slate-900 w-5 h-5"></i>
+            <a href="../index.html">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-yellow-500 p-1.5 rounded-lg">
+                        <i data-lucide="shield-check" class="text-slate-900 w-5 h-5"></i>
+                    </div>
+                    <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span
+                            class="text-yellow-500">Wealth</span></span>
                 </div>
-                <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span class="text-yellow-500">Wealth</span></span>
-            </div>
-            <a href="../index.html" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center">
-                <i data-lucide="arrow-left" class="w-3 h-3 mr-2"></i> EXIT
+            </a>
+            <a href="../index.html"
+                class="fixed top-6 right-6 z-[100] flex items-center space-x-2 bg-slate-900/50 text-white hover:bg-yellow-500 hover:text-slate-900 border border-slate-700 hover:border-slate-700 px-4 py-2 rounded-full transition-all group">
+                <span class="text-xs font-bold uppercase tracking-widest">Home</span>
+                <i data-lucide="home" class="w-4 h-4"></i>
             </a>
         </div>
     </nav>
@@ -96,14 +168,16 @@
     <!-- HERO SECTION -->
     <header class="gradient-dark pt-32 pb-24 text-center">
         <div class="container mx-auto px-6">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Legal <span class="text-yellow-500">Vault</span></h1>
-            <p class="text-slate-400 text-sm md:text-base font-medium uppercase tracking-widest">Transparency & Payout Protocols</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Legal <span
+                    class="text-yellow-500">Vault</span></h1>
+            <p class="text-slate-400 text-sm md:text-base font-medium uppercase tracking-widest">Transparency & Payout
+                Protocols</p>
         </div>
     </header>
 
     <!-- UNIFIED VAULT CONTENT -->
     <main class="vault-container px-4">
-        
+
         <!-- Tab Switcher -->
         <div class="tab-nav">
             <div class="tab-link active" onclick="switchTab('faq')">FAQ</div>
@@ -113,7 +187,7 @@
 
         <!-- CONTENT BOX -->
         <div class="bg-white rounded-[2rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
-            
+
             <!-- 1. FAQ SECTION -->
             <!-- 1. FAQ SECTION -->
             <section id="faq" class="legal-section active p-6 md:p-12">
@@ -121,7 +195,7 @@
                     <div class="w-1 h-8 bg-yellow-500 rounded-full"></div>
                     <h2 class="text-2xl font-bold">Comprehensive Support FAQ</h2>
                 </div>
-                
+
                 <div class="divide-y divide-slate-50">
                     <!-- Q1 -->
                     <div class="faq-item active">
@@ -130,7 +204,10 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Fidelity Wealth Scheme acts as a liquidity bridge. Your deposit is pooled with institutional capital to fund high-frequency micro-loans for SMEs (Small to Medium Enterprises). These businesses pay high daily interest for short-term liquidity. We retain a small percentage for insurance and administrative costs, passing 10% directly to you every 24 hours.
+                            Fidelity Wealth Scheme acts as a liquidity bridge. Your deposit is pooled with institutional
+                            capital to fund high-frequency micro-loans for SMEs (Small to Medium Enterprises). These
+                            businesses pay high daily interest for short-term liquidity. We retain a small percentage
+                            for insurance and administrative costs, passing 10% directly to you every 24 hours.
                         </div>
                     </div>
 
@@ -141,7 +218,10 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            To ensure the stability of the lending ecosystem, funds are committed to active loan contracts. These contracts are legally structured in 20-day cycles. Withdrawing early would break the loan agreement with our enterprise partners. Therefore, the system automatically unlocks your full balance (Capital + 100% Profit) exactly once the 200% target is achieved.
+                            To ensure the stability of the lending ecosystem, funds are committed to active loan
+                            contracts. These contracts are legally structured in 20-day cycles. Withdrawing early would
+                            break the loan agreement with our enterprise partners. Therefore, the system automatically
+                            unlocks your full balance (Capital + 100% Profit) exactly once the 200% target is achieved.
                         </div>
                     </div>
 
@@ -152,7 +232,10 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Yes. We utilize a Collateralized Lending Model. Every loan issued by Fidelity is backed by physical or digital assets from the borrower. In the rare event of a borrower default, the collateral is liquidated to ensure that our lenders' (your) initial capital remains unaffected.
+                            Yes. We utilize a Collateralized Lending Model. Every loan issued by Fidelity is backed by
+                            physical or digital assets from the borrower. In the rare event of a borrower default, the
+                            collateral is liquidated to ensure that our lenders' (your) initial capital remains
+                            unaffected.
                         </div>
                     </div>
 
@@ -163,7 +246,8 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Yes, you can run multiple lending cycles simultaneously. Each deposit is treated as a separate contract with its own 20-day maturation timer.
+                            Yes, you can run multiple lending cycles simultaneously. Each deposit is treated as a
+                            separate contract with its own 20-day maturation timer.
                         </div>
                     </div>
 
@@ -174,7 +258,8 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            We support all major Nigerian commercial banks, as well as licensed neobanks like OPay, Palmpay, and Kuda.
+                            We support all major Nigerian commercial banks, as well as licensed neobanks like OPay,
+                            Palmpay, and Kuda.
                         </div>
                     </div>
 
@@ -185,7 +270,9 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Upon reaching maturation, withdrawal requests are processed via our automated clearing house. Most members receive their funds within 5 to 30 minutes. In cases of extreme bank network congestion, it may take up to 24 hours.
+                            Upon reaching maturation, withdrawal requests are processed via our automated clearing
+                            house. Most members receive their funds within 5 to 30 minutes. In cases of extreme bank
+                            network congestion, it may take up to 24 hours.
                         </div>
                     </div>
 
@@ -196,7 +283,9 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            No. Registration is 100% free. There are no monthly fees, maintenance costs, or withdrawal taxes. The profit shared with you is "Net Profit," meaning we have already deducted our operational costs before crediting your 10%.
+                            No. Registration is 100% free. There are no monthly fees, maintenance costs, or withdrawal
+                            taxes. The profit shared with you is "Net Profit," meaning we have already deducted our
+                            operational costs before crediting your 10%.
                         </div>
                     </div>
 
@@ -207,7 +296,10 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            The maximum deposit limit is adjusted daily based on the current volume of verified loan requests in our pipeline. This ensures we never take more capital than we can profitably lend out. Please check the "Deposit" section of your dashboard for today's institutional limit.
+                            The maximum deposit limit is adjusted daily based on the current volume of verified loan
+                            requests in our pipeline. This ensures we never take more capital than we can profitably
+                            lend out. Please check the "Deposit" section of your dashboard for today's institutional
+                            limit.
                         </div>
                     </div>
 
@@ -218,7 +310,9 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            No. Unlike Ponzi schemes that rely on new members' money to pay old ones, Fidelity is a debt-market platform. Our revenue is generated through real-world commercial interest from businesses. We do not require you to refer anyone to earn your 10% daily return.
+                            No. Unlike Ponzi schemes that rely on new members' money to pay old ones, Fidelity is a
+                            debt-market platform. Our revenue is generated through real-world commercial interest from
+                            businesses. We do not require you to refer anyone to earn your 10% daily return.
                         </div>
                     </div>
 
@@ -229,7 +323,9 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            For security reasons, password resets are handled in you profile dashboard settings only and cant be changed outside that. So we advise you to save your password well incase you forget it.
+                            For security reasons, password resets are handled in you profile dashboard settings only and
+                            cant be changed outside that. So we advise you to save your password well incase you forget
+                            it.
                         </div>
                     </div>
 
@@ -240,7 +336,8 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Yes. Participants must be at least 18 years of age and possess a valid means of receiving financial payouts in their jurisdiction.
+                            Yes. Participants must be at least 18 years of age and possess a valid means of receiving
+                            financial payouts in their jurisdiction.
                         </div>
                     </div>
 
@@ -251,7 +348,8 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Bank details are not saved after withdrawal because of assurance. So anytime you want to make a withdrawal you have to imput in your bank details again.
+                            Bank details are not saved after withdrawal because of assurance. So anytime you want to
+                            make a withdrawal you have to imput in your bank details again.
                         </div>
                     </div>
 
@@ -262,7 +360,9 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Our platform is hosted on military-grade servers with 256-bit SSL encryption. We employ Cloudflare advanced DDoS protection to ensure the dashboard remains accessible 24/7 without interruption.
+                            Our platform is hosted on military-grade servers with 256-bit SSL encryption. We employ
+                            Cloudflare advanced DDoS protection to ensure the dashboard remains accessible 24/7 without
+                            interruption.
                         </div>
                     </div>
 
@@ -273,7 +373,8 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            The system credits your ROI exactly 24 hours after your deposit is confirmed on the blockchain or via our bank gateway. It is a precise rolling 24-hour clock.
+                            The system credits your ROI exactly 24 hours after your deposit is confirmed on the
+                            blockchain or via our bank gateway. It is a precise rolling 24-hour clock.
                         </div>
                     </div>
 
@@ -284,10 +385,16 @@
                             <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i>
                         </button>
                         <div class="faq-content leading-relaxed">
-                            Our support team is available 24/7. You can reach us via the <a href="../support/" class="text-yellow-500 hover:underline">support page</a> or by emailing fidelitywealth9@gmail.com. Response times for members are typically under 35 minutes.
+                            Our support team is available 24/7. You can reach us via the <a href="../support/"
+                                class="text-yellow-500 hover:underline">support page</a> or by emailing
+                            fidelitywealth9@gmail.com. Response times for members are typically under 35 minutes.
                         </div>
                     </div>
-                    <p style="text-align: center; font-size: 14px;">For more questions you can contact our support team at <a href="mailto:fidelitywealth9@gmail.com" style="text-decoration: underline; color: rgb(172, 109, 0);">fidelitywealth9@gmail.com</a> or through the <a href="../support/" class="text-yellow-500 hover:underline">support page</a>.</p>
+                    <p style="text-align: center; font-size: 14px;">For more questions you can contact our support team
+                        at <a href="mailto:fidelitywealth9@gmail.com"
+                            style="text-decoration: underline; color: rgb(172, 109, 0);">fidelitywealth9@gmail.com</a>
+                        or through the <a href="../support/" class="text-yellow-500 hover:underline">support page</a>.
+                    </p>
                 </div>
             </section>
 
@@ -306,22 +413,27 @@
                             <i data-lucide="shield-check" class="w-4 h-4 mr-2"></i> Institutional Data Vault
                         </h3>
                         <p class="text-sm text-slate-300">
-                            Fidelity Wealth Scheme employs the "Zero-Knowledge" principle. We collect the absolute minimum data required to facilitate lending cycles and process 2X payouts. Your information is never sold, rented, or shared with third-party marketing agencies.
+                            Fidelity Wealth Scheme employs the "Zero-Knowledge" principle. We collect the absolute
+                            minimum data required to facilitate lending cycles and process 2X payouts. Your information
+                            is never sold, rented, or shared with third-party marketing agencies.
                         </p>
                     </div>
 
                     <!-- 1. Data Collection -->
                     <div>
                         <h3 class="text-lg font-bold text-slate-800 mb-3">1. Information Collection</h3>
-                        <p class="text-sm mb-4">To maintain the integrity of our micro-finance ecosystem, we collect the following:</p>
+                        <p class="text-sm mb-4">To maintain the integrity of our micro-finance ecosystem, we collect the
+                            following:</p>
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="p-4 border border-slate-100 rounded-xl bg-slate-50/50">
                                 <h4 class="text-xs font-black uppercase text-slate-400 mb-1">Identity Data</h4>
-                                <p class="text-xs">Legal name and verified email address for account ownership and cycle notifications.</p>
+                                <p class="text-xs">Legal name and verified email address for account ownership and cycle
+                                    notifications.</p>
                             </div>
                             <div class="p-4 border border-slate-100 rounded-xl bg-slate-50/50">
                                 <h4 class="text-xs font-black uppercase text-slate-400 mb-1">Financial Data</h4>
-                                <p class="text-xs">Designated payout bank account numbers or wallet addresses used solely for automated disbursement.</p>
+                                <p class="text-xs">Designated payout bank account numbers or wallet addresses used
+                                    solely for automated disbursement.</p>
                             </div>
                         </div>
                     </div>
@@ -329,19 +441,26 @@
                     <!-- 2. Security Infrastructure -->
                     <div>
                         <h3 class="text-lg font-bold text-slate-800 mb-3">2. Encryption & Protection</h3>
-                        <p class="text-sm mb-4">Our "Vault" architecture ensures that lenders' data remains inaccessible to unauthorized parties:</p>
+                        <p class="text-sm mb-4">Our "Vault" architecture ensures that lenders' data remains inaccessible
+                            to unauthorized parties:</p>
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-full mr-3"><i data-lucide="check" class="w-3 h-3"></i></div>
-                                <span class="text-sm"><strong>AES-256 Encryption:</strong> All sensitive financial data is encrypted at rest using military-grade standards.</span>
+                                <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-full mr-3"><i
+                                        data-lucide="check" class="w-3 h-3"></i></div>
+                                <span class="text-sm"><strong>AES-256 Encryption:</strong> All sensitive financial data
+                                    is encrypted at rest using military-grade standards.</span>
                             </li>
                             <li class="flex items-start">
-                                <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-full mr-3"><i data-lucide="check" class="w-3 h-3"></i></div>
-                                <span class="text-sm"><strong>SSL/TLS 1.3:</strong> Data in transit is protected by high-bit rate Secure Socket Layers.</span>
+                                <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-full mr-3"><i
+                                        data-lucide="check" class="w-3 h-3"></i></div>
+                                <span class="text-sm"><strong>SSL/TLS 1.3:</strong> Data in transit is protected by
+                                    high-bit rate Secure Socket Layers.</span>
                             </li>
                             <li class="flex items-start">
-                                <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-full mr-3"><i data-lucide="check" class="w-3 h-3"></i></div>
-                                <span class="text-sm"><strong>Hash Passwords:</strong> We utilize Argon2 hashing; even our administrators cannot view your account password.</span>
+                                <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-full mr-3"><i
+                                        data-lucide="check" class="w-3 h-3"></i></div>
+                                <span class="text-sm"><strong>Hash Passwords:</strong> We utilize Argon2 hashing; even
+                                    our administrators cannot view your account password.</span>
                             </li>
                         </ul>
                     </div>
@@ -350,7 +469,9 @@
                     <div class="p-6 border-2 border-dashed border-slate-100 rounded-2xl">
                         <h3 class="text-lg font-bold text-slate-800 mb-2">3. Third-Party Payout Channels</h3>
                         <p class="text-sm mb-4">
-                            We only transmit your payout data to verified financial clearing houses (Commercial Banks, OPay, Palmpay) during the withdrawal window. We do not integrate with social media trackers, Facebook Pixels, or Google Remarketing scripts.
+                            We only transmit your payout data to verified financial clearing houses (Commercial Banks,
+                            OPay, Palmpay) during the withdrawal window. We do not integrate with social media trackers,
+                            Facebook Pixels, or Google Remarketing scripts.
                         </p>
                     </div>
 
@@ -358,7 +479,9 @@
                     <div>
                         <h3 class="text-lg font-bold text-slate-800 mb-3">4. Automatic Data Purgation</h3>
                         <p class="text-sm">
-                            To protect your long-term privacy, Fidelity Wealth Scheme practices "Maturation Erasure." Once a lending cycle is completed, withdrawn, and the account remains inactive for 12 months, all sensitive transaction logs are automatically shredded from our primary servers.
+                            To protect your long-term privacy, Fidelity Wealth Scheme practices "Maturation Erasure."
+                            Once a lending cycle is completed, withdrawn, and the account remains inactive for 12
+                            months, all sensitive transaction logs are automatically shredded from our primary servers.
                         </p>
                     </div>
 
@@ -382,9 +505,13 @@
                 <div class="space-y-8">
                     <!-- 1. THE BINDING CLAUSE -->
                     <div class="border-l-4 border-yellow-500 bg-yellow-50/50 p-6 rounded-r-3xl">
-                        <h3 class="font-black text-yellow-900 uppercase text-xs tracking-widest mb-2">Article 1: Binding Maturation & Liquidity</h3>
+                        <h3 class="font-black text-yellow-900 uppercase text-xs tracking-widest mb-2">Article 1: Binding
+                            Maturation & Liquidity</h3>
                         <p class="text-sm text-yellow-800 leading-relaxed font-medium">
-                            By initiating a deposit into the Fidelity Wealth Scheme, the user ("Lender") enters into a binding 20-day liquidity agreement. Capital is immediately deployed into active micro-loan contracts. Consequently, capital is strictly non-liquid and cannot be withdrawn, reversed, or refunded until the 200% (2X) profit maturation threshold is achieved.
+                            By initiating a deposit into the Fidelity Wealth Scheme, the user ("Lender") enters into a
+                            binding 20-day liquidity agreement. Capital is immediately deployed into active micro-loan
+                            contracts. Consequently, capital is strictly non-liquid and cannot be withdrawn, reversed,
+                            or refunded until the 200% (2X) profit maturation threshold is achieved.
                         </p>
                     </div>
 
@@ -397,13 +524,15 @@
                             <div class="p-5 border border-slate-100 rounded-2xl bg-white shadow-sm">
                                 <h4 class="font-bold text-slate-900 text-sm mb-2">Identity Integrity</h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">
-                                    Lenders must provide accurate financial details. Fidelity is not liable for funds disbursed to incorrect bank accounts provided by the user.
+                                    Lenders must provide accurate financial details. Fidelity is not liable for funds
+                                    disbursed to incorrect bank accounts provided by the user.
                                 </p>
                             </div>
                             <div class="p-5 border border-slate-100 rounded-2xl bg-white shadow-sm">
                                 <h4 class="font-bold text-slate-900 text-sm mb-2">Single Account Policy</h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">
-                                    To prevent system manipulation, only one account is permitted per individual. Sybil attacks or multi-accounting will result in a permanent asset freeze.
+                                    To prevent system manipulation, only one account is permitted per individual. Sybil
+                                    attacks or multi-accounting will result in a permanent asset freeze.
                                 </p>
                             </div>
                         </div>
@@ -414,16 +543,25 @@
                         <h3 class="text-lg font-bold text-slate-800 mb-4">Article 2: Operational Protocols</h3>
                         <div class="space-y-4">
                             <div class="flex items-start p-4 bg-slate-50 rounded-xl">
-                                <span class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1 rounded mr-4">2.1</span>
-                                <p class="text-xs text-slate-600"><strong>Daily ROI:</strong> The 10% daily return is calculated based on the initial principal. Earnings are credited to the digital vault every 24 hours from the time of deposit confirmation.</p>
+                                <span
+                                    class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1 rounded mr-4">2.1</span>
+                                <p class="text-xs text-slate-600"><strong>Daily ROI:</strong> The 10% daily return is
+                                    calculated based on the initial principal. Earnings are credited to the digital
+                                    vault every 24 hours from the time of deposit confirmation.</p>
                             </div>
                             <div class="flex items-start p-4 bg-slate-50 rounded-xl">
-                                <span class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1 rounded mr-4">2.2</span>
-                                <p class="text-xs text-slate-600"><strong>Auto-Disbursement:</strong> Upon reaching 200% maturation, the payout window opens. Lenders are required to initiate the withdrawal via their dashboard for automated clearing house (ACH) processing.</p>
+                                <span
+                                    class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1 rounded mr-4">2.2</span>
+                                <p class="text-xs text-slate-600"><strong>Auto-Disbursement:</strong> Upon reaching 200%
+                                    maturation, the payout window opens. Lenders are required to initiate the withdrawal
+                                    via their dashboard for automated clearing house (ACH) processing.</p>
                             </div>
                             <div class="flex items-start p-4 bg-slate-50 rounded-xl">
-                                <span class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1 rounded mr-4">2.3</span>
-                                <p class="text-xs text-slate-600"><strong>Platform Liability:</strong> Fidelity acts as a facilitator for debt-market participation. We guarantee the distribution of collected interest but are not liable for external bank network downtimes.</p>
+                                <span
+                                    class="bg-slate-200 text-slate-700 font-bold text-xs px-2 py-1 rounded mr-4">2.3</span>
+                                <p class="text-xs text-slate-600"><strong>Platform Liability:</strong> Fidelity acts as
+                                    a facilitator for debt-market participation. We guarantee the distribution of
+                                    collected interest but are not liable for external bank network downtimes.</p>
                             </div>
                         </div>
                     </div>
@@ -431,17 +569,22 @@
                     <!-- 4. RISK DISCLOSURE -->
                     <div class="p-6 border border-slate-200 rounded-3xl">
                         <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center">
-                            <i data-lucide="alert-triangle" class="w-5 h-5 mr-2 text-yellow-600"></i> Institutional Risk Disclosure
+                            <i data-lucide="alert-triangle" class="w-5 h-5 mr-2 text-yellow-600"></i> Institutional Risk
+                            Disclosure
                         </h3>
                         <p class="text-xs text-slate-500 leading-relaxed">
-                            While Fidelity Wealth Scheme utilizes a collateralized micro-loan model to minimize default risk, all financial participation involves market variables. Lenders should only allocate capital that they intend to remain stationary for the duration of the 20-day cycle. Fidelity does not provide financial advice; participation is at the lender's discretion.
+                            While Fidelity Wealth Scheme utilizes a collateralized micro-loan model to minimize default
+                            risk, all financial participation involves market variables. Lenders should only allocate
+                            capital that they intend to remain stationary for the duration of the 20-day cycle. Fidelity
+                            does not provide financial advice; participation is at the lender's discretion.
                         </p>
                     </div>
 
                     <!-- 5. AMENDMENTS -->
                     <div class="text-center pt-4">
                         <p class="text-[10px] text-slate-400 italic">
-                            Fidelity Wealth Scheme reserves the right to adjust lending tiers and interest spreads based on global credit market volatility.
+                            Fidelity Wealth Scheme reserves the right to adjust lending tiers and interest spreads based
+                            on global credit market volatility.
                         </p>
                     </div>
                 </div>
@@ -463,7 +606,7 @@
             // Update Links
             document.querySelectorAll('.tab-link').forEach(link => {
                 link.classList.remove('active');
-                if(link.innerText.toLowerCase().includes(id)) link.classList.add('active');
+                if (link.innerText.toLowerCase().includes(id)) link.classList.add('active');
             });
 
             // Update Sections
@@ -474,7 +617,7 @@
 
             // Update URL Hash
             window.location.hash = id;
-            
+
             // Refresh icons in case
             lucide.createIcons();
         }
@@ -484,15 +627,16 @@
             item.querySelector('.faq-trigger').addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
                 document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-                if(!isActive) item.classList.add('active');
+                if (!isActive) item.classList.add('active');
             });
         });
 
         // HASH RELOAD
-        if(window.location.hash) {
+        if (window.location.hash) {
             const h = window.location.hash.replace('#', '');
-            if(['faq', 'privacy', 'terms'].includes(h)) switchTab(h);
+            if (['faq', 'privacy', 'terms'].includes(h)) switchTab(h);
         }
     </script>
 </body>
+
 </html>

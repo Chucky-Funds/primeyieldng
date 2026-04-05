@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Hub | Fidelity Wealth Scheme</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <link rel="shortcut icon" href="../favicon.avif" type="image/x-icon">
     <!-- Lucide Icons -->
@@ -18,10 +20,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        .gradient-dark { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        .glass-header { background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); }
-        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+
+        .gradient-dark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .glass-header {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(12px);
+        }
+
         /* FIX: Force cards to be visible and set correct stacking */
         .support-card {
             opacity: 1 !important;
@@ -47,7 +59,11 @@
             background: rgba(255, 255, 255, 0.98);
             z-index: 100;
         }
-        #successOverlay.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        #successOverlay.active {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
 
         /* Chat Widget Styles */
         #chatWindow {
@@ -57,49 +73,98 @@
             opacity: 0;
             pointer-events: none;
         }
-        #chatWindow.open { transform: scale(1); opacity: 1; pointer-events: auto; }
-        
+
+        #chatWindow.open {
+            transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .chat-pulse {
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.6); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
 
         /* Custom Scrollbar for Chat */
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #fbbf24;
+            border-radius: 10px;
+        }
 
         /* Responsive spacing for mobile */
         @media (max-width: 640px) {
-            .hero-text { font-size: 2.25rem !important; }
-            .negative-gap { margin-top: -4rem !important; }
-            .card-grid { gap: 1rem !important; }
+            .hero-text {
+                font-size: 2.25rem !important;
+            }
+
+            .negative-gap {
+                margin-top: -4rem !important;
+            }
+
+            .card-grid {
+                gap: 1rem !important;
+            }
         }
+
         @media (max-width: 320px) {
-            .hero-text { font-size: 1.75rem !important; }
-            .card-padding { padding: 1.5rem !important; }
+            .hero-text {
+                font-size: 1.75rem !important;
+            }
+
+            .card-padding {
+                padding: 1.5rem !important;
+            }
         }
     </style>
 </head>
+
 <body class="text-slate-900 overflow-x-hidden">
 
     <!-- NAVIGATION -->
     <nav class="fixed w-full z-[100] glass-header border-b border-slate-800 py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="bg-yellow-500 p-1.5 rounded-lg">
-                    <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
+            <a href="../index.html">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-yellow-500 p-1.5 rounded-lg">
+                        <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span
+                            class="text-yellow-500">Wealth</span></span>
                 </div>
-                <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span class="text-yellow-500">Wealth</span></span>
-            </div>
-            <a href="../index.html" class="bg-yellow-500 hover:bg-yellow-600 text-slate-950 px-5 py-2 rounded-full text-xs font-black transition-all tracking-widest">
-                EXIT HUB
+            </a>
+            <a href="../index.html"
+                class="fixed top-6 right-6 z-[100] flex items-center space-x-2 bg-slate-900/50 text-white hover:bg-yellow-500 hover:text-slate-900 border border-slate-700 hover:border-slate-700 px-4 py-2 rounded-full transition-all group">
+                <span class="text-xs font-bold uppercase tracking-widest">Home</span>
+                <i data-lucide="home" class="w-4 h-4"></i>
             </a>
         </div>
     </nav>
@@ -107,36 +172,44 @@
     <!-- HERO SECTION -->
     <header class="gradient-dark pt-40 pb-48 relative text-center">
         <div class="container mx-auto px-6">
-            <h1 class="gsap-hero hero-text text-4xl md:text-6xl font-black text-white mb-6">How can we assist your <span class="text-yellow-500 underline decoration-4 underline-offset-8">growth?</span></h1>
-            <p class="gsap-hero text-slate-400 max-w-2xl mx-auto text-lg">Our financial support specialists are available around the clock to manage your lending inquiries and account security.</p>
+            <h1 class="gsap-hero hero-text text-4xl md:text-6xl font-black text-white mb-6">How can we assist your <span
+                    class="text-yellow-500 underline decoration-4 underline-offset-8">growth?</span></h1>
+            <p class="gsap-hero text-slate-400 max-w-2xl mx-auto text-lg">Our financial support specialists are
+                available around the clock to manage your lending inquiries and account security.</p>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <main class="container mx-auto px-6 negative-gap -mt-24 pb-20 relative z-20">
-        
+
         <!-- CONTACT CARDS (Corrected Layout) -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 card-grid">
             <!-- Email -->
-            <div class="support-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl flex flex-col items-center text-center group transition-all hover:-translate-y-2">
+            <div
+                class="support-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl flex flex-col items-center text-center group transition-all hover:-translate-y-2">
                 <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
                     <i data-lucide="mail" class="w-8 h-8"></i>
                 </div>
                 <h3 class="font-bold text-xl mb-2 text-slate-900">Email Support</h3>
-                <p class="text-slate-500 text-sm mb-6 leading-relaxed">For institutional partnerships and cycle inquiries.</p>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">For institutional partnerships and cycle
+                    inquiries.</p>
                 <p class="text-slate-500 text-sm mb-6 leading-relaxed">fidelitywealth9@gmail.com</p>
-                <a href="mailto:fidelitywealth9@gmail.com" class="w-full bg-slate-100 text-slate-900 py-3 rounded-xl font-bold text-xs tracking-widest hover:bg-yellow-500 transition-colors uppercase">Send Email</a>
+                <a href="mailto:fidelitywealth9@gmail.com"
+                    class="w-full bg-slate-100 text-slate-900 py-3 rounded-xl font-bold text-xs tracking-widest hover:bg-yellow-500 transition-colors uppercase">Send
+                    Email</a>
             </div>
 
             <!-- Hours -->
-            <div class="support-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl flex flex-col items-center text-center group transition-all hover:-translate-y-2">
+            <div
+                class="support-card bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl flex flex-col items-center text-center group transition-all hover:-translate-y-2">
                 <div class="w-14 h-14 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-6">
                     <i data-lucide="clock" class="w-8 h-8"></i>
                 </div>
                 <h3 class="font-bold text-xl mb-2 text-slate-900">Live Status</h3>
                 <p class="text-slate-500 text-sm mb-1 leading-relaxed">Mon - Fri: 24 Hours</p>
                 <p class="text-slate-500 text-sm mb-6 leading-relaxed">Sat - Sun: 10am - 4pm</p>
-                <div class="flex items-center text-[10px] font-black text-green-500 uppercase tracking-widest bg-green-50 px-4 py-1 rounded-full">
+                <div
+                    class="flex items-center text-[10px] font-black text-green-500 uppercase tracking-widest bg-green-50 px-4 py-1 rounded-full">
                     <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span> System Online
                 </div>
             </div>
@@ -144,16 +217,21 @@
 
         <!-- TICKET FORM (Central Vault Structure) -->
         <div class="max-w-4xl mx-auto relative gsap-form">
-            <div class="bg-white rounded-[2.5rem] card-padding p-8 md:p-16 shadow-2xl border border-slate-100 relative overflow-hidden">
-                
+            <div
+                class="bg-white rounded-[2.5rem] card-padding p-8 md:p-16 shadow-2xl border border-slate-100 relative overflow-hidden">
+
                 <!-- SUCCESS OVERLAY (Ported Feature) -->
-                <div id="successOverlay" class="absolute inset-0 z-50 flex flex-col items-center justify-center text-center p-6">
-                    <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-200">
+                <div id="successOverlay"
+                    class="absolute inset-0 z-50 flex flex-col items-center justify-center text-center p-6">
+                    <div
+                        class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-200">
                         <i data-lucide="check" class="w-10 h-10"></i>
                     </div>
                     <h2 class="text-3xl font-black mb-2 text-slate-900">Ticket Sent</h2>
                     <p id="referenceIdText" class="text-slate-500 mb-8 max-w-sm"></p>
-                    <button onclick="location.reload()" class="bg-slate-900 text-white px-10 py-3 rounded-full font-bold hover:bg-slate-800 transition-all">Submit New Ticket</button>
+                    <button onclick="location.reload()"
+                        class="bg-slate-900 text-white px-10 py-3 rounded-full font-bold hover:bg-slate-800 transition-all">Submit
+                        New Ticket</button>
                 </div>
 
                 <div class="mb-10 text-center md:text-left">
@@ -164,18 +242,26 @@
                 <form id="fidelityTicketForm" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Legal Full Name</label>
-                            <input type="text" required class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all" placeholder="John Doe">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Legal Full
+                                Name</label>
+                            <input type="text" required
+                                class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all"
+                                placeholder="John Doe">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Verified Email</label>
-                            <input type="email" required class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all" placeholder="john@example.com">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Verified
+                                Email</label>
+                            <input type="email" required
+                                class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all"
+                                placeholder="john@example.com">
                         </div>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Inquiry Department</label>
-                        <select class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all cursor-pointer">
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Inquiry
+                            Department</label>
+                        <select
+                            class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all cursor-pointer">
                             <option>Lending Cycle Verification</option>
                             <option>Withdrawal/Payout Issue</option>
                             <option>Capital Deposit Assistant</option>
@@ -185,17 +271,23 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Detailed Description</label>
-                        <textarea rows="5" required class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all" placeholder="Explain your situation..."></textarea>
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Detailed
+                            Description</label>
+                        <textarea rows="5" required
+                            class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-yellow-500 transition-all"
+                            placeholder="Explain your situation..."></textarea>
                     </div>
 
                     <!-- ATTACHMENT (Ported Feature) -->
                     <div class="space-y-2">
-                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Evidence/Screenshot (Optional)</label>
-                        <label id="fileInputBox" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-all">
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400">Evidence/Screenshot
+                            (Optional)</label>
+                        <label id="fileInputBox"
+                            class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-200 rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-all">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <i data-lucide="upload-cloud" class="w-8 h-8 text-slate-400 mb-2"></i>
-                                <p id="fileStatus" class="text-xs text-slate-500 font-bold">Attach JPG or PNG (Max 5MB)</p>
+                                <p id="fileStatus" class="text-xs text-slate-500 font-bold">Attach JPG or PNG (Max 5MB)
+                                </p>
                             </div>
                             <input type="file" id="ticketFile" class="hidden" accept="image/*">
                         </label>
@@ -204,14 +296,17 @@
                     <!-- CAPTCHA (Ported Feature) -->
                     <div class="flex flex-col md:flex-row items-center gap-4 bg-slate-900 p-6 rounded-[1.5rem]">
                         <div class="flex-1 w-full">
-                            <input type="text" id="captchaInput" placeholder="Type Security Code" class="w-full bg-white/10 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 text-sm">
+                            <input type="text" id="captchaInput" placeholder="Type Security Code"
+                                class="w-full bg-white/10 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 text-sm">
                         </div>
-                        <div id="captchaDisplay" class="captcha-box flex-1 w-full p-4 rounded-xl text-center font-black text-xl text-slate-600 uppercase">
+                        <div id="captchaDisplay"
+                            class="captcha-box flex-1 w-full p-4 rounded-xl text-center font-black text-xl text-slate-600 uppercase">
                             <!-- Code via JS -->
                         </div>
                     </div>
 
-                    <button type="submit" id="submitTicketBtn" disabled class="w-full bg-yellow-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest transition-all opacity-50 cursor-not-allowed flex items-center justify-center space-x-2 hover:bg-yellow-400">
+                    <button type="submit" id="submitTicketBtn" disabled
+                        class="w-full bg-yellow-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest transition-all opacity-50 cursor-not-allowed flex items-center justify-center space-x-2 hover:bg-yellow-400">
                         <span>Dispatch Support Ticket</span>
                         <i data-lucide="send" class="w-5 h-5"></i>
                     </button>
@@ -221,12 +316,14 @@
     </main>
 
     <!-- AI CHATBOT (Ported Feature) -->
-    <div id="chatTrigger" class="fixed bottom-8 right-8 w-16 h-16 bg-yellow-500 text-slate-950 rounded-full flex items-center justify-center cursor-pointer shadow-2xl z-[200] hover:scale-110 transition-transform">
+    <div id="chatTrigger"
+        class="fixed bottom-8 right-8 w-16 h-16 bg-yellow-500 text-slate-950 rounded-full flex items-center justify-center cursor-pointer shadow-2xl z-[200] hover:scale-110 transition-transform">
         <div class="absolute inset-0 bg-yellow-500 rounded-full chat-pulse"></div>
         <i data-lucide="bot" class="relative z-10 w-8 h-8"></i>
     </div>
 
-    <div id="chatWindow" class="fixed bottom-28 right-8 w-[90%] sm:w-[400px] h-[550px] bg-white rounded-[2.5rem] shadow-2xl border border-slate-200 z-[200] flex flex-col overflow-hidden">
+    <div id="chatWindow"
+        class="fixed bottom-28 right-8 w-[90%] sm:w-[400px] h-[550px] bg-white rounded-[2.5rem] shadow-2xl border border-slate-200 z-[200] flex flex-col overflow-hidden">
         <!-- Chat Header -->
         <div class="bg-slate-900 p-6 flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -242,14 +339,18 @@
         </div>
         <!-- Chat Body -->
         <div id="chatContent" class="flex-1 p-6 overflow-y-auto custom-scroll space-y-4 bg-slate-50">
-            <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-sm text-slate-600 shadow-sm">
-                Greetings. I am the Fidelity Wealth Virtual Assistant. How may I facilitate your lending experience today?
+            <div
+                class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-sm text-slate-600 shadow-sm">
+                Greetings. I am the Fidelity Wealth Virtual Assistant. How may I facilitate your lending experience
+                today?
             </div>
         </div>
-        <div id="typingIndicator" class="px-6 py-2 text-[10px] font-bold text-slate-400 uppercase hidden">Specialist is typing...</div>
+        <div id="typingIndicator" class="px-6 py-2 text-[10px] font-bold text-slate-400 uppercase hidden">Specialist is
+            typing...</div>
         <!-- Chat Footer -->
         <div class="p-4 bg-white border-t border-slate-100 flex items-center space-x-2">
-            <input type="text" id="chatInput" placeholder="Enter inquiry..." class="flex-1 bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm outline-none focus:border-yellow-500">
+            <input type="text" id="chatInput" placeholder="Enter inquiry..."
+                class="flex-1 bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm outline-none focus:border-yellow-500">
             <button id="sendChat" class="bg-slate-900 text-white p-3 rounded-xl hover:bg-slate-800 transition-colors">
                 <i data-lucide="arrow-up" class="w-5 h-5"></i>
             </button>
@@ -265,17 +366,17 @@
         // GSAP FIX: fromTo ensures cards stay visible
         // ----------------------------------------------------
         gsap.from(".gsap-hero", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out" });
-        
-        gsap.fromTo(".support-card", 
-            { y: 60, opacity: 0 }, 
-            { 
-                y: 0, 
-                opacity: 1, 
-                duration: 0.8, 
-                stagger: 0.15, 
-                delay: 0.4, 
+
+        gsap.fromTo(".support-card",
+            { y: 60, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                delay: 0.4,
                 ease: "power2.out",
-                clearProps: "all" 
+                clearProps: "all"
             }
         );
 
@@ -294,11 +395,11 @@
 
         // Captcha Engine
         const codes = ["SEC77", "FID10", "ROI2X", "CAP99", "GOLD1"];
-        let currentCode = codes[Math.floor(Math.random()*codes.length)];
+        let currentCode = codes[Math.floor(Math.random() * codes.length)];
         captchaDisplay.innerText = currentCode;
 
         captchaInput.addEventListener('input', (e) => {
-            if(e.target.value.toUpperCase() === currentCode) {
+            if (e.target.value.toUpperCase() === currentCode) {
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             } else {
@@ -309,7 +410,7 @@
 
         // File Handler
         fileInput.addEventListener('change', (e) => {
-            if(e.target.files.length > 0) {
+            if (e.target.files.length > 0) {
                 fileStatus.innerText = "Selected: " + e.target.files[0].name;
                 fileStatus.style.color = "#10b981";
             }
@@ -354,7 +455,7 @@
 
         function addChatMessage(msg, type) {
             const div = document.createElement('div');
-            div.className = type === 'user' 
+            div.className = type === 'user'
                 ? "bg-slate-900 text-white p-4 rounded-2xl rounded-tr-none text-sm self-end ml-10 shadow-md"
                 : "bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-sm text-slate-600 shadow-sm mr-10";
             div.innerText = msg;
@@ -365,13 +466,13 @@
         function processBotResponse(input) {
             const lowInput = input.toLowerCase();
             typingIndicator.classList.remove('hidden');
-            
+
             setTimeout(() => {
                 typingIndicator.classList.add('hidden');
                 let response = "Parameters not recognized. Please inquire about 'Maturation', 'Withdrawals', or 'Deposits'.";
-                
-                for(let key in botDB) {
-                    if(lowInput.includes(key)) { response = botDB[key]; break; }
+
+                for (let key in botDB) {
+                    if (lowInput.includes(key)) { response = botDB[key]; break; }
                 }
                 addChatMessage(response, 'bot');
             }, 1200);
@@ -379,15 +480,16 @@
 
         function handleSend() {
             const val = chatInput.value.trim();
-            if(!val) return;
+            if (!val) return;
             addChatMessage(val, 'user');
             chatInput.value = "";
             processBotResponse(val);
         }
 
         sendChat.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
 
     </script>
 </body>
+
 </html>
