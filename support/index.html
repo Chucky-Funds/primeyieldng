@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Hub | Fidelity Invest Scheme</title>
+    <title>Support Hub | PrimeYieldNG</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -157,8 +157,8 @@
                     <div class="bg-yellow-500 p-1.5 rounded-lg">
                         <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
                     </div>
-                    <span class="text-white font-bold text-lg tracking-tight uppercase">Fidelity <span
-                            class="text-yellow-500">Invest</span></span>
+                    <span class="text-white font-bold text-lg tracking-tight uppercase">Prime <span
+                            class="text-yellow-500">Yield</span></span>
                 </div>
             </a>
             <a href="../index.html"
@@ -193,8 +193,8 @@
                 <h3 class="font-bold text-xl mb-2 text-slate-900">Email Support</h3>
                 <p class="text-slate-500 text-sm mb-6 leading-relaxed">For institutional partnerships and cycle
                     inquiries.</p>
-                <p class="text-slate-500 text-sm mb-6 leading-relaxed">fidelityInvest9@gmail.com</p>
-                <a href="mailto:fidelityInvest9@gmail.com"
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">PrimeYield9@gmail.com</p>
+                <a href="mailto:PrimeYield9@gmail.com"
                     class="w-full bg-slate-100 text-slate-900 py-3 rounded-xl font-bold text-xs tracking-widest hover:bg-yellow-500 transition-colors uppercase">Send
                     Email</a>
             </div>
@@ -239,7 +239,7 @@
                     <p class="text-slate-500 mt-2">Official communication channel for active lenders.</p>
                 </div>
 
-                <form id="fidelityTicketForm" class="space-y-6">
+                <form id="PrimeTicketForm" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-xs font-black uppercase tracking-widest text-slate-400">Legal Full
@@ -331,7 +331,7 @@
                     <i data-lucide="cpu" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold text-sm">Fidelity AI</h4>
+                    <h4 class="text-white font-bold text-sm">Prime AI</h4>
                     <p class="text-[10px] text-green-400 font-black uppercase tracking-widest">Specialist Online</p>
                 </div>
             </div>
@@ -341,7 +341,7 @@
         <div id="chatContent" class="flex-1 p-6 overflow-y-auto custom-scroll space-y-4 bg-slate-50">
             <div
                 class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-sm text-slate-600 shadow-sm">
-                Greetings. I am the Fidelity Invest Virtual Assistant. How may I facilitate your lending experience
+                Greetings. I am the Prime Yield Virtual Assistant. How may I facilitate your lending experience
                 today?
             </div>
         </div>
@@ -385,7 +385,7 @@
         // ----------------------------------------------------
         // TICKET FORM LOGIC (Captcha, File, Success)
         // ----------------------------------------------------
-        const ticketForm = document.getElementById('fidelityTicketForm');
+        const ticketForm = document.getElementById('PrimeTicketForm');
         const submitBtn = document.getElementById('submitTicketBtn');
         const captchaInput = document.getElementById('captchaInput');
         const captchaDisplay = document.getElementById('captchaDisplay');
@@ -424,7 +424,7 @@
             setTimeout(() => {
                 // Generate Reference ID
                 const refId = '#FW-X' + Math.floor(Math.random() * 9999);
-                document.getElementById('referenceIdText').innerHTML = `Reference ID: ${refId}<br>Fidelity support will respond via email shortly.`;
+                document.getElementById('referenceIdText').innerHTML = `Reference ID: ${refId}<br>Prime support will respond via email shortly.`;
                 successOverlay.classList.add('active');
             }, 1800);
         });
@@ -448,7 +448,7 @@
             "maturation": "A full cycle takes exactly 20 days. You receive 10% daily ROI until the 2X threshold is met.",
             "deposit": "Capital is pooled into our enterprise lending reserve. Minimums depend on tier availability.",
             "roi": "We offer a fixed 10% daily return generated through commercial interest from verified SME loans.",
-            "hello": "Greetings. How can Fidelity AI facilitate your Invest generation today?",
+            "hello": "Greetings. How can Prime AI facilitate your Yield generation today?",
             "hi": "Hello. I am online and ready to assist with cycle verification or deposit queries.",
             "help": "I can assist with: Maturation timers, Withdrawal protocols, Security settings, and Deposit verification."
         };

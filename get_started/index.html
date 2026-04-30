@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Access | Fidelity Invest Scheme</title>
+    <title>Secure Access | PrimeYieldNG</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -15,7 +15,7 @@
     <script>
         (function () {
             try {
-                const data = localStorage.getItem('fidelity_user');
+                const data = localStorage.getItem('Prime_user');
 
                 // If the item exists
                 if (data) {
@@ -209,8 +209,8 @@
                     class="inline-flex items-center space-x-2 bg-yellow-500 p-2 rounded-xl mb-3 shadow-lg shadow-yellow-500/20">
                     <i data-lucide="shield-check" class="text-slate-900 w-5 h-5"></i>
                 </div>
-                <h2 class="text-lg font-black tracking-tighter uppercase text-white">Fidelity <span
-                        class="text-yellow-500">Invest</span></h2>
+                <h2 class="text-lg font-black tracking-tighter uppercase text-white">Prime <span
+                        class="text-yellow-500">Yield</span></h2>
             </div>
         </a>
 
@@ -347,7 +347,7 @@
 
     <!-- SMALL FOOTER -->
     <footer class="mt-8 text-center text-slate-600">
-        <p class="text-[10px] font-bold uppercase tracking-[0.2em]">© 2024 Fidelity Invest Scheme</p>
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em]">© 2024 PrimeYieldNG</p>
         <p class="text-[9px] mt-1 opacity-30">Secure Institutional Asset Management & Global Lending</p>
     </footer>
 
@@ -380,7 +380,7 @@
         // --- 2. TAB SWITCHING & ACCOUNT CHECK ---
         function switchTab(tab) {
             // Check if an account already exists in LocalStorage
-            const existingUser = localStorage.getItem('fidelity_user');
+            const existingUser = localStorage.getItem('Prime_user');
 
             if (tab === 'create' && existingUser) {
                 alert("You have already created an account on this device. Please proceed to Login.");
@@ -456,12 +456,12 @@
             };
 
             // Save for Login access
-            localStorage.setItem('fidelity_user', JSON.stringify(userData));
+            localStorage.setItem('Prime_user', JSON.stringify(userData));
 
             // SYNC: Initialize the Dashboard State immediately so Name/Email show up there
             let fwState = JSON.parse(localStorage.getItem('fw_state')) || {
                 user: {},
-                investments: [],
+                Yieldments: [],
                 transactions: [],
                 settings: { darkMode: true }
             };
@@ -488,7 +488,7 @@
             const inputID = document.getElementById('login-input').value.toLowerCase();
             const inputPass = document.getElementById('login-password').value;
 
-            const storedData = localStorage.getItem('fidelity_user');
+            const storedData = localStorage.getItem('Prime_user');
 
             if (!storedData) {
                 alert("No account found on this device. Please create an account first.");

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Fidelity Invest Scheme</title>
+    <title>Dashboard | PrimeYieldNG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -15,7 +15,7 @@
     // --- 0. BULLETPROOF AUTHENTICATION GUARD ---
     (function() {
         try {
-            const data = localStorage.getItem('fidelity_user');
+            const data = localStorage.getItem('Prime_user');
             // If the item doesn't exist at all
             if (!data) {
                 window.location.href = "../";
@@ -104,7 +104,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
         <div class="bg-primary p-2 rounded-xl shadow-lg shadow-primary/20">
             <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
         </div>
-        <span class="font-black text-xl tracking-tighter uppercase">Fidelity <span class="text-primary">Invest</span></span>
+        <span class="font-black text-xl tracking-tighter uppercase">Prime <span class="text-primary">Yield</span></span>
     </div>
 
     <!-- 2. NAVIGATION (Middle - Takes all available space) -->
@@ -117,8 +117,8 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                 <button onclick="showTab('home')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i> <span>Dashboard</span>
                 </button>
-                <button onclick="showTab('investments')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
-                    <i data-lucide="trending-up" class="w-5 h-5"></i> <span>Investments</span>
+                <button onclick="showTab('Yieldments')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i> <span>Yieldments</span>
                 </button>
                 <button onclick="showTab('calculator')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold transition-all text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
                     <i data-lucide="calculator" class="w-5 h-5"></i> <span>Calculator</span>
@@ -176,8 +176,8 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
             <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">Home</span>
         </button>
 
-        <!-- ROI / INVESTMENTS -->
-        <button onclick="showTab('investments')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
+        <!-- ROI / YieldMENTS -->
+        <button onclick="showTab('Yieldments')" class="nav-item-mobile flex flex-col items-center justify-center flex-1 text-slate-400 transition-all">
             <i data-lucide="trending-up" class="w-5 h-5"></i>
             <span class="text-[8px] mt-1 font-black uppercase tracking-tighter">ROI</span>
         </button>
@@ -343,14 +343,14 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
         <div class="bg-white dark:bg-darkCard p-5 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 w-full overflow-hidden shadow-sm">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="font-black text-base md:text-lg text-slate-700 dark:text-white">Active Plan Progress</h3>
-                <button onclick="showTab('investments')" class="text-[10px] font-bold text-primary uppercase tracking-widest">View All</button>
+                <button onclick="showTab('Yieldments')" class="text-[10px] font-bold text-primary uppercase tracking-widest">View All</button>
             </div>
             <!-- Progress list container -->
             <div id="home-active-plans" class="space-y-6 w-full overflow-hidden">
                 <!-- Sample Progress if empty -->
                 <div class="text-center py-6 text-slate-400">
                     <i data-lucide="package-search" class="w-8 h-8 mx-auto mb-2 opacity-20"></i>
-                    <p class="text-[10px] font-bold uppercase tracking-widest">No Active Investment</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest">No Active Yieldment</p>
                     <button onclick="triggerDeposit()" class="text-primary text-[10px] font-black underline mt-2">Start Earning 10% Daily</button>
                 </div>
             </div>
@@ -414,15 +414,15 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 </div>
 </div>
 
-        <!-- INVESTMENTS TAB -->
-        <!-- ADVANCED INVESTMENTS TAB -->
-<!-- ADVANCED INVESTMENTS TAB -->
-<div id="tab-investments" class="tab-content hidden">
+        <!-- YieldMENTS TAB -->
+        <!-- ADVANCED YieldMENTS TAB -->
+<!-- ADVANCED YieldMENTS TAB -->
+<div id="tab-Yieldments" class="tab-content hidden">
     <!-- HEADER -->
     <div class="flex items-center justify-between mb-10 w-full">
-        <h3 class="text-xl md:text-2xl font-black">My Invest. Portfolio</h3>
+        <h3 class="text-xl md:text-2xl font-black">My Yield. Portfolio</h3>
         <button onclick="triggerDeposit()" class="bg-primary hover:bg-yellow-500 text-slate-900 px-5 py-3 md:px-7 md:py-4 rounded-2xl font-black flex items-center transition-all active:scale-95 shadow-lg shadow-primary/20 uppercase text-[10px] md:text-xs tracking-widest whitespace-nowrap">
-            <i data-lucide="plus-circle" class="mr-2 w-4 h-4"></i> New Invest.
+            <i data-lucide="plus-circle" class="mr-2 w-4 h-4"></i> New Yield.
         </button>
     </div>
 
@@ -462,7 +462,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
         
         <div class="text-center">
             <h3 class="text-3xl font-black text-slate-700 dark:text-white mb-2">Payout Portal</h3>
-            <p class="text-sm text-slate-500">Select a matured investment cycle to unlock the form</p>
+            <p class="text-sm text-slate-500">Select a matured Yieldment cycle to unlock the form</p>
         </div>
 
         <form onsubmit="handleWithdrawal(event)" class="space-y-6">
@@ -471,7 +471,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
             <div class="bg-white dark:bg-darkCard p-6 md:p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm">
                 <h4 class="font-black text-sm uppercase tracking-widest text-primary mb-6 flex items-center">
                     <i data-lucide="list-checks" class="mr-2 w-4 h-4"></i> Select Matured Funds
-                    <h6 style="color: rgb(58, 61, 83); font-weight: bold; font-size: 12px; margin-top: -20px; margin-bottom: 15px;">(You can only withdraw from Matured Investments)</h6>
+                    <h6 style="color: rgb(58, 61, 83); font-weight: bold; font-size: 12px; margin-top: -20px; margin-bottom: 15px;">(You can only withdraw from Matured Yieldments)</h6>
                 </h4>
                 
                 <!-- We add 'onchange' to detect clicks inside this list -->
@@ -505,10 +505,10 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
 
                     <div class="space-y-1">
                         <div class="grid md:grid-cols-2 gap-4">
-    <!-- Input 1: From Investment -->
+    <!-- Input 1: From Yieldment -->
     <div class="space-y-1">
-        <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Amt. From Investment Portfolio (₦)</label>
-        <input type="number" id="withdraw-amount-invest" disabled oninput="calcTotalWithdraw()" placeholder="0" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold">
+        <label class="text-[10px] font-bold text-slate-400 uppercase ml-2">Amt. From Yieldment Portfolio (₦)</label>
+        <input type="number" id="withdraw-amount-Yield" disabled oninput="calcTotalWithdraw()" placeholder="0" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl outline-none focus:border-primary text-sm font-bold">
     </div>
     <!-- Input 2: From Referral Bonus -->
     <div class="space-y-1">
@@ -547,9 +547,9 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
             </div>
             <div class="text-center md:text-left flex-1 min-w-0">
                 <h3 id="profile-name-header" class="text-2xl font-black text-slate-700 dark:text-white truncate">John Doe</h3>
-                <p id="profile-email-header" class="text-slate-500 text-sm break-all">john.doe@fidelity.com</p>
+                <p id="profile-email-header" class="text-slate-500 text-sm break-all">john.doe@Prime.com</p>
                 <div class="inline-flex items-center bg-green-500/10 text-green-500 text-[10px] font-bold px-3 py-1 rounded-full mt-2 uppercase tracking-widest">
-                    <i data-lucide="shield-check" class="w-3 h-3 mr-1"></i> Verified Investor
+                    <i data-lucide="shield-check" class="w-3 h-3 mr-1"></i> Verified Yieldor
                 </div>
             </div>
         </div>
@@ -666,7 +666,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                     </div>
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-primary/5 rounded-2xl border border-primary/10 gap-2 w-full">
                         <span class="text-[10px] font-black text-slate-400 uppercase shrink-0">Official Email</span>
-                        <span class="text-[11px] font-bold text-slate-700 dark:text-white break-all">fidelityInvest9@gmail.com</span>
+                        <span class="text-[11px] font-bold text-slate-700 dark:text-white break-all">PrimeYield9@gmail.com</span>
                     </div>
                 </div>
 
@@ -681,7 +681,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                 </div>
                 <div class="min-w-0">
                     <h5 class="text-lg font-black text-red-500 uppercase tracking-tighter">Account Security</h5>
-                    <p class="text-[11px] text-slate-500 leading-relaxed max-w-md break-words">Permanently wipe all your investment history, active portfolios, and remaining balance. This action cannot be undone.</p>
+                    <p class="text-[11px] text-slate-500 leading-relaxed max-w-md break-words">Permanently wipe all your Yieldment history, active portfolios, and remaining balance. This action cannot be undone.</p>
                 </div>
             </div>
             <button onclick="deleteAccount()" class="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-red-500/20 active:scale-95 shrink-0">
@@ -701,7 +701,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
             
             <div class="space-y-6">
                 <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-500 uppercase ml-2">Investment Amount (₦)</label>
+                    <label class="text-xs font-bold text-slate-500 uppercase ml-2">Yieldment Amount (₦)</label>
                     <!-- Input strictly for numbers, prevents 'e', '+', '-' -->
                     <input type="number" 
                            id="calc-input" 
@@ -728,7 +728,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                 </div>
 
                 <button onclick="triggerDeposit()" class="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-black py-4 rounded-2xl uppercase tracking-widest text-sm shadow-xl transition-transform active:scale-95">
-    Authorize & Start Investment
+    Authorize & Start Yieldment
 </button>
             </div>
         </div>
@@ -755,7 +755,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
                 <i data-lucide="wallet-2" class="w-8 h-8"></i>
             </div>
             <h3 class="text-2xl font-black text-slate-800 dark:text-white">Fund Account</h3>
-            <p class="text-sm text-slate-500">Enter the amount you wish to invest</p>
+            <p class="text-sm text-slate-500">Enter the amount you wish to Yield</p>
         </div>
 
         <div class="space-y-6">
@@ -788,7 +788,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
     <script>
     // --- 1. CORE STATE & SYNCING ---
     // --- 1. CORE STATE & SYNCING ---
-const accountData = JSON.parse(localStorage.getItem('fidelity_user'));
+const accountData = JSON.parse(localStorage.getItem('Prime_user'));
 
 // Load existing state
 let state = JSON.parse(localStorage.getItem('fw_state')) || {};
@@ -797,14 +797,14 @@ let state = JSON.parse(localStorage.getItem('fw_state')) || {};
 if (!state.user) {
     state.user = { 
         name: accountData ? accountData.fullName : "User", 
-        email: accountData ? accountData.email : "user@fidelity.com", 
+        email: accountData ? accountData.email : "user@Prime.com", 
         phone: accountData ? accountData.phone : "",
         age: accountData ? accountData.dob : "",
         balance: 0,
         referralBalance: 0 
     };
 }
-if (!state.investments) state.investments = [];
+if (!state.Yieldments) state.Yieldments = [];
 if (!state.transactions) state.transactions = [];
 if (!state.notifications) state.notifications = [];
 if (!state.pendingReferrals) state.pendingReferrals = [];
@@ -826,7 +826,7 @@ if (!state.settings) state.settings = { darkMode: true };
             phone: state.user.phone,
             dob: state.user.age
         };
-        localStorage.setItem('fidelity_user', JSON.stringify(updatedMaster));
+        localStorage.setItem('Prime_user', JSON.stringify(updatedMaster));
         render();
     }
 
@@ -835,7 +835,7 @@ if (!state.settings) state.settings = { darkMode: true };
     const now = Date.now();
     let updated = false;
 
-    state.investments.forEach(inv => {
+    state.Yieldments.forEach(inv => {
         if (inv.status === 'Active') {
             const msPerDay = 24 * 60 * 60 * 1000;
             const elapsed = now - inv.lastUpdate;
@@ -878,10 +878,10 @@ if (!state.settings) state.settings = { darkMode: true };
     let earningsChart; 
 
     function render() {
-           const investments = state.investments || [];
+           const Yieldments = state.Yieldments || [];
     const notifications = state.notifications || [];
 
-    const activePlans = investments.filter(i => i.status === 'Active');
+    const activePlans = Yieldments.filter(i => i.status === 'Active');
         // --- Dynamic Initial Logic ---
     const userName = state.user.name || "User";
     // Get first two letters and format them (e.g., Ibrahim -> Ib)
@@ -947,8 +947,8 @@ if (refBonusElement) {
 
         const portfolioContainer = document.getElementById('dynamic-portfolio-container');
         if (portfolioContainer) {
-            portfolioContainer.innerHTML = state.investments.length === 0 ? `<div class="text-center py-20 opacity-50"><p>No investments found.</p></div>` : 
-            state.investments.map((inv, idx) => {
+            portfolioContainer.innerHTML = state.Yieldments.length === 0 ? `<div class="text-center py-20 opacity-50"><p>No Yieldments found.</p></div>` : 
+            state.Yieldments.map((inv, idx) => {
                 const dailyROI = inv.amount * 0.10;
                 const targetPayout = inv.amount * 2.00;
                 const daysElapsed = Math.min(20, Math.floor(inv.earned / dailyROI));
@@ -979,13 +979,13 @@ if (refBonusElement) {
         }
 
         const maturedContainer = document.getElementById('matured-list');
-        const maturedInvestments = state.investments.filter(i => i.status === 'Completed' && i.earned > 0);
+        const maturedYieldments = state.Yieldments.filter(i => i.status === 'Completed' && i.earned > 0);
         if (maturedContainer) {
-            maturedContainer.innerHTML = maturedInvestments.length === 0 ? `<div class="p-6 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No Matured Funds Available</p></div>` :
-            maturedInvestments.map(inv => `
+            maturedContainer.innerHTML = maturedYieldments.length === 0 ? `<div class="p-6 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No Matured Funds Available</p></div>` :
+            maturedYieldments.map(inv => `
                 <label class="relative flex items-center justify-between p-5 bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-3xl cursor-pointer hover:border-primary transition-all">
                     <div class="flex items-center space-x-4">
-                        <input type="radio" name="selected_investment" value="${inv.id}" data-max="${inv.earned}" class="w-4 h-4 text-primary" required>
+                        <input type="radio" name="selected_Yieldment" value="${inv.id}" data-max="${inv.earned}" class="w-4 h-4 text-primary" required>
                         <div><p class="text-[10px] font-black text-slate-400 uppercase">Matured Portfolio (₦${inv.amount.toLocaleString()})</p><p class="text-sm font-black">₦${inv.earned.toLocaleString()}</p></div>
                     </div>
                 </label>`).join('');
@@ -1056,7 +1056,7 @@ if (refBonusElement) {
         const totalEarned = growthData[growthData.length - 1];
         const insightBox = document.getElementById('chart-insight-text');
         if (insightBox) {
-            insightBox.innerHTML = totalEarned > 0 ? `Your portfolio is performing at 100% efficiency. Your total Invest has grown by <b class="text-primary">₦${totalEarned.toLocaleString()}</b> since you started.` : "Analysis pending... complete your first deposit to see growth trends.";
+            insightBox.innerHTML = totalEarned > 0 ? `Your portfolio is performing at 100% efficiency. Your total Yield has grown by <b class="text-primary">₦${totalEarned.toLocaleString()}</b> since you started.` : "Analysis pending... complete your first deposit to see growth trends.";
         }
         if (earningsChart) earningsChart.destroy();
         const chartCtx = ctx.getContext('2d');
@@ -1106,7 +1106,7 @@ if (refBonusElement) {
             currency: "NGN",
             callback: function(response) {
                 const instantProfit = finalAmount * 0.10;
-                state.investments.unshift({ id: Date.now(), amount: finalAmount, earned: instantProfit, date: new Date().toLocaleDateString(), lastUpdate: Date.now(), status: 'Active' });
+                state.Yieldments.unshift({ id: Date.now(), amount: finalAmount, earned: instantProfit, date: new Date().toLocaleDateString(), lastUpdate: Date.now(), status: 'Active' });
                 state.user.balance += instantProfit;
                 state.transactions.unshift({ type: 'Deposit', amount: finalAmount, date: new Date().toLocaleDateString(), status: 'Success' });
                 state.transactions.unshift({ type: 'Daily ROI', amount: instantProfit, date: new Date().toLocaleDateString(), status: 'Success' });
@@ -1120,7 +1120,7 @@ if (refBonusElement) {
     }
 
     function calcTotalWithdraw() {
-        const invAmt = parseFloat(document.getElementById('withdraw-amount-invest').value) || 0;
+        const invAmt = parseFloat(document.getElementById('withdraw-amount-Yield').value) || 0;
         const refAmt = parseFloat(document.getElementById('withdraw-amount-ref').value) || 0;
         const total = invAmt + refAmt;
         document.getElementById('withdraw-amount-total').value = "₦" + total.toLocaleString();
@@ -1130,8 +1130,8 @@ if (refBonusElement) {
     e.preventDefault();
     
     const submitBtn = document.getElementById('withdraw-submit-btn');
-    const selected = document.querySelector('input[name="selected_investment"]:checked');
-    const invAmt = parseFloat(document.getElementById('withdraw-amount-invest').value) || 0;
+    const selected = document.querySelector('input[name="selected_Yieldment"]:checked');
+    const invAmt = parseFloat(document.getElementById('withdraw-amount-Yield').value) || 0;
     const refAmt = parseFloat(document.getElementById('withdraw-amount-ref').value) || 0;
     const totalWithdraw = invAmt + refAmt;
 
@@ -1156,7 +1156,7 @@ if (refBonusElement) {
 
         // Deduct from Portfolio if applicable
         if (selected && invAmt > 0) {
-            const target = state.investments.find(i => i.id == selected.value);
+            const target = state.Yieldments.find(i => i.id == selected.value);
             target.earned -= invAmt;
         }
         
@@ -1195,10 +1195,10 @@ if (refBonusElement) {
         const oldPass = document.getElementById('old-pass').value;
         const newPass = document.getElementById('edit-pass').value;
         if (newPass !== "") {
-            const master = JSON.parse(localStorage.getItem('fidelity_user'));
+            const master = JSON.parse(localStorage.getItem('Prime_user'));
             if (oldPass !== master.password) return alert("Incorrect Old Password.");
             master.password = newPass;
-            localStorage.setItem('fidelity_user', JSON.stringify(master));
+            localStorage.setItem('Prime_user', JSON.stringify(master));
             addNotification('Password Changed', 'Your login security was updated.', 'profile');
         }
         state.user.name = document.getElementById('edit-name').value;
@@ -1219,7 +1219,7 @@ if (refBonusElement) {
     function inviteViaWhatsApp() {
         const phone = document.getElementById('wa-phone').value;
         if (!phone) return alert("Enter phone.");
-        window.open(`https://wa.me/234${phone}?text=${encodeURIComponent("Invest your  money with Fidelity Invest: https://bit.ly/4bzYxKr and get 2X back on your deposit by earning 10% daily!")}`, '_blank');
+        window.open(`https://wa.me/234${phone}?text=${encodeURIComponent("Yield your  money with Prime Yield: https://bit.ly/4bzYxKr and get 2X back on your deposit by earning 10% daily!")}`, '_blank');
         state.pendingReferrals.push({ id: Date.now(), timestamp: Date.now(), amount: 100, processed: false });
         addNotification('Invite Sent', 'Your bonus is pending.', 'referral');
         save();
@@ -1254,7 +1254,7 @@ if (refBonusElement) {
     }
 
     function toggleWithdrawForm() {
-    const selected = document.querySelector('input[name="selected_investment"]:checked');
+    const selected = document.querySelector('input[name="selected_Yieldment"]:checked');
     const section = document.getElementById('banking-section');
     const inputs = section.querySelectorAll('input, button');
     
@@ -1263,8 +1263,8 @@ if (refBonusElement) {
     inputs.forEach(i => i.disabled = !selected);
 
     if (selected) {
-        // 1. Set the MAX limit for the Investment input based on the selected portfolio
-        const invInput = document.getElementById('withdraw-amount-invest');
+        // 1. Set the MAX limit for the Yieldment input based on the selected portfolio
+        const invInput = document.getElementById('withdraw-amount-Yield');
         const maxProfit = parseFloat(selected.dataset.max);
         invInput.max = maxProfit;
         invInput.placeholder = `Max: ₦${maxProfit.toLocaleString()}`;
@@ -1295,11 +1295,11 @@ if (refBonusElement) {
 
     function deleteAccount() {
     // 1. Create a very scary warning message
-    const totalLoss = state.user.balance + state.investments.reduce((sum, i) => sum + i.amount, 0);
+    const totalLoss = state.user.balance + state.Yieldments.reduce((sum, i) => sum + i.amount, 0);
     const warningMessage = `⚠️ PERMANENT DATA & MONEY LOSS WARNING!\n\n` +
         `By deleting your account, you will PERMANENTLY LOSE:\n` +
         `- Your Total Available Balance (₦${state.user.balance.toLocaleString()})\n` +
-        `- Your Active Investment Capital\n` +
+        `- Your Active Yieldment Capital\n` +
         `- Your entire Transaction History\n\n` +
         `This action CANNOT be undone. All your money on this platform will be wiped forever.\n\n` +
         `Are you absolutely sure you want to proceed?`;
@@ -1312,7 +1312,7 @@ if (refBonusElement) {
             
             // 4. Clear all platform data
             localStorage.removeItem('fw_state');
-            localStorage.removeItem('fidelity_user');
+            localStorage.removeItem('Prime_user');
             // Using localStorage.clear() is also okay, but the above is more specific
             
             alert("Account and all financial data have been permanently wiped.");
