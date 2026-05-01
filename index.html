@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrimeYieldNG | Professional Institutional Lending</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- AOS Animations -->
@@ -19,58 +21,199 @@
     <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
 
     <style>
-        html, body{overflow-x: hidden;}
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        .btn-primary { 
-            background: #fbbf24; 
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .btn-primary {
+            background: #fbbf24;
             transition: all 0.3s ease;
         }
-        .btn-primary:hover { 
-            background: #f59e0b; 
+
+        .btn-primary:hover {
+            background: #f59e0b;
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.4);
         }
+
         .glass-nav {
-            background: rgba(15, 23, 42, 0.98); 
+            background: rgba(15, 23, 42, 0.98);
             backdrop-filter: blur(12px);
             max-width: 100vw;
         }
+
         /* Mobile Menu Overlay */
         #mobileMenu {
             transition: transform 0.3s ease-in-out;
             transform: translateX(100%);
         }
+
         #mobileMenu.active {
             transform: translateX(0);
         }
+
         /* Slider dots color */
-        .swiper-pagination-bullet-active { background: #fbbf24 !important; }
-        
+        .swiper-pagination-bullet-active {
+            background: #fbbf24 !important;
+        }
+
         /* Fix for mobile text overlap */
         @media (max-width: 768px) {
-            .hero-section { padding-top: 140px !important; }
+            .hero-section {
+                padding-top: 140px !important;
+            }
         }
+
         @media (max-width: 320px) {
-            h1 { font-size: 1.8rem !important; }
+            h1 {
+                font-size: 1.8rem !important;
+            }
         }
+
         html:has(#mobileMenu.active) {
-  overflow-y: hidden;
-}
+            overflow-y: hidden;
+        }
+
+        /* Animated complex geometric lines for hero section */
+        .hero-bg-container {
+            overflow: hidden;
+        }
+
+        /* Float the entire group gently */
+        .animate-mesh-float {
+            animation: meshFloat 20s ease-in-out infinite alternate;
+            transform-origin: center;
+            will-change: transform;
+            /* Performance boost for mobile */
+        }
+
+        /* Continuous line drawing effect */
+        .path-draw-1 {
+            stroke-dasharray: 4000;
+            stroke-dashoffset: 4000;
+            animation: lineDraw 15s ease-in-out infinite alternate;
+        }
+
+        .path-draw-2 {
+            stroke-dasharray: 3000;
+            stroke-dashoffset: 3000;
+            animation: lineDraw 22s ease-in-out infinite alternate-reverse;
+        }
+
+        .path-draw-3 {
+            stroke-dasharray: 5000;
+            stroke-dashoffset: 5000;
+            animation: lineDraw 18s ease-in-out infinite alternate;
+        }
+
+        /* Glowing pulse effect for geometric shapes */
+        .pulse-shape {
+            animation: shapePulse 8s ease-in-out infinite alternate;
+        }
+
+        /* Desktop Stroke Widths */
+        .responsive-stroke {
+            stroke-width: 0.7;
+        }
+
+        .responsive-stroke-mid {
+            stroke-width: 1.5;
+        }
+
+        .responsive-stroke-thick {
+            stroke-width: 2.5;
+        }
+
+        @keyframes meshFloat {
+            0% {
+                transform: scale(1) translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.05) translateY(-20px) rotate(1deg);
+            }
+
+            100% {
+                transform: scale(1.02) translateY(15px) rotate(-1deg);
+            }
+        }
+
+        @keyframes lineDraw {
+            0% {
+                stroke-dashoffset: 4000;
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes shapePulse {
+            0% {
+                opacity: 0.2;
+                transform: scale(0.98);
+            }
+
+            100% {
+                opacity: 0.7;
+                transform: scale(1.02);
+            }
+        }
+
+        /* MOBILE FIXES */
+        @media (max-width: 768px) {
+
+            /* Make lines slightly thicker and brighter on mobile so they don't vanish when scaled */
+            .responsive-stroke {
+                stroke-width: 1.5;
+            }
+
+            .responsive-stroke-mid {
+                stroke-width: 2.5;
+            }
+
+            .responsive-stroke-thick {
+                stroke-width: 4;
+            }
+
+            .path-draw-1,
+            .path-draw-2,
+            .path-draw-3 {
+                /* Speeds up the mobile animation very slightly to make it feel more energetic on small screens */
+                animation-duration: 12s, 18s, 14s;
+            }
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-900 overflow-x-hidden">
 
     <!-- NAVIGATION -->
     <nav class="fixed top-0 left-0 w-full z-[100] glass-nav border-b border-slate-800 py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="#">
-            <div class="flex items-center space-x-2">
-                <div class="bg-yellow-500 p-1.5 rounded-lg">
-                    <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
+                <div class="flex items-center space-x-2">
+                    <div class="bg-yellow-500 p-1.5 rounded-lg">
+                        <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <span class="text-white font-bold text-xl tracking-tight">Prime <span
+                            class="text-yellow-500">YieldNG</span></span>
                 </div>
-                <span class="text-white font-bold text-xl tracking-tight">Prime<span class="text-yellow-500">YieldNG</span></span>
-            </div>
             </a>
             <!-- Desktop Links -->
             <div class="hidden lg:flex space-x-8 text-sm font-semibold text-slate-300">
@@ -83,7 +226,9 @@
             </div>
 
             <div class="flex items-center space-x-4">
-                <a href="/get_started/"><button class="btn-primary text-slate-900 px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider">Get Started</button></a>
+                <a href="/get_started/"><button
+                        class="btn-primary text-slate-900 px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider">Get
+                        Started</button></a>
                 <button class="lg:hidden text-white" id="openMenu">
                     <i data-lucide="menu"></i>
                 </button>
@@ -92,7 +237,8 @@
     </nav>
 
     <!-- MOBILE MENU -->
-    <div id="mobileMenu" class="fixed inset-0 z-[110] bg-slate-950 flex flex-col p-8 lg:hidden overflow-hidden max-h-screen">
+    <div id="mobileMenu"
+        class="fixed inset-0 z-[110] bg-slate-950 flex flex-col p-8 lg:hidden overflow-hidden max-h-screen">
         <div class="flex justify-end">
             <button id="closeMenu" class="text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
         </div>
@@ -103,17 +249,76 @@
             <a href="#testimonials" class="mobile-link">Testimonials</a>
             <a href="#faq" class="mobile-link">FAQ</a>
             <a href="#contact" class="mobile-link">Contact Us</a>
-            <a href="/get_started/"><button class="btn-primary text-slate-900 px-6 py-4 rounded-xl text-lg font-bold">Get Started Now</button></a>
+            <a href="/get_started/"><button
+                    class="btn-primary text-slate-900 px-6 py-4 rounded-xl text-lg font-bold">Get Started
+                    Now</button></a>
         </div>
     </div>
 
     <!-- HERO SECTION -->
-    <section id="home" class="gradient-bg min-h-screen flex items-center hero-section pt-32 lg:pt-20">
+    <section id="home"
+        class="gradient-bg min-h-screen flex items-center hero-section pt-32 lg:pt-20 relative overflow-hidden">
+        <!-- Animated Geometric Lines Background -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0 hero-bg-container" viewBox="0 0 1440 900"
+            preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+            <!-- Define dynamic gradients to make it pop -->
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.9" /> <!-- Blue -->
+                    <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.2" /> <!-- Purple -->
+                </linearGradient>
+                <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.8" /> <!-- Emerald -->
+                    <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.2" /> <!-- Cyan -->
+                </linearGradient>
+                <linearGradient id="grad3" x1="0%" y1="50%" x2="100%" y2="50%">
+                    <stop offset="0%" stop-color="#64748b" stop-opacity="0.2" /> <!-- Slate -->
+                    <stop offset="50%" stop-color="#e2e8f0" stop-opacity="0.5" /> <!-- Light Slate -->
+                    <stop offset="100%" stop-color="#64748b" stop-opacity="0.2" />
+                </linearGradient>
+            </defs>
+
+            <g class="animate-mesh-float">
+                <!-- Abstract Geometric Background Grid (Centered for mobile focus) -->
+                <g stroke="url(#grad3)" class="responsive-stroke pulse-shape">
+                    <path d="M 0 0 L 1440 900 M 0 900 L 1440 0 M 720 0 L 720 900 M 0 450 L 1440 450" />
+                    <circle cx="720" cy="450" r="300" stroke-dasharray="10 20" />
+                    <circle cx="720" cy="450" r="450" stroke-dasharray="5 30" />
+                </g>
+
+                <!-- Complex Sweeping Wave 1 -->
+                <path class="path-draw-1 responsive-stroke-thick"
+                    d="M -100 200 C 300 400, 500 -100, 900 300 S 1300 800, 1540 600 S 1100 100, 720 450 S 200 900, -100 700"
+                    stroke="url(#grad1)" stroke-linecap="round" fill="none" />
+
+                <!-- Intersecting Sharp Geometric Path 2 -->
+                <path class="path-draw-2 responsive-stroke-mid"
+                    d="M -100 800 L 250 550 L 400 700 L 850 150 L 1150 450 L 1500 50 M 1500 250 L 1200 500 L 950 300 L 600 800 L 200 450 L -100 550"
+                    stroke="url(#grad2)" fill="none" />
+
+                <!-- Intricate Looping Sine-like Wave 3 -->
+                <path class="path-draw-3 responsive-stroke-thick"
+                    d="M 0 450 Q 180 200, 360 450 T 720 450 T 1080 450 T 1440 450 M 0 400 Q 180 650, 360 400 T 720 400 T 1080 400 T 1440 400"
+                    stroke="url(#grad1)" opacity="0.8" fill="none" />
+
+                <!-- Accent Floating Geometric Polygons -->
+                <g stroke="url(#grad2)" fill="none" class="responsive-stroke pulse-shape">
+                    <polygon points="300,250 350,300 320,380 250,350" stroke-dasharray="4 4" />
+                    <polygon points="1100,600 1180,550 1200,650 1120,680" stroke-dasharray="2 6" />
+                    <polygon points="800,200 850,150 920,220" />
+                    <!-- Added one dead center for mobile visibility -->
+                    <polygon points="720,400 750,420 740,460 700,450" stroke-dasharray="3 5" />
+                </g>
+            </g>
+        </svg>
         <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-right">
-                <div class="inline-flex items-center space-x-2 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full text-yellow-500 text-xs font-bold mb-6">
+                <div
+                    class="inline-flex items-center space-x-2 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1 rounded-full text-yellow-500 text-xs font-bold mb-6">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
                     </span>
                     <span>SYSTEM ONLINE & PAYING</span>
@@ -123,13 +328,15 @@
                     <span class="text-yellow-500">Accelerated</span> Growth.
                 </h1>
                 <p class="mt-6 text-slate-400 text-lg md:text-xl max-w-lg leading-relaxed">
-                    Powering global enterprise through micro-lending. Earn a fixed 10% daily return until your deposit reaches 200%.
+                    Powering global enterprise through micro-lending. Earn a fixed 10% daily return until your deposit
+                    reaches 200%.
                 </p>
                 <div class="mt-10 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <a href="/get_started/">
-                    <button class="btn-primary text-slate-900 px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center">
-                        Create Free Account <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
-                    </button>
+                        <button
+                            class="btn-primary text-slate-900 px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center">
+                            Create Free Account <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                        </button>
                     </a>
                 </div>
             </div>
@@ -138,20 +345,24 @@
                     <div class="flex justify-between items-center mb-8">
                         <div>
                             <p class="text-slate-400 text-sm uppercase font-bold tracking-widest">Growth Performance</p>
-                            <h3 class="text-3xl font-bold text-white">10.00% <span class="text-sm font-normal text-slate-400">/ Day</span></h3>
+                            <h3 class="text-3xl font-bold text-white">10.00% <span
+                                    class="text-sm font-normal text-slate-400">/ Day</span></h3>
                         </div>
                         <i data-lucide="bar-chart-3" class="text-yellow-500 w-10 h-10"></i>
                     </div>
                     <div class="space-y-4">
-                        <div class="bg-slate-900/50 p-4 rounded-xl flex justify-between items-center border border-slate-700/50">
+                        <div
+                            class="bg-slate-900/50 p-4 rounded-xl flex justify-between items-center border border-slate-700/50">
                             <span class="text-slate-300">Active Deposit</span>
                             <span class="text-white font-mono font-bold">₦10,000.00</span>
                         </div>
-                        <div class="bg-slate-900/50 p-4 rounded-xl flex justify-between items-center border border-slate-700/50">
+                        <div
+                            class="bg-slate-900/50 p-4 rounded-xl flex justify-between items-center border border-slate-700/50">
                             <span class="text-slate-300">Daily ROI</span>
                             <span class="text-green-400 font-mono font-bold">₦1,000.00</span>
                         </div>
-                        <div class="bg-yellow-500/10 p-4 rounded-xl flex justify-between items-center border border-yellow-500/20">
+                        <div
+                            class="bg-yellow-500/10 p-4 rounded-xl flex justify-between items-center border border-yellow-500/20">
                             <span class="text-yellow-500 font-bold">Auto-Withdraw Target</span>
                             <span class="text-yellow-500 font-mono font-bold">₦20,000.00</span>
                         </div>
@@ -174,21 +385,24 @@
                         <i data-lucide="wallet"></i>
                     </div>
                     <h4 class="text-xl font-bold">1. Pool Capital</h4>
-                    <p class="text-slate-500">You deposit funds into PrimeYieldNG. These funds are pooled to create a massive lending liquidity reserve.</p>
+                    <p class="text-slate-500">You deposit funds into PrimeYieldNG. These funds are pooled to create a
+                        massive lending liquidity reserve.</p>
                 </div>
                 <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-yellow-500">
                         <i data-lucide="landmark"></i>
                     </div>
                     <h4 class="text-xl font-bold">2. Strategic Loans</h4>
-                    <p class="text-slate-500">PrimeYieldNG issues high-frequency micro-loans to verified global businesses at premium interest rates.</p>
+                    <p class="text-slate-500">PrimeYieldNG issues high-frequency micro-loans to verified global
+                        businesses at premium interest rates.</p>
                 </div>
                 <div class="space-y-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-yellow-500">
                         <i data-lucide="refresh-cw"></i>
                     </div>
                     <h4 class="text-xl font-bold">3. Shared Profits</h4>
-                    <p class="text-slate-500">Interest from loans is redistributed back to you at a rate of 10% daily until your capital is doubled.</p>
+                    <p class="text-slate-500">Interest from loans is redistributed back to you at a rate of 10% daily
+                        until your capital is doubled.</p>
                 </div>
             </div>
         </div>
@@ -200,7 +414,8 @@
             <div class="lg:w-1/2 mb-12 lg:mb-0" data-aos="fade-right">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900">The 2X Maturation Rule</h2>
                 <p class="text-slate-600 text-lg mb-8 leading-relaxed">
-                    To maintain the stability of our lending cycles, capital remains active in the market until it reaches the 200% threshold.
+                    To maintain the stability of our lending cycles, capital remains active in the market until it
+                    reaches the 200% threshold.
                 </p>
                 <ul class="space-y-4">
                     <li class="flex items-start space-x-3">
@@ -257,156 +472,269 @@
                 <div class="swiper-wrapper">
                     <!-- Slide 1 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"The 10% daily return is incredibly consistent. I've doubled my ₦50,000 deposit twice now. Best decision of the year."</p>
+                                <p class="text-slate-600 italic mb-8">"The 10% daily return is incredibly consistent.
+                                    I've doubled my ₦50,000 deposit twice now. Best decision of the year."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-blue-600 shrink-0">Em</div>
-                                <div><h5 class="font-bold text-slate-900">Emeka Obi</h5><p class="text-xs text-slate-400">Retail Merchant</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-blue-600 shrink-0">
+                                    Em</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Emeka Obi</h5>
+                                    <p class="text-xs text-slate-400">Retail Merchant</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 2 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"As a business owner, liquidity is key. PrimeYieldNG gives me the daily cash flow I need to expand my operations."</p>
+                                <p class="text-slate-600 italic mb-8">"As a business owner, liquidity is key.
+                                    PrimeYieldNG gives me the daily cash flow I need to expand my operations."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-purple-600 shrink-0">Sa</div>
-                                <div><h5 class="font-bold text-slate-900">Sarah Adesina</h5><p class="text-xs text-slate-400">Entrepreneur</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-purple-600 shrink-0">
+                                    Sa</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Sarah Adesina</h5>
+                                    <p class="text-xs text-slate-400">Entrepreneur</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 3 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"I was worried about the withdrawal lock, but reaching 200% happened so fast! Exactly 20 days and my money was out."</p>
+                                <p class="text-slate-600 italic mb-8">"I was worried about the withdrawal lock, but
+                                    reaching 200% happened so fast! Exactly 20 days and my money was out."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-teal-600 shrink-0">Ch</div>
-                                <div><h5 class="font-bold text-slate-900">Chidi Azikiwe</h5><p class="text-xs text-slate-400">Tech Consultant</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-teal-600 shrink-0">
+                                    Ch</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Chidi Azikiwe</h5>
+                                    <p class="text-xs text-slate-400">Tech Consultant</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 4 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"Transparency is what I look for. The dashboard updates every single day at the same time. Very professional system."</p>
+                                <p class="text-slate-600 italic mb-8">"Transparency is what I look for. The dashboard
+                                    updates every single day at the same time. Very professional system."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-rose-600 shrink-0">Bl</div>
-                                <div><h5 class="font-bold text-slate-900">Blessing Okoro</h5><p class="text-xs text-slate-400">Finance Analyst</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-rose-600 shrink-0">
+                                    Bl</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Blessing Okoro</h5>
+                                    <p class="text-xs text-slate-400">Finance Analyst</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 5 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"Highly recommended for anyone looking for passive income. The PrimeYieldNG team knows what they are doing."</p>
+                                <p class="text-slate-600 italic mb-8">"Highly recommended for anyone looking for passive
+                                    income. The PrimeYieldNG team knows what they are doing."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-indigo-600 shrink-0">Ab</div>
-                                <div><h5 class="font-bold text-slate-900">Abubakar Musa</h5><p class="text-xs text-slate-400">Civil Servant</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-indigo-600 shrink-0">
+                                    Ab</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Abubakar Musa</h5>
+                                    <p class="text-xs text-slate-400">Civil Servant</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 6 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"Verified payout! Just received my ₦200,000 withdrawal today. Smooth and fast."</p>
+                                <p class="text-slate-600 italic mb-8">"Verified payout! Just received my ₦200,000
+                                    withdrawal today. Smooth and fast."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-orange-600 shrink-0">An</div>
-                                <div><h5 class="font-bold text-slate-900">Anita Williams</h5><p class="text-xs text-slate-400">Marketing Lead</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-orange-600 shrink-0">
+                                    An</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Anita Williams</h5>
+                                    <p class="text-xs text-slate-400">Marketing Lead</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 7 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"The customer support is top-notch. They helped me through my first deposit and it's been profit ever since."</p>
+                                <p class="text-slate-600 italic mb-8">"The customer support is top-notch. They helped me
+                                    through my first deposit and it's been profit ever since."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-emerald-600 shrink-0">Ka</div>
-                                <div><h5 class="font-bold text-slate-900">Kalu Prince</h5><p class="text-xs text-slate-400">Investor</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-emerald-600 shrink-0">
+                                    Ka</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Kalu Prince</h5>
+                                    <p class="text-xs text-slate-400">Investor</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 8 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"Finally a platform that delivers what it promises without stories. 10/10 recommendation."</p>
+                                <p class="text-slate-600 italic mb-8">"Finally a platform that delivers what it promises
+                                    without stories. 10/10 recommendation."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-pink-600 shrink-0">Li</div>
-                                <div><h5 class="font-bold text-slate-900">Linda Eke</h5><p class="text-xs text-slate-400">Designer</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-pink-600 shrink-0">
+                                    Li</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Linda Eke</h5>
+                                    <p class="text-xs text-slate-400">Designer</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 9 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"I started with ₦10,000 just to test. I was amazed when it hit ₦20,000 exactly on day 20. Now I'm in for more."</p>
+                                <p class="text-slate-600 italic mb-8">"I started with ₦10,000 just to test. I was amazed
+                                    when it hit ₦20,000 exactly on day 20. Now I'm in for more."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-cyan-600 shrink-0">Ol</div>
-                                <div><h5 class="font-bold text-slate-900">Oluwatobi J.</h5><p class="text-xs text-slate-400">Freelancer</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-cyan-600 shrink-0">
+                                    Ol</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Oluwatobi J.</h5>
+                                    <p class="text-xs text-slate-400">Freelancer</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Slide 10 -->
                     <div class="swiper-slide">
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
+                        <div
+                            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 h-full flex flex-col justify-between">
                             <div>
                                 <div class="flex space-x-1 text-yellow-500 mb-4">
-                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i>
+                                    <i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i><i data-lucide="star"
+                                        class="fill-current w-4 h-4"></i>
                                 </div>
-                                <p class="text-slate-600 italic mb-8">"Secured, professional, and profitable. PrimeYieldNG is the future of micro-lending."</p>
+                                <p class="text-slate-600 italic mb-8">"Secured, professional, and profitable.
+                                    PrimeYieldNG is the future of micro-lending."</p>
                             </div>
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-amber-600 shrink-0">Gr</div>
-                                <div><h5 class="font-bold text-slate-900">Grace Amadi</h5><p class="text-xs text-slate-400">Pharma Consultant</p></div>
+                                <div
+                                    class="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg border-2 border-yellow-500 bg-amber-600 shrink-0">
+                                    Gr</div>
+                                <div>
+                                    <h5 class="font-bold text-slate-900">Grace Amadi</h5>
+                                    <p class="text-xs text-slate-400">Pharma Consultant</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <h3 class="text-xl font-bold text-center mb-6" style="font-weight: 300; font-size: 18px; margin-top: 1.5rem; margin-bottom: 0; text-decoration: underline;"><a href="/testimonials/">View More > </a></h3>
+                <h3 class="text-xl font-bold text-center mb-6"
+                    style="font-weight: 300; font-size: 18px; margin-top: 1.5rem; margin-bottom: 0; text-decoration: underline;">
+                    <a href="/testimonials/">View More > </a>
+                </h3>
                 <!-- Navigation Dots -->
                 <div class="swiper-pagination"></div>
             </div>
@@ -420,66 +748,97 @@
             <div class="space-y-4">
                 <!-- FAQ 1 (Open by default) -->
                 <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                    <button class="w-full flex justify-between items-center p-6 text-left font-bold text-slate-900 transition-colors">
+                    <button
+                        class="w-full flex justify-between items-center p-6 text-left font-bold text-slate-900 transition-colors">
                         <span>How does PrimeYieldNG provide 10% daily?</span>
                         <i data-lucide="chevron-down" class="faq-icon transition-transform duration-300 rotate-180"></i>
                     </button>
                     <div class="faq-content p-6 pt-0 text-slate-500">
-                        Our capital is used in the high-frequency micro-loan market, where short-term business loans generate significant interest yields daily. We pass 10% of that profit to our liquidity providers (you).
+                        Our capital is used in the high-frequency micro-loan market, where short-term business loans
+                        generate significant interest yields daily. We pass 10% of that profit to our liquidity
+                        providers (you).
                     </div>
                 </div>
                 <!-- FAQ 2 -->
                 <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                    <button class="w-full flex justify-between items-center p-6 text-left font-bold text-slate-900 transition-colors">
+                    <button
+                        class="w-full flex justify-between items-center p-6 text-left font-bold text-slate-900 transition-colors">
                         <span>Is there a fee to create an account?</span>
                         <i data-lucide="chevron-down" class="faq-icon transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content p-6 pt-0 text-slate-500 hidden">
-                        No. Registration is completely free. It is simply a financial investment process where you only need to deposit capital to start earning.
+                        No. Registration is completely free. It is simply a financial investment process where you only
+                        need to deposit capital to start earning.
                     </div>
                 </div>
                 <!-- FAQ 3 -->
                 <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                    <button class="w-full flex justify-between items-center p-6 text-left font-bold text-slate-900 transition-colors">
+                    <button
+                        class="w-full flex justify-between items-center p-6 text-left font-bold text-slate-900 transition-colors">
                         <span>How many investment accounts can I have?</span>
                         <i data-lucide="chevron-down" class="faq-icon transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content p-6 pt-0 text-slate-500 hidden">
-                        For security and compliance reasons, each individual is allowed only one account. This helps us maintain a safe and transparent lending environment for all users.
+                        For security and compliance reasons, each individual is allowed only one account. This helps us
+                        maintain a safe and transparent lending environment for all users.
                     </div>
                 </div>
             </div>
-            <h3 class="text-xl font-bold text-center mb-6" style="font-weight: 300; font-size: 18px; margin-top: 1.5rem; margin-bottom: 0; text-decoration: underline;"><a href="/tpf/#faq">View More > </a></h3>
+            <h3 class="text-xl font-bold text-center mb-6"
+                style="font-weight: 300; font-size: 18px; margin-top: 1.5rem; margin-bottom: 0; text-decoration: underline;">
+                <a href="/tpf/#faq">View More > </a>
+            </h3>
         </div>
     </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="py-24 bg-white">
         <div class="container mx-auto px-6">
-            <div class="bg-slate-900 rounded-[3rem] p-8 lg:p-16 flex flex-col lg:flex-row gap-16 overflow-hidden relative">
+            <div
+                class="bg-slate-900 rounded-[3rem] p-8 lg:p-16 flex flex-col lg:flex-row gap-16 overflow-hidden relative">
                 <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-yellow-500/10 blur-[100px] rounded-full"></div>
                 <div class="lg:w-1/2 relative z-10" data-aos="fade-right">
                     <h3 class="text-4xl font-bold text-white mb-6">Need Assistance?</h3>
-                    <p class="text-slate-400 mb-10 text-lg leading-relaxed">Our financial support team is available 24/7 to help you with your account, deposits, or technical questions.</p>
+                    <p class="text-slate-400 mb-10 text-lg leading-relaxed">Our financial support team is available 24/7
+                        to help you with your account, deposits, or technical questions.</p>
                     <div class="space-y-6">
                         <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-yellow-500"><i data-lucide="mail"></i></div>
-                            <div><p class="text-slate-400 text-xs">Email Support</p><p class="text-white font-bold" style="word-break: break-all;">support@primeyieldng.com</p></div>
+                            <div
+                                class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-yellow-500">
+                                <i data-lucide="mail"></i>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs">Email Support</p>
+                                <p class="text-white font-bold" style="word-break: break-all;">support@primeyieldng.com
+                                </p>
+                            </div>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-yellow-500"><i data-lucide="users"></i></div>
-                            <div><p class="text-slate-400 text-xs">Visit Support Page</p><p class="text-white font-bold"><a href="/support/" class="hover:text-yellow-500">Support >></a></p></div>
+                            <div
+                                class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-yellow-500">
+                                <i data-lucide="users"></i>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs">Visit Support Page</p>
+                                <p class="text-white font-bold"><a href="/support/"
+                                        class="hover:text-yellow-500">Support >></a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="lg:w-1/2 relative z-10" data-aos="fade-left">
                     <form class="space-y-4">
                         <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors" required>
-                            <input type="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors" required>
+                            <input type="text" placeholder="Full Name"
+                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors"
+                                required>
+                            <input type="email" placeholder="Email Address"
+                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors"
+                                required>
                         </div>
                         <div class="relative">
-                            <select required id="contactSubject" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors appearance-none cursor-pointer">
+                            <select required id="contactSubject"
+                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors appearance-none cursor-pointer">
                                 <option value="" disabled selected class="bg-slate-900">Select Subject</option>
                                 <option value="Account Issues" class="bg-slate-900">Account Issues</option>
                                 <option value="Deposit Verification" class="bg-slate-900">Deposit Verification</option>
@@ -488,12 +847,17 @@
                                 <option value="General Inquiry" class="bg-slate-900">General Inquiry</option>
                             </select>
                             <!-- Custom dropdown arrow for professional look -->
-                            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-500">
+                            <div
+                                class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-500">
                                 <i data-lucide="chevron-down" class="w-5 h-5"></i>
                             </div>
                         </div>
-                        <textarea rows="4" placeholder="Your Message" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors" required></textarea>
-                        <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold uppercase tracking-widest text-slate-900">Send Message</button>
+                        <textarea rows="4" placeholder="Your Message"
+                            class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-yellow-500 transition-colors"
+                            required></textarea>
+                        <button type="submit"
+                            class="btn-primary w-full py-4 rounded-xl font-bold uppercase tracking-widest text-slate-900">Send
+                            Message</button>
                     </form>
                 </div>
             </div>
@@ -508,10 +872,12 @@
                     <div class="bg-yellow-500 p-1.5 rounded-lg">
                         <i data-lucide="shield-check" class="text-slate-900 w-6 h-6"></i>
                     </div>
-                    <span class="text-white font-bold text-xl tracking-tight">Prime<span class="text-yellow-500">YieldNG</span></span>
+                    <span class="text-white font-bold text-xl tracking-tight">Prime<span
+                            class="text-yellow-500">YieldNG</span></span>
                 </div>
                 <p class="text-slate-500 max-w-sm leading-relaxed">
-                    A premier institutional lending company designed to provide consistent, high-yield returns through strategic micro-finance and loan distribution.
+                    A premier institutional lending company designed to provide consistent, high-yield returns through
+                    strategic micro-finance and loan distribution.
                 </p>
             </div>
             <div>
@@ -525,13 +891,17 @@
             <div>
                 <h5 class="font-bold mb-6">Contact</h5>
                 <ul class="space-y-4 text-slate-400 text-sm">
-                    <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-2"></i> support@primeyieldng.com</li>
-                    <li class="flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2"></i><a href="/support/">Support</a></li>
+                    <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-2"></i>
+                        support@primeyieldng.com</li>
+                    <li class="flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2"></i><a
+                            href="/support/">Support</a></li>
                 </ul>
             </div>
         </div>
         <div class="container mx-auto px-6 mt-20 pt-8 border-t border-slate-900 text-center text-slate-600 text-xs">
-            <p>&copy; 2022 PrimeYieldNG. All rights reserved. <!--Lending involves risk. Please consult a financial advisor.--></p>
+            <p>&copy; 2022 PrimeYieldNG. All rights reserved.
+                <!--Lending involves risk. Please consult a financial advisor.-->
+            </p>
         </div>
     </footer>
 
@@ -541,7 +911,7 @@
     <script>
         // Init Lucide
         lucide.createIcons();
-        
+
         // Init AOS
         AOS.init({ duration: 800, once: true });
 
@@ -594,11 +964,11 @@
 
             btn.addEventListener('click', () => {
                 const isOpen = !content.classList.contains('hidden');
-                
+
                 // Close all
                 document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
                 document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotate-180'));
-                
+
                 // Toggle clicked
                 if (!isOpen) {
                     content.classList.remove('hidden');
@@ -607,16 +977,16 @@
             });
         });
         // CONTACT FORM LOGIC
-const contactForm = document.querySelector('#contact form');
-const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const contactForm = document.querySelector('#contact form');
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
 
-contactForm.addEventListener('submit', function(e) {
-    // 1. Prevent the page from refreshing
-    e.preventDefault();
+        contactForm.addEventListener('submit', function (e) {
+            // 1. Prevent the page from refreshing
+            e.preventDefault();
 
-    // 2. Change button to "Processing..." and disable it
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = `
+            // 2. Change button to "Processing..." and disable it
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = `
         <span class="flex items-center justify-center">
             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -625,26 +995,27 @@ contactForm.addEventListener('submit', function(e) {
             Processing...
         </span>
     `;
-    submitBtn.style.opacity = "0.7";
-    submitBtn.style.pointerEvents = "none";
+            submitBtn.style.opacity = "0.7";
+            submitBtn.style.pointerEvents = "none";
 
-    // 3. Wait for 3 seconds
-    setTimeout(() => {
-        // 4. Show success alert
-        alert("Success! Your message has been sent to the PrimeYieldNG support team.");
+            // 3. Wait for 3 seconds
+            setTimeout(() => {
+                // 4. Show success alert
+                alert("Success! Your message has been sent to the PrimeYieldNG support team.");
 
-        // 5. Reset the form
-        contactForm.reset();
+                // 5. Reset the form
+                contactForm.reset();
 
-        // 6. Restore the button
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.opacity = "1";
-        submitBtn.style.pointerEvents = "auto";
-        
-        // Refresh icons in case any were inside the button
-        lucide.createIcons();
-    }, 3000);
-});
+                // 6. Restore the button
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.opacity = "1";
+                submitBtn.style.pointerEvents = "auto";
+
+                // Refresh icons in case any were inside the button
+                lucide.createIcons();
+            }, 3000);
+        });
     </script>
 </body>
+
 </html>
