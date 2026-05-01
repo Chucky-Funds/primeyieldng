@@ -19,7 +19,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
     <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
+     <script>
+        (function () {
+            try {
+                const data = localStorage.getItem('Prime_user');
 
+                // If the item exists
+                if (data) {
+                    const user = JSON.parse(data);
+
+                    // If valid user with email exists → go to dashboard
+                    if (user && user.email) {
+                        window.location.href = "../dashboard";
+                        return;
+                    }
+                }
+
+            } catch (error) {
+                // Do nothing (stay on page if error)
+            }
+        })();
+    </script>
     <style>
         html,
         body {
